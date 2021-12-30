@@ -38,6 +38,7 @@ const LoginForm = () => {
   // 컴포넌트 렌더링 시 form 초기화
   useEffect(() => {
     dispatch(initializeForm('login'));
+    dispatch(initializeForm('register'));
   }, [dispatch]);
 
   useEffect(() => {

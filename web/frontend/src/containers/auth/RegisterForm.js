@@ -28,39 +28,11 @@ const RegisterForm = () => {
     );
   };
 
-  const handleSex = (value) => {
+  const handleImpUID = (value) => {
     dispatch(
       changeField({
         form: 'register',
-        key: 'sex',
-        value,
-      }),
-    );
-  };
-
-  const handleChangeRegNum = (value) => {
-    dispatch(
-      changeField({
-        form: 'register',
-        key: 'registration_number',
-        value,
-      }),
-    );
-  };
-  const handleChangePhoneNum = (value) => {
-    dispatch(
-      changeField({
-        form: 'register',
-        key: 'phone_number',
-        value,
-      }),
-    );
-  };
-  const handleChangeResidence = (value) => {
-    dispatch(
-      changeField({
-        form: 'register',
-        key: 'residence',
+        key: 'impUID',
         value,
       }),
     );
@@ -68,36 +40,18 @@ const RegisterForm = () => {
   // 폼 등록 이벤트 핸들러
   const onSubmit = (e) => {
     e.preventDefault();
-    const {
-      id,
-      password,
-      passwordConfirm,
-      name,
-      registration_number,
-      sex,
-      phone_number,
-      residence,
-    } = form;
+    const { email, password, passwordConfirm, impUID } = form;
+    const regex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
     // 하나라도 비어있다면
-    if (
-      [
-        id,
-        password,
-        passwordConfirm,
-        name,
-        registration_number,
-        sex,
-        phone_number,
-        residence,
-      ].includes('')
-    ) {
+    if ([email, password, passwordConfirm, impUID].includes('')) {
       setError('모든 정보를 입력하세요.');
       return;
     }
-    if (id.length < 4) {
-      setError('아이디는 최소 4자리입니다.');
-      changeField({ form: 'register', key: 'id', value: '' });
+    if (!(email !== undefined && regex.test(email))) {
+      setError('이메일 형식이 아닙니다.');
+      changeField({ form: 'register', key: 'email', value: '' });
       return;
     }
 
@@ -116,28 +70,12 @@ const RegisterForm = () => {
       return;
     }
 
-    // 잘못된 주민번호
-    if (registration_number.length !== 14) {
-      setError('올바른 주민번호 형식이 아닙니다.');
-      return;
-    }
-
-    // 잘못된 전화번호
-    if (phone_number.length !== 13 && phone_number.length !== 12) {
-      setError('올바른 전화번호 형식이 아닙니다.');
-      return;
-    }
-
     dispatch(
       register({
-        id,
+        email,
         password,
         passwordConfirm,
-        name,
-        registration_number,
-        sex,
-        phone_number,
-        residence,
+        impUID,
       }),
     );
   };
@@ -145,7 +83,21 @@ const RegisterForm = () => {
   // 컴포넌트가 처음 렌더링 될 때 form 을 초기화함
   useEffect(() => {
     dispatch(initializeForm('register'));
+    dispatch(initializeForm('login'));
   }, [dispatch]);
+
+  useEffect(() => {
+    const jquery = document.createElement('script');
+    jquery.src = 'https://code.jquery.com/jquery-1.12.4.min.js';
+    const iamport = document.createElement('script');
+    iamport.src = 'https://cdn.iamport.kr/js/iamport.payment-1.2.0.js';
+    document.head.appendChild(jquery);
+    document.head.appendChild(iamport);
+    return () => {
+      document.head.removeChild(jquery);
+      document.head.removeChild(iamport);
+    };
+  }, []);
 
   // 회원가입 성공 / 실패 처리
   useEffect(() => {
@@ -186,10 +138,7 @@ const RegisterForm = () => {
       onChange={onChange}
       onSubmit={onSubmit}
       error={error}
-      handleSex={handleSex}
-      handleChangePhoneNum={handleChangePhoneNum}
-      handleChangeRegNum={handleChangeRegNum}
-      handleChangeResidence={handleChangeResidence}
+      handleImpUID={handleImpUID}
     />
   );
 };

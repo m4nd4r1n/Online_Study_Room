@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
-import { Form } from 'react-bootstrap';
 import { StyledInput, InputBlock } from '../common/Input';
 import { StyledBox, StyledClickBox } from '../common/Contents';
-
+import { Checkbox } from 'antd';
 /**
  * login form
  */
@@ -53,72 +52,29 @@ const ErrorMessage = styled.div`
   margin-top: 1rem;
 `;
 
-const AuthForm = ({
-  type,
-  form,
-  onChange,
-  onSubmit,
-  error,
-  handleSex,
-  handleChangePhoneNum,
-  handleChangeRegNum,
-  handleChangeResidence,
-}) => {
+const AuthForm = ({ type, form, onChange, onSubmit, error, handleImpUID }) => {
   const text = textMap[type];
-
-  const [registrationNumber, setRegistrationNumber] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [available, setAvailable] = useState(true);
+  const [certSuccess, setCertSuccess] = useState(false);
+  const [available, setAvailable] = useState(false);
   const [agreeContents, setAgreeContents] = useState(false);
 
-  // 주민번호 변경 이벤트 핸들러
-  const onChangeRegNumber = (e) => {
-    const regex = /^[0-9\b -]{0,14}$/;
-    if (regex.test(e.target.value)) {
-      setRegistrationNumber(e.target.value);
-    }
-    onChange(e);
+  const handleCert = (e) => {
+    e.preventDefault();
+    const USERCODE = 'imp34059711';
+    const { IMP } = window;
+    IMP.init(USERCODE);
+    const data = {
+      merchant_uid: `mid_${new Date().getTime()}`,
+    };
+    IMP.certification(data, (rsp) => {
+      if (rsp.success) {
+        setCertSuccess(true);
+        handleImpUID(rsp.imp_uid);
+      } else {
+        alert(`인증에 실패하였습니다.\n에러 내용: ${rsp.error_msg}`);
+      }
+    });
   };
-
-  // 주민번호에 - 자동 삽입
-  useEffect(() => {
-    if (registrationNumber.length === 13) {
-      setRegistrationNumber(
-        registrationNumber.replace(/-/g, '').replace(/(\d{6})(\d{7})/, '$1-$2'),
-      );
-    }
-
-    if (typeof handleChangeRegNum !== 'undefined') {
-      handleChangeRegNum(registrationNumber);
-    }
-  }, [registrationNumber, handleChangeRegNum]);
-
-  // 전화번호 변경 이벤트 핸들러
-  const onChangePhoneNumber = (e) => {
-    const regex = /^[0-9\b -]{0,13}$/;
-    if (regex.test(e.target.value)) {
-      setPhoneNumber(e.target.value);
-    }
-    onChange(e);
-  };
-
-  // 전화번호에 - 자동 삽입
-  useEffect(() => {
-    if (phoneNumber.length === 10) {
-      setPhoneNumber(phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
-    }
-    if (phoneNumber.length === 13) {
-      setPhoneNumber(
-        phoneNumber
-          .replace(/-/g, '')
-          .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'),
-      );
-    }
-
-    if (typeof handleChangePhoneNum !== 'undefined') {
-      handleChangePhoneNum(phoneNumber);
-    }
-  }, [phoneNumber, handleChangePhoneNum]);
 
   // 약관 체크 이벤트 핸들러
   const handleCheck = () => {
@@ -136,12 +92,14 @@ const AuthForm = ({
       <form onSubmit={onSubmit}>
         <InputBlock>
           <StyledInput
-            autoComplete="id"
-            name="id"
-            placeholder="아이디"
+            autoComplete="email"
+            type="email"
+            name="email"
+            placeholder="E-mail"
             onChange={onChange}
-            value={form.id}
-            maxLength={8}
+            value={form.email}
+            maxLength={30}
+            required
           />
         </InputBlock>
         <InputBlock>
@@ -153,6 +111,7 @@ const AuthForm = ({
             onChange={onChange}
             value={form.password}
             maxLength={16}
+            required
           />
         </InputBlock>
         {type === 'register' && (
@@ -166,41 +125,23 @@ const AuthForm = ({
                 onChange={onChange}
                 value={form.passwordConfirm}
                 maxLength={16}
+                required
               />
             </InputBlock>
             <InputBlock>
-              <StyledInput
-                name="name"
-                placeholder="이름"
-                onChange={onChange}
-                value={form.name}
-                maxLength={5}
-              />
-            </InputBlock>
-            <InputBlock>
-              <StyledInput
-                name="registration_number"
-                placeholder="주민번호"
-                onChange={onChangeRegNumber}
-                value={registrationNumber}
-              />
-            </InputBlock>
-            <InputBlock>
-              <StyledInput
-                name="phone_number"
-                placeholder="휴대전화 번호"
-                onChange={onChangePhoneNumber}
-                value={phoneNumber}
-              />
+              {!certSuccess ? (
+                <Button cyan fullwidth="true" onClick={handleCert}>
+                  본인인증
+                </Button>
+              ) : (
+                <Button fullwidth="true" disabled>
+                  인증완료
+                </Button>
+              )}
             </InputBlock>
             <InputBlock>
               <StyledBox style={{ height: '3rem' }}>
-                <Form.Check
-                  type="checkbox"
-                  id="agreement"
-                  label="약관동의"
-                  onChange={handleCheck}
-                />
+                <Checkbox onChange={handleCheck}>약관동의</Checkbox>
                 <StyledClickBox onClick={handleAgreeContents}>
                   약관보기
                 </StyledClickBox>
@@ -218,8 +159,7 @@ const AuthForm = ({
         <ButtonWithMarginTop
           cyan
           fullwidth="true"
-          style={{ marginTop: '1rem' }}
-          disabled={type === 'register' ? available : false}
+          disabled={type === 'register' ? !available || !certSuccess : false}
         >
           {text}
         </ButtonWithMarginTop>

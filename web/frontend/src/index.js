@@ -9,6 +9,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer, { rootSaga } from './modules';
 import { tempSetUser, check } from './modules/user';
+import 'antd/dist/antd.css';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
