@@ -10,6 +10,7 @@ import createSagaMiddleware from 'redux-saga';
 import rootReducer, { rootSaga } from './modules';
 import { tempSetUser, check } from './modules/user';
 import 'antd/dist/antd.css';
+import { IconContext } from 'react-icons';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
@@ -33,9 +34,15 @@ loadUser();
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <IconContext.Provider
+      value={{
+        size: '2.5rem',
+      }}
+    >
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </IconContext.Provider>
   </Provider>,
   document.getElementById('root'),
 );

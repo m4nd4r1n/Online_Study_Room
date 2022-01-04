@@ -2,6 +2,8 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
+import { MdPlayCircleOutline } from 'react-icons/md';
+import { MdStopCircle } from 'react-icons/md';
 
 const buttonStyle = css`
   text-decoration: none;
@@ -62,3 +64,31 @@ const Button = (props) => {
 };
 
 export default Button;
+
+export const StudyButton = ({ type }) => {
+  return (
+    <>
+      <Button
+        fullwidth
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: '4rem',
+        }}
+      >
+        {type === 'stop' ? (
+          <>
+            <MdStopCircle />
+            <span style={{ marginLeft: '5px' }}>학습종료</span>
+          </>
+        ) : (
+          <>
+            <MdPlayCircleOutline />
+            <span style={{ marginLeft: '5px' }}>학습시작</span>
+          </>
+        )}
+      </Button>
+    </>
+  );
+};

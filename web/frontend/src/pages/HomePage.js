@@ -1,8 +1,13 @@
-import React from 'react'
+import React from 'react';
+import HeaderContainer from '../containers/common/HeaderContainer';
+import MainContainer from '../containers/main/MainContainer';
 
 const HomePage = () => {
   return (
-    <div>메인 페이지</div>
+    <>
+      <HeaderContainer title="Main" back={false} />
+      <MainContainer />
+    </>
   );
 };
 
