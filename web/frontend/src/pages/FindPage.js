@@ -1,17 +1,17 @@
 import React from 'react';
 import AuthTemplate from '../components/auth/AuthTemplate';
-import LoginForm from '../containers/auth/LoginForm';
+import FindForm from '../containers/auth/FindForm';
 import HeaderContainer from '../containers/common/HeaderContainer';
 
-const LoginPage = () => {
+const FindPage = () => {
   return (
     <>
-      <HeaderContainer title="로그인" />
+      <HeaderContainer title="찾기" back />
       <AuthTemplate center>
-        <LoginForm />
+        <FindForm />
       </AuthTemplate>
     </>
   );
 };
 
-export default LoginPage;
+export default FindPage;

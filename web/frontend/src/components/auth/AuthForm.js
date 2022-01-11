@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
 import { StyledInput, InputBlock } from '../common/Input';
@@ -17,7 +17,8 @@ const AuthFormBlock = styled.div`
     margin-bottom: 1rem;
   }
 
-  display: ${(props) => (props.type === 'login' || props.user ? '' : 'none')};
+  display: ${(props) =>
+    props.type !== 'register' || props.user ? '' : 'none'};
 `;
 
 /**
@@ -42,6 +43,9 @@ const ButtonWithMarginTop = styled(Button)`
 const textMap = {
   login: '로그인',
   register: '회원가입',
+  find: '찾기',
+  email: '이메일',
+  password: '비밀번호',
 };
 
 /**
@@ -66,6 +70,11 @@ const AuthForm = ({ type, form, onChange, onSubmit, error, handleImpUID }) => {
   const [available, setAvailable] = useState(false);
   const [agreeContents, setAgreeContents] = useState(false);
   const [user, setUser] = useState(null);
+  const location = useLocation();
+  const sch = location.search;
+  const params = new URLSearchParams(sch);
+  const keyword = params.get('type');
+  const findType = textMap[keyword];
 
   const handleCert = (e) => {
     e.preventDefault();
@@ -135,33 +144,66 @@ const AuthForm = ({ type, form, onChange, onSubmit, error, handleImpUID }) => {
       </UserSelectButton>
       <AuthFormBlock type={type} user={user}>
         <h3>
-          {user} {text}
+          {user} {findType} {text}
         </h3>
         <form onSubmit={onSubmit}>
-          <InputBlock>
-            <StyledInput
-              autoComplete="email"
-              type="email"
-              name="email"
-              placeholder="E-mail"
-              onChange={onChange}
-              value={form.email}
-              maxLength={30}
-              required
-            />
-          </InputBlock>
-          <InputBlock>
-            <StyledInput
-              autoComplete="new-password"
-              name="password"
-              placeholder="비밀번호"
-              type="password"
-              onChange={onChange}
-              value={form.password}
-              maxLength={16}
-              required
-            />
-          </InputBlock>
+          {type === 'find' && (
+            <>
+              {keyword === 'password' && (
+                <InputBlock>
+                  <StyledInput
+                    autoComplete="email"
+                    type="email"
+                    name="email"
+                    placeholder="E-mail"
+                    onChange={onChange}
+                    value={form.email}
+                    maxLength={30}
+                    required
+                  />
+                </InputBlock>
+              )}
+              <InputBlock>
+                {!certSuccess ? (
+                  <Button cyan fullwidth="true" onClick={handleCert}>
+                    본인인증
+                  </Button>
+                ) : (
+                  <Button fullwidth="true" disabled>
+                    인증완료
+                  </Button>
+                )}
+              </InputBlock>
+            </>
+          )}
+          {type !== 'find' && (
+            <>
+              <InputBlock>
+                <StyledInput
+                  autoComplete="email"
+                  type="email"
+                  name="email"
+                  placeholder="E-mail"
+                  onChange={onChange}
+                  value={form.email}
+                  maxLength={30}
+                  required
+                />
+              </InputBlock>
+              <InputBlock>
+                <StyledInput
+                  autoComplete="new-password"
+                  name="password"
+                  placeholder="비밀번호"
+                  type="password"
+                  onChange={onChange}
+                  value={form.password}
+                  maxLength={16}
+                  required
+                />
+              </InputBlock>
+            </>
+          )}
           {type === 'register' && (
             <>
               <InputBlock>
@@ -266,14 +308,28 @@ const AuthForm = ({ type, form, onChange, onSubmit, error, handleImpUID }) => {
           <ButtonWithMarginTop
             cyan
             fullwidth="true"
-            disabled={type === 'register' ? !available || !certSuccess : false}
+            disabled={
+              type === 'register'
+                ? !available || !certSuccess
+                : type === 'find'
+                ? !certSuccess
+                : false
+            }
           >
-            {text}
+            {findType} {text}
           </ButtonWithMarginTop>
         </form>
         <Footer>
           {type === 'login' ? (
-            <Link to="/register">회원가입</Link>
+            <>
+              <Link to="/find?type=email" style={{ marginRight: '1rem' }}>
+                E-mail 찾기
+              </Link>
+              <Link to="/find?type=password" style={{ marginRight: '1rem' }}>
+                비밀번호 찾기
+              </Link>
+              <Link to="/register">회원가입</Link>
+            </>
           ) : (
             <Link to="/login">로그인</Link>
           )}

@@ -39,6 +39,7 @@ const LoginForm = () => {
   useEffect(() => {
     dispatch(initializeForm('login'));
     dispatch(initializeForm('register'));
+    dispatch(initializeForm('find'));
   }, [dispatch]);
 
   useEffect(() => {
@@ -56,7 +57,7 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/');
+      navigate('/home');
       try {
         localStorage.setItem('user', JSON.stringify(user));
       } catch (e) {
