@@ -20,20 +20,29 @@ const printExp = (ExpRatio) => {
   return ExpBar;
 };
 
-const UserInfo = () => {
+const UserInfo = ({ info }) => {
   const user = ['mentee', '김겨울', '8', 60];
 
   return (
     <InfoBar>
       <div style={{ width: '15%' }}>{user[1]} 님</div>
-      <div style={{ width: '15%' }}>Lv. {user[2]}</div>
-      <div style={{ width: '15%', textAlign: 'right', padding: '0.5rem' }}>
-        EXP
-      </div>
-      <div style={{ width: '40%', textAlign: 'left' }}>
-        {printExp(user[3] / 120)}
-      </div>
-      <div style={{ width: '15%' }}>{user[3]}/120</div>
+      {
+        // 멘티(학생)에게만 레벨, 경험치를 보여줌
+        info.type === 'mentee' && (
+          <>
+            <div style={{ width: '15%' }}>Lv. {user[2]}</div>
+            <div
+              style={{ width: '15%', textAlign: 'right', padding: '0.5rem' }}
+            >
+              EXP
+            </div>
+            <div style={{ width: '40%', textAlign: 'left' }}>
+              {printExp(user[3] / 120)}
+            </div>
+            <div style={{ width: '15%' }}>{user[3]}/120</div>
+          </>
+        )
+      }
     </InfoBar>
   );
 };

@@ -15,6 +15,7 @@ export const ContentsBlock = styled(Responsive)`
   align-items: center;
   justify-content: center;
   width: 600px;
+  text-align: center;
 `;
 
 export const ItemBlock = styled.div`
@@ -39,6 +40,7 @@ export const StyledBox = styled.div`
   align-items: center;
   justify-content: space-between;
   display: flex;
+  margin-bottom: -1px;
   &:focus {
     color: $oc-teal-7;
     border: 1px solid ${palette.gray[7]};
