@@ -1,7 +1,7 @@
 import React from 'react';
 import { ItemBlock, StyledBox } from '../common/Contents';
 import { useNavigate } from 'react-router-dom';
-import { Divider, ListItem } from './List';
+import { Divider, ListItem } from '../common/List';
 import { MdManageAccounts } from 'react-icons/md';
 import { MdMessage } from 'react-icons/md';
 import { MdEventNote } from 'react-icons/md';

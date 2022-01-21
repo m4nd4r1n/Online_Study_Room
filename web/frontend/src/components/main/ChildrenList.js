@@ -3,7 +3,7 @@ import { ItemBlock, StyledBox } from '../common/Contents';
 import { useNavigate } from 'react-router-dom';
 import { BsFillCameraVideoFill } from 'react-icons/bs';
 import { IoDocumentText } from 'react-icons/io5';
-import { Divider, ListItem } from './List';
+import { Divider, ListItem } from '../common/List';
 
 const Child = ({ child }) => {
   const navigate = useNavigate();

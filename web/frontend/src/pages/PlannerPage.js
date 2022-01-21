@@ -1,8 +1,15 @@
 import React from 'react';
+import HeaderContainer from '../containers/common/HeaderContainer';
+import PlannerContainer from '../containers/planner/PlannerContainer';
+import BottomTabBar from '../components/common/BottomTabBar';
 
 const PlannerPage = () => {
   return (
-    <div>플래너 페이지</div>
+    <>
+      <HeaderContainer title="플래너" />
+      <PlannerContainer />
+      <BottomTabBar />
+    </>
   );
 };
 

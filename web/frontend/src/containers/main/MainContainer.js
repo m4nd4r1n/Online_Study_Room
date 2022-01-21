@@ -33,11 +33,15 @@ const MainContainer = () => {
 
   // 테스트 info
   // parent/mento/mentee 테스트 후 제거 필요
-  info = { type: 'mentee' };
+  info = { type: 'mento' };
 
   useEffect(() => {
     if (user !== null) dispatch(getUserInfo());
   }, [dispatch, user]);
+
+  useEffect(() => {
+    if (info.type !== 'mentee') setIsOpen(false);
+  }, [info]);
 
   // 첫 클릭 시 출석 ==> 보상
   // 두번째 클릭 시 창 닫기

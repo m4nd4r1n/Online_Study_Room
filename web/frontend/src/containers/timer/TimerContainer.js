@@ -28,36 +28,34 @@ const TimerContainer = () => {
   };
 
   return (
-    <>
-      <ContentsBlock
-        style={{ display: 'flex', height: '80vh', flexDirection: 'column' }}
-      >
-        {inputTime ? (
-          <InputTime
-            changeTimer={changeTimer}
-            isTimer={isTimer}
-            onClickTimer={onClickTimer}
-            time={time}
-            setTime={setTime}
-          />
-        ) : isTimer ? (
-          <Timer
-            onClickTimer={onClickTimer}
-            inputTime={inputTime}
-            hh={time.hours}
-            mm={time.minutes}
-            ss={time.seconds}
-          />
-        ) : (
-          <Alarm
-            onClickTimer={onClickTimer}
-            hh={time.hours}
-            mm={time.minutes}
-            ss={time.seconds}
-          />
-        )}
-      </ContentsBlock>
-    </>
+    <ContentsBlock
+      style={{ display: 'flex', height: '80vh', flexDirection: 'column' }}
+    >
+      {inputTime ? (
+        <InputTime
+          changeTimer={changeTimer}
+          isTimer={isTimer}
+          onClickTimer={onClickTimer}
+          time={time}
+          setTime={setTime}
+        />
+      ) : isTimer ? (
+        <Timer
+          onClickTimer={onClickTimer}
+          inputTime={inputTime}
+          hh={time.hours}
+          mm={time.minutes}
+          ss={time.seconds}
+        />
+      ) : (
+        <Alarm
+          onClickTimer={onClickTimer}
+          hh={time.hours}
+          mm={time.minutes}
+          ss={time.seconds}
+        />
+      )}
+    </ContentsBlock>
   );
 };
 

@@ -27,6 +27,12 @@ export const ListItem = styled.div`
     `}
 
   ${(props) =>
+    props.auto &&
+    css`
+      width: auto;
+    `}
+
+  ${(props) =>
     props.index &&
     css`
       width: 7%;
