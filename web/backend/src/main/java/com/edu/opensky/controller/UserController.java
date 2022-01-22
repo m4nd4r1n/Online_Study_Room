@@ -13,7 +13,7 @@ public class UserController {
 
     UserService userService;
 
-    @PostMapping("/login")
+    @PostMapping("/login123")
     public String login(UserResponseDto responseDto){
         return "redirect:/";
     }

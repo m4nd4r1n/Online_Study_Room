@@ -1,4 +1,4 @@
-package com.edu.opensky.controller;
+package com.edu.opensky.controller.api;
 
 import com.edu.opensky.controller.dto.MentorSaveRequestDto;
 import com.edu.opensky.domain.Mentor;
@@ -15,15 +15,6 @@ public class MentorApiController {
 
     private final MentorService mentorService;
 
-    @PostMapping("/register")
-    public String registerMentor(@RequestBody MentorSaveRequestDto requestDto){
-        return mentorService.save(requestDto);
-    }
-
-    @GetMapping("")
-    public List<Mentor> getAllMentor(){
-        return mentorService.getAllMentor();
-    }
 
 
 

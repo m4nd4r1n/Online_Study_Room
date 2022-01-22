@@ -18,18 +18,24 @@ public class UserService {
     private final MenteeRepository menteeRepository;
     private final ParentRepository parentRepository;
 
+    /* 로그인 */
+    @Transactional
+    public String login(UserResponseDto responseDto) {
+        return userRepository.findByEmailAndPassword(responseDto.getEmail(), responseDto.getPassword()).orElseThrow(() ->
+                new IllegalArgumentException("아이디와 비밀번호를 확인해주세요.")).getEmail();
+    }
 
     /* 회원가입 */
     @Transactional
-    public String register(UserSaveRequestDto requestDto){
+    public String register(UserSaveRequestDto requestDto) {
         checkDuplicateUser(requestDto);
-        switch (requestDto.getRole()){
+        switch (requestDto.getRole()) {
             case "mentee":
                 MenteeSaveRequestDto menteeSaveRequestDto = new MenteeSaveRequestDto(requestDto.getEmail());
                 menteeRepository.save(menteeSaveRequestDto.toEntity());
                 break;
             case "mentor":
-                MentorSaveRequestDto mentorSaveRequestDto= new MentorSaveRequestDto(requestDto.getEmail());
+                MentorSaveRequestDto mentorSaveRequestDto = new MentorSaveRequestDto(requestDto.getEmail());
                 mentorRepository.save(mentorSaveRequestDto.toEntity());
                 break;
             case "parent":
@@ -48,19 +54,14 @@ public class UserService {
                 });
     }
 
-    /* 비밀번호 변경 수정중 */ 
+    /* 비밀번호 변경 수정중 */
     @Transactional
-    public String update(String username, UserUpdateRequestDto requestDto){
-        User user = userRepository.findByRegnum(username).orElseThrow(()-> new
+    public String update(String username, UserUpdateRequestDto requestDto) {
+        User user = userRepository.findByRegnum(username).orElseThrow(() -> new
                 IllegalArgumentException("해당 아이디가 없습니다. id=" + username));
         user.update(requestDto.getUsername(), requestDto.getPassword());
 
         return username;
     }
 
-    public UserResponseDto findByUsername(String username){
-        User entity = userRepository.findByRegnum(username).orElseThrow(() ->
-                new IllegalArgumentException("해당 아이디가 없습니다. id=" +username));
-        return new UserResponseDto(entity);
-    }
 }
