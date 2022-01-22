@@ -1,23 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
+    <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7e0ae73-e136-438e-8cf7-b7e0a9d457e9" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/1465f23b-329f-49d1-b61e-9a0f26aab826.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/1465f23b-329f-49d1-b61e-9a0f26aab826/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/1465f23b-329f-49d1-b61e-9a0f26aab826/storage_v2/_src_/schema/mysql.osA4Bg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/1465f23b-329f-49d1-b61e-9a0f26aab826/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/1465f23b-329f-49d1-b61e-9a0f26aab826/storage_v2/_src_/schema/sys.zb4BAA.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/HomeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/MentorApiController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/UserApiController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/MenteeSaveRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/MentorSaveRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/ParentSaveRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserSaveRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserUpdateRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Mentee.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Mentor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Parent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/MenteeRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/MentorRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/ParentRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/MenteeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/MentorService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/ParentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/resources/templates/home.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/resources/templates/index.mustache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/resources/templates/join.mustache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/resources/templates/layout/footer.mustache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/resources/templates/layout/header.mustache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/test/java/com/edu/opensky/controller/UserApiControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/test/java/com/edu/opensky/domain/repository/MentorRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/web/frontend/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/web/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/HelloController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/test/java/com/edu/opensky/web/HelloControllerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/test/java/com/edu/opensky/controller/HelloControllerTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +51,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/web/backend">
+      <ProjectState />
+    </projectState>
     <projectState path="$PROJECT_DIR$/../test/web/backend">
       <ProjectState />
     </projectState>
@@ -50,6 +82,20 @@
                 <item name="opensky" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="opensky" type="f1a62948:ProjectNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="opensky" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="opensky" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -60,6 +106,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="FxmlFile" />
+        <option value="HTML File" />
+        <option value="Interface" />
+        <option value="JUnit5 Test Class" />
         <option value="Class" />
       </list>
     </option>
@@ -104,6 +154,7 @@
     <option name="myId2FirstActivated">
       <map>
         <entry key="JPA Structure" value="true" />
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
         <entry key="com.haulmont.jpb.jpaPalette" value="true" />
         <entry key="com.haulmont.jpb.jpaStructure" value="true" />
       </map>
@@ -111,8 +162,9 @@
     <option name="myId2Visible">
       <map>
         <entry key="JPA Structure" value="false" />
+        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
         <entry key="com.haulmont.jpb.jpaPalette" value="false" />
-        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
       </map>
     </option>
   </component>
@@ -123,6 +175,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
@@ -130,12 +183,36 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.openapi.externalSystem.service.settings.ExternalSystemGroupConfigurable" value="SELECTIVE" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../test/web/backend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/repository" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="프로젝트" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.3156863" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\java\com\edu\opensky\repository" />
+      <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\java\com\edu\opensky\domain" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\resources\templates\members" />
+      <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\resources\static" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.edu.opensky.controller" />
+      <recent name="com.edu.opensky.service" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.edu.opensky.domain" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
@@ -144,13 +221,13 @@
       </set>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="ApplicationTests.contextLoads" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Spring Boot.Application (1)">
+    <configuration name="MemberRepositoryTest.findByName" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/web/backend" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;com.edu.opensky.ApplicationTests.contextLoads&quot;" />
+        <option name="scriptParameters" value="--tests &quot;com.edu.opensky.repository.MemberRepositoryTest.findByName&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -166,12 +243,12 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="HelloControllerTests.hello_return" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="MemberRepositoryTest.member_join" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/web/backend" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;com.edu.opensky.web.HelloControllerTests.hello_return&quot;" />
+        <option name="scriptParameters" value="--tests &quot;com.edu.opensky.repository.MemberRepositoryTest.member_join&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -186,11 +263,76 @@
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
+    </configuration>
+    <configuration name="MentorRepositoryTest.asdasd" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/web/backend" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;com.edu.opensky.domain.repository.MentorRepositoryTest.asdasd&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="UserApiControllerTest.User_join" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/web/backend" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;com.edu.opensky.controller.UserApiControllerTest.User_join&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Application (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="opensky.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.edu.opensky.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edu.opensky.Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="com.edu.opensky.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edu.opensky.Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.HelloControllerTests.hello_return" />
-        <item itemvalue="Gradle.ApplicationTests.contextLoads" />
+        <item itemvalue="Spring Boot.Application (1)" />
+        <item itemvalue="Gradle.MentorRepositoryTest.asdasd" />
+        <item itemvalue="Gradle.UserApiControllerTest.User_join" />
+        <item itemvalue="Gradle.MemberRepositoryTest.member_join" />
+        <item itemvalue="Gradle.MemberRepositoryTest.findByName" />
       </list>
     </recent_temporary>
   </component>
@@ -208,12 +350,135 @@
       <workItem from="1641040061148" duration="68000" />
       <workItem from="1642266525685" duration="439000" />
       <workItem from="1642267191924" duration="85000" />
-      <workItem from="1642268325546" duration="211000" />
+      <workItem from="1642268325546" duration="344000" />
+      <workItem from="1642268685879" duration="8000" />
+      <workItem from="1642420639078" duration="1122000" />
+      <workItem from="1642422176739" duration="575000" />
+      <workItem from="1642422940803" duration="3494000" />
+      <workItem from="1642426702638" duration="724000" />
+      <workItem from="1642427544509" duration="512000" />
+      <workItem from="1642428618809" duration="1000" />
+      <workItem from="1642428982027" duration="349000" />
+      <workItem from="1642429869675" duration="6970000" />
+      <workItem from="1642498369303" duration="5348000" />
+      <workItem from="1642506636899" duration="4126000" />
+      <workItem from="1642514129641" duration="3733000" />
+      <workItem from="1642518061862" duration="4422000" />
+      <workItem from="1642530096636" duration="1288000" />
+      <workItem from="1642531499151" duration="682000" />
+      <workItem from="1642532206134" duration="2471000" />
+      <workItem from="1642574249229" duration="13079000" />
+      <workItem from="1642616594937" duration="3756000" />
+      <workItem from="1642700631265" duration="3446000" />
+      <workItem from="1642824452637" duration="2126000" />
+      <workItem from="1642826729997" duration="2829000" />
+      <workItem from="1642829911324" duration="645000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.xml.bind:jakarta.xml.bind-api" />
+    <option featureType="dependencySupport" implementationName="java:org.slf4j:jul-to-slf4j" />
+    <option featureType="dependencySupport" implementationName="java:com.zaxxer:HikariCP" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-actuator-autoconfigure" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
+    <option featureType="dependencySupport" implementationName="java:org.thymeleaf:thymeleaf-spring5" />
+    <option featureType="dependencySupport" implementationName="java:net.minidev:accessors-smart" />
+    <option featureType="dependencySupport" implementationName="java:org.aspectj:aspectjweaver" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-test" />
+    <option featureType="dependencySupport" implementationName="java:com.fasterxml:classmate" />
+    <option featureType="dependencySupport" implementationName="java:org.apache.tomcat.embed:tomcat-embed-core" />
+    <option featureType="dependencySupport" implementationName="java:com.fasterxml.jackson.datatype:jackson-datatype-jsr310" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate:hibernate-core" />
+    <option featureType="dependencySupport" implementationName="java:org.glassfish.jaxb:jaxb-runtime" />
+    <option featureType="dependencySupport" implementationName="java:org.skyscreamer:jsonassert" />
+    <option featureType="dependencySupport" implementationName="java:org.apache.tomcat.embed:tomcat-embed-websocket" />
+    <option featureType="dependencySupport" implementationName="java:ch.qos.logback:logback-classic" />
+    <option featureType="dependencySupport" implementationName="java:org.mockito:mockito-junit-jupiter" />
+    <option featureType="dependencySupport" implementationName="java:org.glassfish.jaxb:txw2" />
+    <option featureType="dependencySupport" implementationName="java:org.opentest4j:opentest4j" />
+    <option featureType="dependencySupport" implementationName="java:org.objenesis:objenesis" />
+    <option featureType="dependencySupport" implementationName="java:org.junit.jupiter:junit-jupiter" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-tx" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-jcl" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-web" />
+    <option featureType="dependencySupport" implementationName="java:org.attoparser:attoparser" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-starter-logging" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-starter-aop" />
+    <option featureType="dependencySupport" implementationName="java:ch.qos.logback:logback-core" />
+    <option featureType="dependencySupport" implementationName="java:com.fasterxml.jackson.core:jackson-databind" />
+    <option featureType="dependencySupport" implementationName="java:org.apache.logging.log4j:log4j-to-slf4j" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-starter" />
+    <option featureType="dependencySupport" implementationName="java:org.jboss.logging:jboss-logging" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-devtools" />
+    <option featureType="dependencySupport" implementationName="java:org.slf4j:slf4j-api" />
+    <option featureType="dependencySupport" implementationName="java:org.ow2.asm:asm" />
+    <option featureType="dependencySupport" implementationName="java:org.thymeleaf.extras:thymeleaf-extras-java8time" />
+    <option featureType="dependencySupport" implementationName="java:org.yaml:snakeyaml" />
+    <option featureType="dependencySupport" implementationName="java:antlr:antlr" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-autoconfigure" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-test-autoconfigure" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-starter-json" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-expression" />
+    <option featureType="dependencySupport" implementationName="java:com.fasterxml.jackson.datatype:jackson-datatype-jdk8" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-starter-actuator" />
+    <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
+    <option featureType="dependencySupport" implementationName="java:org.latencyutils:LatencyUtils" />
+    <option featureType="dependencySupport" implementationName="java:mysql:mysql-connector-java" />
+    <option featureType="dependencySupport" implementationName="java:org.assertj:assertj-core" />
+    <option featureType="dependencySupport" implementationName="java:com.fasterxml.jackson.module:jackson-module-parameter-names" />
+    <option featureType="dependencySupport" implementationName="java:com.vaadin.external.google:android-json" />
+    <option featureType="dependencySupport" implementationName="java:org.apiguardian:apiguardian-api" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-jdbc" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-starter-jdbc" />
+    <option featureType="dependencySupport" implementationName="java:org.mockito:mockito-core" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.transaction:jakarta.transaction-api" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-starter-thymeleaf" />
+    <option featureType="dependencySupport" implementationName="java:org.hdrhistogram:HdrHistogram" />
+    <option featureType="dependencySupport" implementationName="java:org.xmlunit:xmlunit-core" />
+    <option featureType="dependencySupport" implementationName="java:net.bytebuddy:byte-buddy" />
+    <option featureType="dependencySupport" implementationName="java:org.junit.jupiter:junit-jupiter-params" />
+    <option featureType="dependencySupport" implementationName="java:org.hamcrest:hamcrest" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-starter-data-jpa" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.data:spring-data-commons" />
+    <option featureType="dependencySupport" implementationName="java:net.bytebuddy:byte-buddy-agent" />
+    <option featureType="dependencySupport" implementationName="java:org.junit.platform:junit-platform-engine" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-aspects" />
+    <option featureType="dependencySupport" implementationName="java:org.jboss:jandex" />
+    <option featureType="dependencySupport" implementationName="java:com.h2database:h2" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-starter-test" />
+    <option featureType="dependencySupport" implementationName="java:com.jayway.jsonpath:json-path" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-beans" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate.common:hibernate-commons-annotations" />
+    <option featureType="dependencySupport" implementationName="java:org.thymeleaf:thymeleaf" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.data:spring-data-jpa" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-actuator" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.activation:jakarta.activation-api" />
+    <option featureType="dependencySupport" implementationName="java:org.junit.jupiter:junit-jupiter-engine" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
+    <option featureType="dependencySupport" implementationName="java:org.unbescape:unbescape" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-starter-tomcat" />
+    <option featureType="dependencySupport" implementationName="java:com.fasterxml.jackson.core:jackson-annotations" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-test" />
+    <option featureType="dependencySupport" implementationName="java:com.fasterxml.jackson.core:jackson-core" />
+    <option featureType="dependencySupport" implementationName="java:org.junit.platform:junit-platform-commons" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.annotation:jakarta.annotation-api" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-orm" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-context" />
+    <option featureType="dependencySupport" implementationName="java:io.micrometer:micrometer-core" />
+    <option featureType="dependencySupport" implementationName="java:com.sun.istack:istack-commons-runtime" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-aop" />
+    <option featureType="dependencySupport" implementationName="java:org.junit.jupiter:junit-jupiter-api" />
+    <option featureType="dependencySupport" implementationName="java:net.minidev:json-smart" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot-starter-web" />
+    <option featureType="dependencySupport" implementationName="java:org.apache.tomcat.embed:tomcat-embed-el" />
+    <option featureType="dependencySupport" implementationName="java:com.sun.activation:jakarta.activation" />
+    <option featureType="dependencySupport" implementationName="java:org.apache.logging.log4j:log4j-api" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

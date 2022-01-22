@@ -1,5 +1,6 @@
-package com.edu.opensky.web;
+package com.edu.opensky.controller;
 
+import com.edu.opensky.controller.HelloController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

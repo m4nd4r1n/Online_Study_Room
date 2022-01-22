@@ -1,4 +1,4 @@
-package com.edu.opensky.web;
+package com.edu.opensky.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
