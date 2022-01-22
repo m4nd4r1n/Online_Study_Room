@@ -1,8 +1,15 @@
 import React from 'react';
+import HeaderContainer from '../containers/common/HeaderContainer';
+import TimerContainer from '../containers/timer/TimerContainer';
+import BottomTabBar from '../components/common/BottomTabBar';
 
 const TimerPage = () => {
   return (
-    <div>타이머 페이지</div>
+    <>
+      <HeaderContainer title="타이머" back={false} />
+      <TimerContainer />
+      <BottomTabBar />
+    </>
   );
 };
 
