@@ -64,7 +64,15 @@ const UserSelectButton = styled(Button)`
   margin-bottom: 1rem;
 `;
 
-const AuthForm = ({ type, form, onChange, onSubmit, error, handleImpUID }) => {
+const AuthForm = ({
+  type,
+  form,
+  onChange,
+  onSubmit,
+  error,
+  handleImpUID,
+  handleRegType,
+}) => {
   const text = textMap[type];
   const [certSuccess, setCertSuccess] = useState(false);
   const [available, setAvailable] = useState(false);
@@ -105,7 +113,9 @@ const AuthForm = ({ type, form, onChange, onSubmit, error, handleImpUID }) => {
   };
 
   const handleUser = (value) => {
-    setUser(value.target.innerText.slice(0, -3));
+    const type = value.target.innerText.slice(0, -3);
+    setUser(type);
+    handleRegType(type);
   };
 
   const inNumber = (e) => {

@@ -6,16 +6,18 @@ export const login = ({ email, password }) =>
 
 // 회원가입
 export const register = ({
-  email,
-  password,
-  impUID,
-  school,
-  stdName,
-  phoneFirst,
-  phoneMiddle,
-  phoneLast,
+  type, // 멘티/멘토/학부모 중 하나
+  email, // 이메일
+  password, // 비밀번호
+  impUID, // 아임포트 UID
+  school, // 학교 (멘티)
+  stdName, // 자녀 이름 (학부모)
+  phoneFirst, // 자녀 전화번호 앞자리 (학부모)
+  phoneMiddle, // 자녀 전화번호 중간자리 (학부모)
+  phoneLast, // 자녀 전화번호 뒷자리 (학부모)
 }) =>
   client.post('/auth/register', {
+    type,
     email,
     password,
     impUID,

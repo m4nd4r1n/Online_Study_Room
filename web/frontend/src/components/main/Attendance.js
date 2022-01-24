@@ -1,13 +1,10 @@
 import React from 'react';
-import DatePicker, { registerLocale } from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import ko from 'date-fns/locale/ko';
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 import palette from '../../lib/styles/palette';
 import styled from 'styled-components';
 import Modal from 'react-modal';
 //import Button from '../common/Button';
-
-registerLocale('ko', ko);
 
 const modalStyle = {
   overlay: {
@@ -58,20 +55,45 @@ const RewardItem = styled.div`
   color: ${palette.gray[8]};
 `;
 
-const StyledDatePicker = styled(DatePicker)`
-  display: flex;
-  margin-right: 1rem;
-  margin-left: 1rem;
-  height: 38px;
-  width: auto;
-  border-radius: 4px;
-  border: 1px solid ${palette.gray[4]};
+const StyledDayPicker = styled(DayPicker)`
+  margin-top: -1rem;
+  font-size: 0.9rem;
 `;
 
-const Attendance = ({ handleClick, isOpen, next }) => {
-  const today = new Date();
-  //const attendance = [today];
+const MONTHS = [
+  '1월',
+  '2월',
+  '3월',
+  '4월',
+  '5월',
+  '6월',
+  '7월',
+  '8월',
+  '9월',
+  '10월',
+  '11월',
+  '12월',
+];
 
+const WEEKDAYS_LONG = [
+  '일요일',
+  '월요일',
+  '화요일',
+  '수요일',
+  '목요일',
+  '금요일',
+  '토요일',
+];
+
+const WEEKDAYS_SHORT = ['일', '월', '화', '수', '목', '금', '토'];
+
+const ATTENDANCE_DATES = [
+  new Date(),
+  new Date(2022, 0, 15),
+  new Date(2022, 0, 18),
+]; // 출석 날짜
+
+const Attendance = ({ handleClick, isOpen, next }) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -92,16 +114,14 @@ const Attendance = ({ handleClick, isOpen, next }) => {
         ) : (
           <>
             <ModalTitle>이번 달 출석현황</ModalTitle>
-            <StyledDatePicker
-              dateFormat="yyyy/MM/dd"
-              disabled={true}
+            <StyledDayPicker
               locale="ko"
-              selected={today} //new Date(today.setDate(today.getDate() + 1))
-              //onChange={handleDate}
-              //minDate={new Date(today.setDate(today.getDate() + 1))} // 과거 날짜 disable
-              fixedHeight
-              withPortal
-              inline
+              months={MONTHS}
+              weekdaysLong={WEEKDAYS_LONG}
+              weekdaysShort={WEEKDAYS_SHORT}
+              canChangeMonth={false}
+              selectedDays={ATTENDANCE_DATES} // 출석 날짜 표시
+              fixedWeeks={true}
             />
           </>
         )}

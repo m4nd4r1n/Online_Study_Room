@@ -37,6 +37,17 @@ const RegisterForm = () => {
       }),
     );
   };
+
+  const handleRegType = (value) => {
+    dispatch(
+      changeField({
+        form: 'register',
+        key: 'type',
+        value,
+      }),
+    );
+  };
+
   // 폼 등록 이벤트 핸들러
   const onSubmit = (e) => {
     e.preventDefault();
@@ -139,6 +150,7 @@ const RegisterForm = () => {
       onSubmit={onSubmit}
       error={error}
       handleImpUID={handleImpUID}
+      handleRegType={handleRegType}
     />
   );
 };

@@ -30,6 +30,7 @@ export const initializeForm = createAction(INITIALIZE_FORM, (form) => form); // 
 export const register = createAction(
   REGISTER,
   ({
+    type,
     email,
     password,
     impUID,
@@ -39,6 +40,7 @@ export const register = createAction(
     phoneMiddle,
     phoneLast,
   }) => ({
+    type,
     email,
     password,
     impUID,
@@ -72,6 +74,7 @@ export function* authSaga() {
 // state 초기화
 const initialState = {
   register: {
+    type: '',
     email: '',
     password: '',
     passwordConfirm: '',
