@@ -6,7 +6,7 @@ import BottomTabBar from '../components/common/BottomTabBar';
 const TimerPage = () => {
   return (
     <>
-      <HeaderContainer title="타이머" back={false} />
+      <HeaderContainer title="타이머" back />
       <TimerContainer />
       <BottomTabBar />
     </>

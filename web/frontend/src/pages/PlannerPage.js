@@ -6,7 +6,7 @@ import BottomTabBar from '../components/common/BottomTabBar';
 const PlannerPage = () => {
   return (
     <>
-      <HeaderContainer title="플래너" />
+      <HeaderContainer title="플래너" back />
       <PlannerContainer />
       <BottomTabBar />
     </>
