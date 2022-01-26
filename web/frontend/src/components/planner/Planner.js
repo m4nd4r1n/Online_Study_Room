@@ -2,6 +2,18 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import palette from '../../lib/styles/palette';
 import { ItemBlock } from '../common/Contents';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import ko from 'date-fns/locale/ko';
+registerLocale('ko', ko);
+
+const StyledDatePicker = styled(DatePicker)`
+  height: 24px;
+  width: auto;
+  border: none;
+  text-align: center;
+  background-color: transparent;
+`;
 
 const planColor = ['#7B68EE', '#F8F8FF', '#E6E6FA', '#6A5ACD'];
 
@@ -19,7 +31,7 @@ const TimeUnit = styled.div`
     `}
 `;
 
-const HourOfPlan = ({ plans, hour, index }) => {
+const HourOfPlan = ({ plans, hour }) => {
   const minutes = ['00', '10', '20', '30', '40', '50'];
 
   return (
@@ -36,12 +48,15 @@ const HourOfPlan = ({ plans, hour, index }) => {
       </TimeUnit>
       {minutes.map((minute) => {
         let color = '#ffffff';
-        for (let i = 0; i < plans.length; i++) {
-          if (
-            parseInt(hour + minute) >= parseInt(plans[i].plan.startTime) &&
-            parseInt(hour + minute) < parseInt(plans[i].plan.endTime)
-          )
-            color = planColor[i];
+        // plans null check
+        if (plans) {
+          for (let i = 0; i < plans.length; i++) {
+            if (
+              parseInt(hour + minute) >= parseInt(plans[i].startTime) &&
+              parseInt(hour + minute) < parseInt(plans[i].endTime)
+            )
+              color = planColor[i];
+          }
         }
         return <TimeUnit key={minute} color={color}></TimeUnit>;
       })}
@@ -49,7 +64,7 @@ const HourOfPlan = ({ plans, hour, index }) => {
   );
 };
 
-const Planner = ({ plans }) => {
+const Planner = ({ plans, date, handleDate }) => {
   const hours = [
     '05',
     '06',
@@ -77,16 +92,6 @@ const Planner = ({ plans }) => {
     '04',
   ];
 
-  const date = () => {
-    let now = new Date();
-    let year = now.getFullYear();
-    let month = now.getMonth() + 1;
-    let date = now.getDate();
-    const week = ['일', '월', '화', '수', '목', '금', '토'];
-    let dayOfWeek = week[now.getDay()];
-    return year + '.' + month + '.' + date + ' ' + dayOfWeek;
-  };
-
   return (
     <div
       style={{
@@ -94,14 +99,19 @@ const Planner = ({ plans }) => {
         height: '744px',
       }}
     >
-      <ItemBlock>{date()}</ItemBlock>
-      {hours.map((hour, index) => (
-        <HourOfPlan
-          hour={hour}
-          key={hour}
-          plans={plans}
-          index={index}
-        ></HourOfPlan>
+      <ItemBlock>
+        <StyledDatePicker
+          dateFormat="yyyy.MM.dd"
+          locale="ko"
+          selected={date} //new Date(today.setDate(today.getDate() + 1))
+          onChange={handleDate}
+          placeholderText=" 날짜 선택"
+          fixedHeight
+          withPortal
+        />
+      </ItemBlock>
+      {hours.map((hour) => (
+        <HourOfPlan hour={hour} key={hour} plans={plans}></HourOfPlan>
       ))}
     </div>
   );

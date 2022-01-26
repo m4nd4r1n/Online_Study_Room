@@ -2,9 +2,7 @@ import React from 'react';
 import { ItemBlock, StyledBox } from '../common/Contents';
 import { useNavigate } from 'react-router-dom';
 import { Divider, ListItem } from '../common/List';
-import { MdManageAccounts } from 'react-icons/md';
-import { MdMessage } from 'react-icons/md';
-import { MdEventNote } from 'react-icons/md';
+import { MdManageAccounts, MdMessage, MdEventNote } from 'react-icons/md';
 
 const Mentee = ({ mentee, index }) => {
   const navigate = useNavigate();
