@@ -8,8 +8,6 @@ const StyledTimer = styled.div`
   font-size: 2.5rem;
 `;
 
-const audio = new Audio('sound/alert.mp3');
-
 const Alarm = ({ onClickTimer, hh, mm, ss }) => {
   const date = new Date();
   const [hours, setHours] = useState(date.getHours());
@@ -43,6 +41,7 @@ const Alarm = ({ onClickTimer, hh, mm, ss }) => {
     }
     if (hours === hh && minutes === mm && seconds === ss) {
       setDelay(null);
+      const audio = new Audio('sound/alert.mp3');
       audio.play();
       alert('목표 시간 달성!!');
     }
