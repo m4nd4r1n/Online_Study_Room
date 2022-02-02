@@ -15,18 +15,28 @@ public class UserApiController {
     private final UserService userService;
 
     // 회원가입
-    @PostMapping("/register")
+    @PostMapping("/auth/register")
     public String register(@RequestBody UserSaveRequestDto requestDto){
         return userService.register(requestDto);
     }
 
     // 로그인
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public String login(@RequestBody UserResponseDto responseDto){
         return userService.login(responseDto);
     }
 
+    // 아임포트 인증
+    @PostMapping("/certifications")
+    public void certification(@RequestBody UserResponseDto responseDto){
 
+    }
+
+    // 토큰
+    @PostMapping("/token")
+    public void token(){
+        userService.getToken();
+    }
     @PutMapping("/api/v1/user/{username}")
     public String update(
             @PathVariable String username, @RequestBody UserUpdateRequestDto requestDto){

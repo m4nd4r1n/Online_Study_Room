@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, String> {
     
-    Optional<User> findByRegnum(String regnum);
+    Optional<User> findByEmail(String email);
     Optional<User> findByEmailAndPassword(String email, String password);
 }
