@@ -7,6 +7,7 @@ import userInfo, { userInfoSaga } from './userInfo';
 import attendanceInfo, { attendanceInfoSaga } from './attendanceInfo';
 import planner, { plannerSaga } from './planner';
 import plan, { planSaga } from './plan';
+import achievement, { achievementSaga } from './achievement';
 
 const rootReducer = combineReducers({
   auth,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   attendanceInfo,
   planner,
   plan,
+  achievement,
 });
 
 export function* rootSaga() {
@@ -26,6 +28,7 @@ export function* rootSaga() {
     attendanceInfoSaga(),
     plannerSaga(),
     planSaga(),
+    achievementSaga(),
   ]);
 }
 
