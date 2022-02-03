@@ -9,9 +9,11 @@ const AchievementList = ({ achievements }) => {
   const rowRenderer = useCallback(
     ({ index, key, style }) => {
       const achievementItem = achievementList[index]; // 도전과제
-      const achievement = achievements.filter(
-        (achievement) => achievement.id === achievementItem.id,
-      )[0]; // 도전과제 id === 완수한 id
+      const achievement = achievements
+        ? achievements.filter(
+            (achievement) => achievement.id === achievementItem.id,
+          )[0] // 도전과제 id === 완수한 id
+        : null;
 
       return (
         <AchievementListItem
