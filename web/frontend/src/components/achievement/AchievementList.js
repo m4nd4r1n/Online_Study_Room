@@ -1,7 +1,15 @@
 import React, { useCallback } from 'react';
 import { List } from 'react-virtualized';
+import styled from 'styled-components';
 import AchievementListItem from './AchievementListItem';
 import achievementData from './achievement_list.json';
+
+const StyledList = styled(List)`
+  --ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 const AchievementList = ({ achievements }) => {
   const achievementList = achievementData.normal;
@@ -28,7 +36,7 @@ const AchievementList = ({ achievements }) => {
   );
 
   return (
-    <List
+    <StyledList
       className="AchievementList"
       width={617}
       height={815}

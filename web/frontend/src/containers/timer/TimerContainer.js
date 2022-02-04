@@ -24,6 +24,7 @@ const TimerContainer = () => {
   };
 
   const changeTimer = () => {
+    setTime({ hours: 0, minutes: 0, seconds: 0 });
     setIsTimer(!isTimer);
   };
 
