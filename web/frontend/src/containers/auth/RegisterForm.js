@@ -51,11 +51,33 @@ const RegisterForm = () => {
   // 폼 등록 이벤트 핸들러
   const onSubmit = (e) => {
     e.preventDefault();
-    const { email, password, passwordConfirm, impUID } = form;
+    const {
+      type,
+      email,
+      password,
+      passwordConfirm,
+      impUID,
+      school,
+      stdName,
+      phoneFirst,
+      phoneMiddle,
+      phoneLast,
+    } = form;
     const regex =
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
     // 하나라도 비어있다면
+    if (type === '멘티' && [school].includes('')) {
+      setError('모든 정보를 입력하세요.');
+      return;
+    }
+    if (
+      type === '학부모' &&
+      [stdName, phoneFirst, phoneMiddle, phoneLast].includes('')
+    ) {
+      setError('모든 정보를 입력하세요.');
+      return;
+    }
     if ([email, password, passwordConfirm, impUID].includes('')) {
       setError('모든 정보를 입력하세요.');
       return;
@@ -83,10 +105,16 @@ const RegisterForm = () => {
 
     dispatch(
       register({
+        type,
         email,
         password,
         passwordConfirm,
         impUID,
+        school,
+        stdName,
+        phoneFirst,
+        phoneMiddle,
+        phoneLast,
       }),
     );
   };
