@@ -20,11 +20,25 @@ export const ListItem = styled.div`
   justify-content: space-around;
 
   ${(props) =>
+    props.column &&
+    css`
+      flex-direction: column;
+    `}
+
+  ${(props) =>
     props.fullwidth &&
     css`
       display: flex;
       width: 40%;
     `}
+
+  ${(props) =>
+    props.title &&
+    css`
+      display: flex;
+      width: 65%;
+    `}
+
 
   ${(props) =>
     props.auto &&

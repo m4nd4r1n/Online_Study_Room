@@ -8,8 +8,6 @@ const StyledTimer = styled.div`
   font-size: 2.5rem;
 `;
 
-const audio = new Audio('sound/alert.mp3');
-
 const Timer = ({ onClickTimer, inputTime, hh, mm, ss }) => {
   const [hours, setHours] = useState(hh);
   const [minutes, setMinutes] = useState(mm);
@@ -34,6 +32,7 @@ const Timer = ({ onClickTimer, inputTime, hh, mm, ss }) => {
         // 시 분 초 0
         if (hours === 0) {
           setPause(true);
+          const audio = new Audio('sound/alert.mp3');
           audio.play();
           alert('타임아웃!!');
         }

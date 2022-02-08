@@ -44,6 +44,20 @@ const buttonStyle = css`
     color: ${palette.gray[5]};
     cursor: not-allowed;
   }
+
+  ${(props) =>
+    props.left &&
+    css`
+      border-bottom-right-radius: 0%;
+      border-top-right-radius: 0%;
+    `}
+
+  ${(props) =>
+    props.right &&
+    css`
+      border-bottom-left-radius: 0%;
+      border-top-left-radius: 0%;
+    `}
 `;
 
 const StyledButton = styled.button`

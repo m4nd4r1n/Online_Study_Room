@@ -39,7 +39,7 @@ ReactDOM.render(
   <Provider store={store}>
     <IconContext.Provider
       value={{
-        size: '2.5rem',
+        size: '40px',
       }}
     >
       <BrowserRouter>
