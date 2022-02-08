@@ -8,22 +8,22 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class MentorSaveRequestDto {
-    private String mtrId;
+    private String email;
     private String mteId;
 
     public Mentor toEntity(){
         return Mentor.builder()
-                .mtrId(mtrId)
+                .mtrId(email)
                 .mteId(mteId)
                 .build();
     }
 
     @Builder
-    public MentorSaveRequestDto(String mtrId, String mteId){
-        this.mtrId = mtrId;
+    public MentorSaveRequestDto(String email, String mteId){
+        this.email = email;
         this.mteId = mteId;
     }
-    public MentorSaveRequestDto(String mtrId) {
-        this.mtrId = mtrId;
+    public MentorSaveRequestDto(String email) {
+        this.email = email;
     }
 }

@@ -5,13 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7e0ae73-e136-438e-8cf7-b7e0a9d457e9" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/RegisterRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Achievement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Attendance.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Planner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/AchievementRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/AttendanceRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/PlannerRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/MentorApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/MentorApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/UserApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/UserApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/UserApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/UserApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/MenteeSaveRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/MenteeSaveRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/MentorSaveRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/MentorSaveRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/ParentSaveRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/ParentSaveRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserSaveRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserSaveRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Mentor.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Mentor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Parent.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Parent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/MentorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/MentorRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/ParentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/ParentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/frontend/src/containers/auth/LoginForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/frontend/src/containers/auth/LoginForm.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,8 +90,8 @@
       <list>
         <option value="FxmlFile" />
         <option value="HTML File" />
-        <option value="Interface" />
         <option value="JUnit5 Test Class" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -161,6 +175,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.3156863" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2021.1.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -341,6 +356,30 @@
       <workItem from="1642824452637" duration="2126000" />
       <workItem from="1642826729997" duration="2829000" />
       <workItem from="1642829911324" duration="2740000" />
+      <workItem from="1643538968561" duration="103000" />
+      <workItem from="1643623705602" duration="598000" />
+      <workItem from="1643789265810" duration="3156000" />
+      <workItem from="1643792511503" duration="21000" />
+      <workItem from="1643792617325" duration="23000" />
+      <workItem from="1643792693619" duration="10000" />
+      <workItem from="1643792848350" duration="248000" />
+      <workItem from="1643793200730" duration="22000" />
+      <workItem from="1643793318215" duration="22000" />
+      <workItem from="1643793515718" duration="182000" />
+      <workItem from="1643793761453" duration="8000" />
+      <workItem from="1643793924340" duration="818000" />
+      <workItem from="1643794783660" duration="8000" />
+      <workItem from="1643794863790" duration="69000" />
+      <workItem from="1643794993207" duration="368000" />
+      <workItem from="1643795512146" duration="43000" />
+      <workItem from="1643795612473" duration="2384000" />
+      <workItem from="1643798344976" duration="2019000" />
+      <workItem from="1643800440947" duration="5827000" />
+      <workItem from="1644289494117" duration="5956000" />
+      <workItem from="1644327778636" duration="600000" />
+      <workItem from="1644329305571" duration="3101000" />
+      <workItem from="1644332480751" duration="1616000" />
+      <workItem from="1644334151872" duration="1835000" />
     </task>
     <servers />
   </component>

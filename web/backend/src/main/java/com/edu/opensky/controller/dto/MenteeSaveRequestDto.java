@@ -1,7 +1,6 @@
 package com.edu.opensky.controller.dto;
 
 import com.edu.opensky.domain.Mentee;
-import com.edu.opensky.domain.Mentor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,22 +8,22 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class MenteeSaveRequestDto {
-    private String mteId;
+    private String email;
     private String school;
 
     @Builder
-    public MenteeSaveRequestDto(String mteId, String school){
-        this.mteId = mteId;
+    public MenteeSaveRequestDto(String email, String school){
+        this.email = email;
         this.school = school;
     }
 
     public MenteeSaveRequestDto(String email) {
-        this.mteId = email;
+        this.email = email;
     }
 
     public Mentee toEntity(){
         return Mentee.builder()
-                .mteId(mteId)
+                .mteId(email)
                 .school(school)
                 .build();
     }

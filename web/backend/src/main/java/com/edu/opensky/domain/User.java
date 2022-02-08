@@ -14,25 +14,17 @@ import javax.persistence.Id;
 public class User {
 
     @Id
-    private String regnum;
-
     private String email;
+
     private String password;
-    private String name;
-    private String phone;
-    private char sex;
-    private String location;
+
+
 
 
     @Builder
-    public User(String regnum, String email, String password, String name, String phone, char sex , String location){
-        this.regnum = regnum;
+    public User(String email, String password){
         this.email = email;
         this.password = password;
-        this.name = name;
-        this.phone = phone;
-        this.sex= sex;
-        this.location = location;
 
     }
 

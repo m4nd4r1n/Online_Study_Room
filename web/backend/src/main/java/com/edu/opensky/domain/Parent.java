@@ -17,17 +17,22 @@ public class Parent {
     private String prtId;
 
     @Column(nullable = true, length=15)
-    private String mteId;
+    private String stdName;
+
+    @Column(nullable = true, length = 15)
+    private String stdPhone;
 
     @Builder
-    public Parent(String prtId, String mteId){
+    public Parent(String prtId, String stdName, String stdPhone){
         this.prtId = prtId;
-        this.mteId = mteId;
+        this.stdName = stdName;
+        this.stdPhone = stdPhone;
 
     }
 
-    public void update(String prtId, String mteId){
+    public void update(String prtId, String stdName, String stdPhone){
         this.prtId = prtId;
-        this.mteId = mteId;
+        this.stdName = stdName;
+        this.stdPhone = stdPhone;
     }
 }
