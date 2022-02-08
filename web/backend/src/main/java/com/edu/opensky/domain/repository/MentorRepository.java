@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface MentorRepository extends JpaRepository<Mentor,String>{
 
-    Optional<Mentor> findByMtrId(String mtrId);
+    Optional<Mentor> findByMtrId(String email);
 }

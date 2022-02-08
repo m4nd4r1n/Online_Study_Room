@@ -42,39 +42,43 @@ public class UserService {
     }
 
     /* 토큰으로 정보 조회 */
-    public String getCertification(String imp_UID){
-        String url = "https://api.iamport.kr/certifications/" + imp_UID;
+    public String getCertification(String impUID){
+        String url = "https://api.iamport.kr/certifications/" + impUID;
         return "token";
 
     }
 
     /* 로그인 */
     @Transactional
-    public String login(UserResponseDto responseDto) {
-        return userRepository.findByEmailAndPassword(responseDto.getEmail(), responseDto.getPassword()).orElseThrow(() ->
-                new IllegalArgumentException("아이디와 비밀번호를 확인해주세요.")).getImpUID();
+    public void login(UserResponseDto responseDto) {
+        userRepository.findByEmailAndPassword(responseDto.getEmail(), responseDto.getPassword()).orElseThrow(() ->
+                new IllegalArgumentException("아이디와 비밀번호를 확인해주세요."));
+
+
     }
 
     /* 회원가입 */
     @Transactional
-    public String register(UserSaveRequestDto requestDto) {
-        System.out.println("requestDto.getType() = " + requestDto.getType());
-        checkDuplicateUser(requestDto);
+    public String register(RegisterRequestDto requestDto) {
+        UserSaveRequestDto userSaveRequestDto = new UserSaveRequestDto(requestDto.getEmail(), requestDto.getPassword(),requestDto.getImpUID());
+        checkDuplicateUser(userSaveRequestDto);
         switch (requestDto.getType()) {
-            case "mentee":
-                MenteeSaveRequestDto menteeSaveRequestDto = new MenteeSaveRequestDto(requestDto.getEmail());
+            case "멘티":
+                MenteeSaveRequestDto menteeSaveRequestDto = new MenteeSaveRequestDto(requestDto.getEmail(), requestDto.getSchool());
                 menteeRepository.save(menteeSaveRequestDto.toEntity());
                 break;
-            case "mentor":
+            case "멘토":
                 MentorSaveRequestDto mentorSaveRequestDto = new MentorSaveRequestDto(requestDto.getEmail());
                 mentorRepository.save(mentorSaveRequestDto.toEntity());
                 break;
-            case "parent":
-                ParentSaveRequestDto parentSaveRequestDto = new ParentSaveRequestDto(requestDto.getEmail());
+            case "학부모":
+                ParentSaveRequestDto parentSaveRequestDto = new ParentSaveRequestDto(
+                        requestDto.getEmail(), requestDto.getStdName(), requestDto.getPhoneFirst()+requestDto.getPhoneMiddle()+requestDto.getPhoneLast());
                 parentRepository.save(parentSaveRequestDto.toEntity());
 
         }
-        return userRepository.save(requestDto.toEntity()).getEmail();
+        System.out.println("userSaveRequestDto.getImpUID() = " + userSaveRequestDto.getImpUID());
+        return userRepository.save(userSaveRequestDto.toEntity()).getEmail();
     }
 
     // 중복확인

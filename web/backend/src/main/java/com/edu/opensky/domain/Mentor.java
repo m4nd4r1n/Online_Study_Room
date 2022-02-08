@@ -16,7 +16,7 @@ public class Mentor {
     @Column(name = "mentor_id", length = 15)
     private String mtrId;
 
-    @Column(name = "fk_mentee_id", nullable = false, length=15)
+    @Column(name = "fk_mentee_id", nullable = true, length=15)
     private String mteId;
 
     @Builder

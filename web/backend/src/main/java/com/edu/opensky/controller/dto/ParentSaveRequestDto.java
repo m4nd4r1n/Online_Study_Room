@@ -1,6 +1,5 @@
 package com.edu.opensky.controller.dto;
 
-import com.edu.opensky.domain.Mentor;
 import com.edu.opensky.domain.Parent;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,23 +8,22 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ParentSaveRequestDto {
-    private String prtId;
-    private String mteId;
+    private String email;
+    private String stdName;
+    private String stdPhone;
 
     @Builder
-    public ParentSaveRequestDto(String prtId, String mteId){
-        this.prtId = prtId;
-        this.mteId = mteId;
-    }
-
-    public ParentSaveRequestDto(String prtId) {
-        this.prtId = prtId;
+    public ParentSaveRequestDto(String email, String stdName, String stdPhone){
+        this.email = email;
+        this.stdName = stdName;
+        this.stdPhone = stdPhone;
     }
 
     public Parent toEntity(){
         return Parent.builder()
-                .prtId(prtId)
-                .mteId(mteId)
+                .prtId(email)
+                .stdName(stdName)
+                .stdPhone(stdPhone)
                 .build();
     }
 }

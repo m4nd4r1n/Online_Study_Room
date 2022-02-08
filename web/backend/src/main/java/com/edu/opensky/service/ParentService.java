@@ -14,6 +14,7 @@ public class ParentService {
     /* 회원가입 */
     @Transactional
     public String save(ParentSaveRequestDto requestDto) {
+        System.out.println("requestDto.toEntity() = " + requestDto.toEntity());
         return parentRepository.save(requestDto.toEntity()).getPrtId();
     }
 

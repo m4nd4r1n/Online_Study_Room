@@ -14,17 +14,15 @@ import javax.persistence.Id;
 public class User {
 
     @Id
-    private String impUID;
-
     private String email;
+
     private String password;
 
 
 
 
     @Builder
-    public User(String impUID, String email, String password){
-        this.impUID = impUID;
+    public User(String email, String password){
         this.email = email;
         this.password = password;
 
