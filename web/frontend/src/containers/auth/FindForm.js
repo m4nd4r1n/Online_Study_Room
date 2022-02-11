@@ -6,6 +6,9 @@ import { check } from '../../modules/user';
 
 const FindForm = () => {
   const [error, setError] = useState(null);
+  const [errors, setErrors] = useState({
+    email: false,
+  });
   const dispatch = useDispatch();
   const { form, auth, authError } = useSelector(({ auth }) => ({
     form: auth.find,
@@ -39,6 +42,13 @@ const FindForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     const { impUID, email } = form;
+    const regex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!(email !== undefined && regex.test(email))) {
+      setErrors({ email: true });
+      changeField({ form: 'register', key: 'email', value: '' });
+      return;
+    }
     dispatch(find({ impUID, email }));
   };
 
@@ -82,6 +92,7 @@ const FindForm = () => {
       onChange={onChange}
       onSubmit={onSubmit}
       error={error}
+      errors={errors}
       handleImpUID={handleImpUID}
     />
   );

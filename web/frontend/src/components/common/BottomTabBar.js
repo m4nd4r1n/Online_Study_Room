@@ -1,13 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import palette from '../../lib/styles/palette';
-import { useNavigate } from 'react-router-dom';
-import { AiFillTrophy } from 'react-icons/ai';
-import { MdOutlineEqualizer } from 'react-icons/md';
-import { MdTimer } from 'react-icons/md';
-import { MdEventNote } from 'react-icons/md';
-import { MdMessage } from 'react-icons/md';
-import { MdSettings } from 'react-icons/md';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
+import {
+  EmojiEvents,
+  Equalizer,
+  Timer,
+  Home,
+  EventNote,
+  Chat,
+  Settings,
+} from '@material-ui/icons';
 
 /* 네비바 하단 고정 및 세로 길이 설정 */
 const Wrapper = styled.div`
@@ -17,77 +20,54 @@ const Wrapper = styled.div`
   right: 0;
   height: 50px;
   overflow: hidden;
-  border-top: 2px solid grey;
+  border-top: 1px solid grey;
   display: flex;
   justify-content: space-around;
 `;
 
-/* 아이콘 컨테이너 */
-const ItemBox = styled.div`
-  width: 17%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-color: #ffffff;
-  &:hover {
-    background-color: ${palette.LightGreen};
-  }
-`;
-
 const BottomTabBar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const value = location.pathname;
 
+  const onChange = (event, value) => {
+    navigate(value);
+  };
   return (
     <Wrapper>
-      <ItemBox
-        onClick={() => {
-          navigate('/achievement');
-        }}
-      >
-        <AiFillTrophy />
-        <span>도전과제</span>
-      </ItemBox>
-      <ItemBox
-        onClick={() => {
-          navigate('/ranking');
-        }}
-      >
-        <MdOutlineEqualizer />
-        <span>랭킹</span>
-      </ItemBox>
-      <ItemBox
-        onClick={() => {
-          navigate('/timer');
-        }}
-      >
-        <MdTimer />
-        <span>타이머</span>
-      </ItemBox>
-      <ItemBox
-        onClick={() => {
-          navigate('/planner');
-        }}
-      >
-        <MdEventNote />
-        <span>플래너</span>
-      </ItemBox>
-      <ItemBox
-        onClick={() => {
-          navigate('/messenger');
-        }}
-      >
-        <MdMessage />
-        <span>메시지</span>
-      </ItemBox>
-      <ItemBox
-        onClick={() => {
-          navigate('/setting');
-        }}
-      >
-        <MdSettings />
-        <span>설정</span>
-      </ItemBox>
+      <BottomNavigation value={value} onChange={onChange} showLabels>
+        <BottomNavigationAction label="홈" value="/home" icon={<Home />} />
+        <BottomNavigationAction
+          label="도전과제"
+          value="/achievement"
+          icon={<EmojiEvents />}
+        />
+        <BottomNavigationAction
+          label="랭킹"
+          value="/ranking"
+          icon={<Equalizer />}
+        />
+        <BottomNavigationAction
+          label="타이머"
+          value="/timer"
+          icon={<Timer />}
+        />
+        <BottomNavigationAction
+          label="플래너"
+          value="/planner"
+          icon={<EventNote />}
+        />
+        <BottomNavigationAction
+          label="메시지"
+          value="/messenger"
+          icon={<Chat />}
+        />
+        <BottomNavigationAction
+          label="설정"
+          value="/setting"
+          icon={<Settings />}
+        />
+      </BottomNavigation>
     </Wrapper>
   );
 };

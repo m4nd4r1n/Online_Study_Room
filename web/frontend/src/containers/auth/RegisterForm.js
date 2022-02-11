@@ -8,6 +8,11 @@ import { useNavigate } from 'react-router-dom';
 const RegisterForm = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const [errors, setErrors] = useState({
+    email: false,
+    password: false,
+    passwordConfirm: false,
+  });
   const dispatch = useDispatch();
   const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
     form: auth.register,
@@ -83,21 +88,21 @@ const RegisterForm = () => {
       return;
     }
     if (!(email !== undefined && regex.test(email))) {
-      setError('이메일 형식이 아닙니다.');
+      setErrors({ email: true });
       changeField({ form: 'register', key: 'email', value: '' });
       return;
     }
 
     // 비밀번호가 일치하지 않는다면
     if (password !== passwordConfirm) {
-      setError('비밀번호가 일치하지 않습니다.');
+      setErrors({ passwordConfirm: true });
       changeField({ form: 'register', key: 'password', value: '' });
       changeField({ form: 'register', key: 'passwordConfirm', value: '' });
       return;
     }
 
     if (password.length < 8) {
-      setError('비밀번호는 최소 8자리입니다.');
+      setErrors({ password: true });
       changeField({ form: 'register', key: 'password', value: '' });
       changeField({ form: 'register', key: 'passwordConfirm', value: '' });
       return;
@@ -177,6 +182,7 @@ const RegisterForm = () => {
       onChange={onChange}
       onSubmit={onSubmit}
       error={error}
+      errors={errors}
       handleImpUID={handleImpUID}
       handleRegType={handleRegType}
     />

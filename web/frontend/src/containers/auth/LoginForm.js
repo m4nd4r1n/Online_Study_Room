@@ -8,6 +8,10 @@ import { check } from '../../modules/user';
 const LoginForm = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const [errors, setErrors] = useState({
+    email: false,
+    password: false,
+  });
   const dispatch = useDispatch();
   const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
     form: auth.login,
@@ -32,6 +36,19 @@ const LoginForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     const { email, password } = form;
+    const regex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!(email !== undefined && regex.test(email))) {
+      setErrors({ email: true });
+      changeField({ form: 'register', key: 'email', value: '' });
+      return;
+    }
+    if (password.length < 8) {
+      setErrors({ password: true });
+      changeField({ form: 'register', key: 'password', value: '' });
+      changeField({ form: 'register', key: 'passwordConfirm', value: '' });
+      return;
+    }
     dispatch(login({ email, password }));
   };
 
@@ -73,6 +90,7 @@ const LoginForm = () => {
       onChange={onChange}
       onSubmit={onSubmit}
       error={error}
+      errors={errors}
     />
   );
 };
