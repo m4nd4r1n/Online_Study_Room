@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Responsive from '../common/Responsive';
 import palette from '../../lib/styles/palette';
 
@@ -45,6 +45,41 @@ export const StyledBox = styled.div`
     color: $oc-teal-7;
     border: 1px solid ${palette.gray[7]};
   }
+
+  ${(props) =>
+    props.messenger &&
+    css`
+      border: none;
+      border-radius: 0px;
+      &:hover {
+        background: ${palette.gray[1]};
+      }
+    `}
+
+  ${(props) =>
+    props.message &&
+    css`
+      border: none;
+      border-radius: 0px;
+      flex-direction: column;
+      align-items: flex-start;
+    `}
+
+    ${(props) =>
+    props.right &&
+    css`
+      flex-direction: column;
+      align-items: flex-end;
+    `}
+    
+  ${(props) =>
+    props.isClicked &&
+    css`
+      background: ${palette.gray[2]};
+      &:hover {
+        background: ${palette.gray[2]};
+      }
+    `}
 `;
 
 /**

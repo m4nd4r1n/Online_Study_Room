@@ -171,7 +171,7 @@ const PlannerContainer = () => {
   const onRemove = ({ subject, date }) => {
     if (window.confirm(`'${subject}' 플랜을 삭제하시겠습니까?`)) {
       setCopyPlans(copyPlans.filter((plan) => plan.subject !== subject));
-      asyncRemove({ subject, month: date.getMonth(), day: date.getDate() });
+      asyncRemove({ subject, month: date.getMonth() + 1, day: date.getDate() });
     }
   };
 

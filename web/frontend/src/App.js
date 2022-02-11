@@ -27,9 +27,9 @@ const App = () => {
       <Route element={<AttendancePage />} path="attendance" />
       <Route element={<MentiManagementPage />} path="management" />
       <Route element={<StudyTimeManagementPage />} path="timeManagement" />
-      <Route element={<MessagePage />} path="message" />
       <Route element={<MessengerPage />} path="messenger" />
-      <Route element={<PlannerPage />} path="planner" exact />
+      <Route element={<MessagePage />} path="messenger/:messengerId" />
+      <Route element={<PlannerPage />} path="planner" />
       <Route element={<RankingPage />} path="ranking" />
       <Route element={<StudyPage />} path="study" />
       <Route element={<TimerPage />} path="timer" />

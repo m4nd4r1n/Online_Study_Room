@@ -6,6 +6,9 @@ import { MdPlayCircleOutline } from 'react-icons/md';
 import { MdStopCircle } from 'react-icons/md';
 
 const buttonStyle = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-decoration: none;
   border: none;
   border-radius: 4px;

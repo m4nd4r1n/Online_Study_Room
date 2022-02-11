@@ -71,7 +71,7 @@ const Timer = ({ onClickTimer, inputTime, hh, mm, ss }) => {
         {minutes < 10 ? `0${minutes}` : minutes}:
         {seconds < 10 ? `0${seconds}` : seconds}
       </StyledTimer>
-      <div style={{ flexDirection: 'row', marginTop: '10px' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', marginTop: '10px' }}>
         <Button onClick={pauseTimer} style={{ marginRight: '5px' }}>
           {pause ? '재개' : '일시정지'}
         </Button>

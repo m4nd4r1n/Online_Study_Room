@@ -58,7 +58,7 @@ const Alarm = ({ onClickTimer, hh, mm, ss }) => {
         {minutes < 10 ? `0${minutes}` : minutes}:
         {seconds < 10 ? `0${seconds}` : seconds}
       </StyledTimer>
-      <div style={{ flexDirection: 'row', marginTop: '10px' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', marginTop: '10px' }}>
         <Button onClick={() => setDelay(null)} style={{ marginRight: '5px' }}>
           정지
         </Button>

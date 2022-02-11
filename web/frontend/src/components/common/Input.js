@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import palette from '../../lib/styles/palette';
 
 /**
@@ -9,6 +9,21 @@ export const InputBlock = styled.div`
   & + & {
     margin-top: 1rem;
   }
+
+  ${(props) =>
+    props.border &&
+    css`
+      position: fixed;
+      bottom: 0;
+      width: 600px;
+      border: 1px solid ${palette.gray[5]};
+      border-radius: 4px;
+      overflow: hidden;
+      &:focus {
+        color: $oc-teal-7;
+        border: 1px solid ${palette.gray[7]};
+      }
+    `}
 `;
 
 /**
@@ -26,4 +41,14 @@ export const StyledInput = styled.input`
     color: $oc-teal-7;
     border: 1px solid ${palette.gray[7]};
   }
+
+  ${(props) =>
+    props.none &&
+    css`
+      border: 0px;
+      &:focus {
+        color: $oc-teal-7;
+        border: 0px;
+      }
+    `}
 `;

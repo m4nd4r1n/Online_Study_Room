@@ -79,7 +79,7 @@ const InputTime = ({ changeTimer, isTimer, onClickTimer, setTime, time }) => {
           <StyledAnchor>{time.seconds}</StyledAnchor>
         </Dropdown>
       </div>
-      <div style={{ flexDirection: 'row', marginTop: '10px' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', marginTop: '10px' }}>
         <Button onClick={changeTimer} style={{ marginRight: '5px' }}>
           {isTimer ? '타이머' : '알람'}
         </Button>
