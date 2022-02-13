@@ -98,22 +98,15 @@ const StyledFormControl = styled(FormControl)`
   }
 `;
 
-const AuthForm = ({
-  type,
-  form,
-  onChange,
-  onSubmit,
-  error,
-  errors,
-  handleImpUID,
-  handleRegType,
-}) => {
+const AuthForm = ({ type, form, onChange, onSubmit, errors }) => {
   const text = textMap[type];
-  const [certSuccess, setCertSuccess] = useState(false);
-  const [available, setAvailable] = useState(false);
-  const [agreeContents, setAgreeContents] = useState(false);
-  const [user, setUser] = useState(null);
-  const [showPassword, setShowPassword] = useState(false);
+  const [state, setState] = useState({
+    certSuccess: false,
+    available: false,
+    agreeContents: false,
+    user: null,
+    showPassword: false,
+  });
   const location = useLocation();
   const sch = location.search;
   const params = new URLSearchParams(sch);
@@ -133,8 +126,9 @@ const AuthForm = ({
     };
     IMP.certification(data, (rsp) => {
       if (rsp.success) {
-        setCertSuccess(true);
-        handleImpUID(rsp.imp_uid);
+        setState({ ...state, certSuccess: true });
+        const values = { target: { value: rsp.imp_uid, name: 'impUID' } };
+        onChange(values);
       } else {
         alert(`인증에 실패하였습니다.\n에러 내용: ${rsp.error_msg}`);
       }
@@ -142,28 +136,29 @@ const AuthForm = ({
   };
 
   const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
+    setState({ ...state, showPassword: !state.showPassword });
   };
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
+  const handleMouseDownPassword = (e) => {
+    e.preventDefault();
   };
 
   // 약관 체크 이벤트 핸들러
   const handleCheck = (e) => {
     e.preventDefault();
-    setAvailable(!available);
+    setState({ ...state, available: !state.available });
   };
 
   // 약관 내용 클릭 이벤트 핸들러
   const handleAgreeContents = () => {
-    setAgreeContents(!agreeContents);
+    setState({ ...state, agreeContents: !state.agreeContents });
   };
 
   const handleUser = (value) => {
     const type = value.target.innerText.slice(0, -3);
-    setUser(type);
-    handleRegType(type);
+    setState({ ...state, user: type });
+    const values = { target: { value: type, name: 'type' } };
+    onChange(values);
   };
 
   const inNumber = (e) => {
@@ -178,7 +173,7 @@ const AuthForm = ({
         fullwidth="true"
         onClick={handleUser}
         type={type}
-        user={user}
+        user={state.user}
       >
         멘토 가입
       </UserSelectButton>
@@ -187,7 +182,7 @@ const AuthForm = ({
         fullwidth="true"
         onClick={handleUser}
         type={type}
-        user={user}
+        user={state.user}
       >
         멘티 가입
       </UserSelectButton>
@@ -196,13 +191,13 @@ const AuthForm = ({
         fullwidth="true"
         onClick={handleUser}
         type={type}
-        user={user}
+        user={state.user}
       >
         학부모 가입
       </UserSelectButton>
-      <AuthFormBlock type={type} user={user}>
+      <AuthFormBlock type={type} user={state.user}>
         <h3>
-          {user} {findType} {text}
+          {state.user} {findType} {text}
         </h3>
         <form onSubmit={onSubmit}>
           {type === 'find' && (
@@ -227,7 +222,7 @@ const AuthForm = ({
                 </InputBlock>
               )}
               <InputBlock>
-                {!certSuccess ? (
+                {!state.certSuccess ? (
                   <Button cyan fullwidth="true" onClick={handleCert}>
                     본인인증
                   </Button>
@@ -271,7 +266,7 @@ const AuthForm = ({
                     name="password"
                     placeholder="최소 8자리"
                     inputProps={{ maxLength: 16 }}
-                    type={showPassword ? 'text' : 'password'}
+                    type={state.showPassword ? 'text' : 'password'}
                     value={form.password}
                     onChange={onChange}
                     endAdornment={
@@ -282,7 +277,11 @@ const AuthForm = ({
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
                         >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                          {state.showPassword ? (
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
                         </IconButton>
                       </InputAdornment>
                     }
@@ -310,7 +309,7 @@ const AuthForm = ({
                     name="passwordConfirm"
                     placeholder="최소 8자리"
                     inputProps={{ maxLength: 16 }}
-                    type={showPassword ? 'text' : 'password'}
+                    type={state.showPassword ? 'text' : 'password'}
                     value={form.passwordConfirm}
                     onChange={onChange}
                     endAdornment={
@@ -321,7 +320,11 @@ const AuthForm = ({
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
                         >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                          {state.showPassword ? (
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
                         </IconButton>
                       </InputAdornment>
                     }
@@ -334,7 +337,7 @@ const AuthForm = ({
                   </FormHelperText>
                 </StyledFormControl>
               </InputBlock>
-              {user === '멘티' && (
+              {state.user === '멘티' && (
                 <InputBlock>
                   <StyledTextField
                     name="school"
@@ -350,7 +353,7 @@ const AuthForm = ({
                   />
                 </InputBlock>
               )}
-              {user === '학부모' && (
+              {state.user === '학부모' && (
                 <>
                   <InputBlock>
                     <StyledTextField
@@ -409,7 +412,7 @@ const AuthForm = ({
                 </>
               )}
               <InputBlock>
-                {!certSuccess ? (
+                {!state.certSuccess ? (
                   <Button cyan fullwidth="true" onClick={handleCert}>
                     본인인증
                   </Button>
@@ -424,7 +427,7 @@ const AuthForm = ({
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={available}
+                        checked={state.available}
                         onClick={handleCheck}
                         color="primary"
                       />
@@ -436,7 +439,7 @@ const AuthForm = ({
                   </StyledClickBox>
                 </StyledBox>
               </InputBlock>
-              {agreeContents && (
+              {state.agreeContents && (
                 <StyledBox style={{ marginTop: '-1px', fontSize: '11px' }}>
                   약관에 동의함으로서 회원가입 시 수집한 개인정보의 보관 및
                   이용에 동의함.
@@ -444,15 +447,15 @@ const AuthForm = ({
               )}
             </>
           )}
-          {error && <ErrorMessage>{error}</ErrorMessage>}
+          {errors.message && <ErrorMessage>{errors.message}</ErrorMessage>}
           <ButtonWithMarginTop
             cyan
             fullwidth="true"
             disabled={
               type === 'register'
-                ? !available || !certSuccess
+                ? !state.available || !state.certSuccess
                 : type === 'find'
-                ? !certSuccess
+                ? !state.certSuccess
                 : false
             }
           >

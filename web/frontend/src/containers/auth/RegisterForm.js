@@ -12,6 +12,7 @@ const RegisterForm = () => {
     email: false,
     password: false,
     passwordConfirm: false,
+    message: null,
   });
   const dispatch = useDispatch();
   const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
@@ -28,26 +29,6 @@ const RegisterForm = () => {
       changeField({
         form: 'register',
         key: name,
-        value,
-      }),
-    );
-  };
-
-  const handleImpUID = (value) => {
-    dispatch(
-      changeField({
-        form: 'register',
-        key: 'impUID',
-        value,
-      }),
-    );
-  };
-
-  const handleRegType = (value) => {
-    dispatch(
-      changeField({
-        form: 'register',
-        key: 'type',
         value,
       }),
     );
@@ -72,19 +53,13 @@ const RegisterForm = () => {
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
     // 하나라도 비어있다면
-    if (type === '멘티' && [school].includes('')) {
-      setError('모든 정보를 입력하세요.');
-      return;
-    }
     if (
-      type === '학부모' &&
-      [stdName, phoneFirst, phoneMiddle, phoneLast].includes('')
+      (type === '멘티' && [school].includes('')) ||
+      (type === '학부모' &&
+        [stdName, phoneFirst, phoneMiddle, phoneLast].includes('')) ||
+      [email, password, passwordConfirm, impUID].includes('')
     ) {
-      setError('모든 정보를 입력하세요.');
-      return;
-    }
-    if ([email, password, passwordConfirm, impUID].includes('')) {
-      setError('모든 정보를 입력하세요.');
+      setErrors({ message: '모든 정보를 입력하세요.' });
       return;
     }
     if (!(email !== undefined && regex.test(email))) {
@@ -148,10 +123,11 @@ const RegisterForm = () => {
     if (authError) {
       // 중복 값 존재
       if (authError.response.status === 409) {
-        setError(authError.response.data.error);
+        setErrors({ message: authError.response.data.error });
         return;
       }
       // 기타 이유
+      setErrors({ message: '회원가입 실패' });
       setError('회원가입 실패');
       return;
     }
@@ -183,8 +159,6 @@ const RegisterForm = () => {
       onSubmit={onSubmit}
       error={error}
       errors={errors}
-      handleImpUID={handleImpUID}
-      handleRegType={handleRegType}
     />
   );
 };

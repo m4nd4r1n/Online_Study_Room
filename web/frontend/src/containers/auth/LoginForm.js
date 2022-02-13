@@ -11,6 +11,7 @@ const LoginForm = () => {
   const [errors, setErrors] = useState({
     email: false,
     password: false,
+    message: null,
   });
   const dispatch = useDispatch();
   const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
@@ -63,6 +64,7 @@ const LoginForm = () => {
     if (authError) {
       console.log('오류 발생');
       console.log(authError);
+      setErrors({ message: '로그인 실패' });
       setError('로그인 실패');
       return;
     }

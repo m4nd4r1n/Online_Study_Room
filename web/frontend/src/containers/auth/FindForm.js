@@ -8,6 +8,7 @@ const FindForm = () => {
   const [error, setError] = useState(null);
   const [errors, setErrors] = useState({
     email: false,
+    message: null,
   });
   const dispatch = useDispatch();
   const { form, auth, authError } = useSelector(({ auth }) => ({
@@ -23,16 +24,6 @@ const FindForm = () => {
       changeField({
         form: 'find',
         key: name,
-        value,
-      }),
-    );
-  };
-
-  const handleImpUID = (value) => {
-    dispatch(
-      changeField({
-        form: 'find',
-        key: 'impUID',
         value,
       }),
     );
@@ -75,6 +66,7 @@ const FindForm = () => {
     if (authError) {
       console.log('오류 발생');
       console.log(authError);
+      setErrors({ message: '찾기 실패' });
       setError('찾기 실패');
       return;
     }
@@ -93,7 +85,6 @@ const FindForm = () => {
       onSubmit={onSubmit}
       error={error}
       errors={errors}
-      handleImpUID={handleImpUID}
     />
   );
 };

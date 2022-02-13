@@ -2,19 +2,22 @@ import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import Button from '../common/Button';
 import useInterval from './useInterval';
+import useNotification from './useNotification';
 
 const StyledTimer = styled.div`
   display: flex;
   font-size: 2.5rem;
 `;
 
-const Timer = ({ onClickTimer, inputTime, hh, mm, ss }) => {
-  const [hours, setHours] = useState(hh);
-  const [minutes, setMinutes] = useState(mm);
-  const [seconds, setSeconds] = useState(ss);
+const Timer = ({ onClickTimer, inputTime, time }) => {
+  const [hours, setHours] = useState(time.hours);
+  const [minutes, setMinutes] = useState(time.minutes);
+  const [seconds, setSeconds] = useState(time.seconds);
 
   const [pause, setPause] = useState(true);
   const [delay, setDelay] = useState(1000);
+
+  const { fireNotification } = useNotification();
 
   // 타이머 일시정지 or 재개
   const pauseTimer = () => {
@@ -34,7 +37,9 @@ const Timer = ({ onClickTimer, inputTime, hh, mm, ss }) => {
           setPause(true);
           const audio = new Audio('sound/alert.mp3');
           audio.play();
-          alert('타임아웃!!');
+          fireNotification('Online Study', {
+            body: '타임아웃!!',
+          });
         }
         // 분 초 0
         else {
@@ -49,7 +54,7 @@ const Timer = ({ onClickTimer, inputTime, hh, mm, ss }) => {
         setSeconds(59);
       }
     }
-  }, [seconds, minutes, hours]);
+  }, [seconds, minutes, hours, fireNotification]);
 
   useInterval(() => {
     countdown();
