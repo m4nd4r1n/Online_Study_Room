@@ -1,19 +1,22 @@
 package com.edu.opensky.service;
 
 import com.edu.opensky.controller.dto.*;
+import com.edu.opensky.domain.Attendance;
 import com.edu.opensky.domain.User;
-import com.edu.opensky.domain.repository.MenteeRepository;
-import com.edu.opensky.domain.repository.MentorRepository;
-import com.edu.opensky.domain.repository.ParentRepository;
-import com.edu.opensky.domain.repository.UserRepository;
+import com.edu.opensky.domain.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 
 @RequiredArgsConstructor
 @Service
@@ -22,6 +25,7 @@ public class UserService {
     private final MentorRepository mentorRepository;
     private final MenteeRepository menteeRepository;
     private final ParentRepository parentRepository;
+    private final AttendanceRepository attendanceRepository;
 
 
     /* 인증 토큰 발급 */
@@ -53,10 +57,28 @@ public class UserService {
     public void login(UserResponseDto responseDto) {
         userRepository.findByEmailAndPassword(responseDto.getEmail(), responseDto.getPassword()).orElseThrow(() ->
                 new IllegalArgumentException("아이디와 비밀번호를 확인해주세요."));
+        attendance(responseDto.getEmail());
+
 
 
     }
 
+    /* 출석체크 */
+    @Transactional
+    public void attendance(String stdId){
+        LocalDate today = LocalDate.now();
+
+        // 오늘 출석체크 했는지 확인
+        if(!attendanceRepository.findByStdIdAndDate(stdId, today).isPresent()){
+            attendanceRepository.save(Attendance
+                    .builder()
+                    .stdId(stdId)
+                    .date(today)
+                    .build());
+        }
+
+
+    }
     /* 회원가입 */
     @Transactional
     public String register(RegisterRequestDto requestDto) {

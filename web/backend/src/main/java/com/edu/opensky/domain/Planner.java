@@ -11,12 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Time;
-import java.sql.Timestamp;
 
 @Getter
 @NoArgsConstructor
 @Entity
-@JsonFormat(timezone = "Asia/Seoul")
+@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Seoul")
 public class Planner {
 
     @Id
