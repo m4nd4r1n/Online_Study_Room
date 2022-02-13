@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
   const [errors, setErrors] = useState({
     email: false,
     password: false,
@@ -128,7 +127,6 @@ const RegisterForm = () => {
       }
       // 기타 이유
       setErrors({ message: '회원가입 실패' });
-      setError('회원가입 실패');
       return;
     }
 
@@ -157,7 +155,6 @@ const RegisterForm = () => {
       form={form}
       onChange={onChange}
       onSubmit={onSubmit}
-      error={error}
       errors={errors}
     />
   );

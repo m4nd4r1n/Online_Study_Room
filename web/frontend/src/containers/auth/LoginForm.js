@@ -7,7 +7,6 @@ import { check } from '../../modules/user';
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
   const [errors, setErrors] = useState({
     email: false,
     password: false,
@@ -65,7 +64,6 @@ const LoginForm = () => {
       console.log('오류 발생');
       console.log(authError);
       setErrors({ message: '로그인 실패' });
-      setError('로그인 실패');
       return;
     }
     if (auth) {
@@ -91,7 +89,6 @@ const LoginForm = () => {
       form={form}
       onChange={onChange}
       onSubmit={onSubmit}
-      error={error}
       errors={errors}
     />
   );

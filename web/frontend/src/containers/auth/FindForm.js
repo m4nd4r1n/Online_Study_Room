@@ -5,7 +5,6 @@ import AuthForm from '../../components/auth/AuthForm';
 import { check } from '../../modules/user';
 
 const FindForm = () => {
-  const [error, setError] = useState(null);
   const [errors, setErrors] = useState({
     email: false,
     message: null,
@@ -67,7 +66,6 @@ const FindForm = () => {
       console.log('오류 발생');
       console.log(authError);
       setErrors({ message: '찾기 실패' });
-      setError('찾기 실패');
       return;
     }
     if (auth) {
@@ -83,7 +81,6 @@ const FindForm = () => {
       form={form}
       onChange={onChange}
       onSubmit={onSubmit}
-      error={error}
       errors={errors}
     />
   );
