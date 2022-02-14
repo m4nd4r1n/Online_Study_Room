@@ -4,7 +4,6 @@ import MessengerListItem from './MessengerListItem';
 
 const MessengerList = ({ messengers }) => {
   const rowHeight = ({ index }) => 93.2;
-
   const rowRenderer = useCallback(
     ({ index, key, style }) => {
       const messenger = messengers[index];

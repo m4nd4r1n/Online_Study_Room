@@ -2,37 +2,120 @@
  * 메신저 컨테이너
  */
 
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  changeField,
+  initializeMessenger,
+  listMessages,
+  sendMessage,
+  receiveMessage,
+  subscribe,
+  unsubscribe,
+} from '../../modules/messenger';
 import { ContentsBlock } from '../../components/common/Contents';
-import MessengerList from '../../components/messenger/MessengerList';
+import MessageList from '../../components/message/MessageList';
+import SendMessage from '../../components/message/SendMessage';
+import { useParams } from 'react-router';
 
-const MessengerContainer = () => {
-  const messengers = [
+const MessageContainer = () => {
+  const { messengerId } = useParams();
+  const dispatch = useDispatch();
+  const { messages, message, subscription, error } = useSelector(
+    ({ messenger }) => ({
+      messages: messenger.messages,
+      message: messenger.message,
+      subscription: messenger.subscription,
+      error: messenger.error,
+    }),
+  );
+
+  const user = { name: '김겨울' };
+  const test_messages = [
     {
-      messengerId: '0fxca1253',
-      messengerTitle: '오픈 스카이',
-      lastMessage: '2021년 10월 15일 학습 결과 보고서',
-      lastReceivedTime: new Date(2022, 1, 1),
+      name: '멘토',
+      message: '6 / 가장 오래된 메시지',
+      messageTime: new Date(2022, 0, 2, 8, 0),
     },
     {
-      messengerId: 'mlqwnr27',
-      messengerTitle: '멘토',
-      lastMessage: '플래너 작성은 다 하셨나요?',
-      lastReceivedTime: new Date(2022, 1, 6),
+      name: '김겨울',
+      message: '3',
+      messageTime: new Date(2022, 0, 3, 14, 20),
     },
     {
-      messengerId: 'd12jut06',
-      messengerTitle: '고길동',
-      lastMessage: 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-      lastReceivedTime: new Date(),
+      name: '멘토',
+      message: '5',
+      messageTime: new Date(2022, 1, 9, 18, 17),
+    },
+    {
+      name: '멘토',
+      message: '4',
+      messageTime: new Date(2022, 1, 9, 18, 18),
+    },
+    {
+      name: '김겨울',
+      message: '2',
+      messageTime: new Date(2022, 1, 10, 14, 10),
+    },
+    {
+      name: '김겨울',
+      message: '1',
+      messageTime: new Date(2022, 1, 10, 14, 20),
+    },
+    {
+      name: '멘토',
+      message: '3',
+      messageTime: new Date(2022, 1, 10, 18, 18),
+    },
+    {
+      name: '멘토',
+      message: '2',
+      messageTime: new Date(2022, 1, 10, 18, 19),
+    },
+    {
+      name: '멘토',
+      message: '1 / 가장 최근 메시지',
+      messageTime: new Date(2022, 1, 10, 18, 20),
     },
   ];
 
+  // 인풋 변경 이벤트 핸들러
+  const onChange = (e) => {
+    const message = e.target.value;
+    dispatch(changeField({ message }));
+  };
+
+  const onClick = () => {
+    dispatch(sendMessage({ messengerId, message }));
+  };
+
+  // 메시지 수신 이벤트 핸들러
+  const onMessage = useCallback(
+    (message) => {
+      if (message.body) {
+        dispatch(receiveMessage({ message: JSON.parse(message.body) }));
+      }
+    },
+    [dispatch],
+  );
+
+  useEffect(() => {
+    dispatch(initializeMessenger());
+    dispatch(listMessages({ messengerId }));
+    dispatch(subscribe({ messengerId, onMessage }));
+    return unsubscribe();
+  }, [dispatch, messengerId, onMessage]);
+
+  useEffect(() => {
+    if (error) console.log(error.message);
+  }, [error]);
+
   return (
     <ContentsBlock>
-      <MessengerList messengers={messengers} />
+      <MessageList user={user} messages={test_messages} />
+      <SendMessage onChange={onChange} onClick={onClick} message={message} />
     </ContentsBlock>
   );
 };
 
-export default MessengerContainer;
+export default MessageContainer;

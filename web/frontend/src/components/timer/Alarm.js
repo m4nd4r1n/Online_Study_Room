@@ -2,18 +2,21 @@ import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import Button from '../common/Button';
 import useInterval from './useInterval';
+import useNotification from './useNotification';
 
 const StyledTimer = styled.div`
   display: flex;
   font-size: 2.5rem;
 `;
 
-const Alarm = ({ onClickTimer, hh, mm, ss }) => {
+const Alarm = ({ onClickTimer, time }) => {
   const date = new Date();
   const [hours, setHours] = useState(date.getHours());
   const [minutes, setMinutes] = useState(date.getMinutes());
   const [seconds, setSeconds] = useState(date.getSeconds());
   const [delay, setDelay] = useState(1000);
+
+  const { fireNotification } = useNotification();
 
   // 카운트다운 콜백함수
   const countdown = useCallback(() => {
@@ -39,13 +42,19 @@ const Alarm = ({ onClickTimer, hh, mm, ss }) => {
         setSeconds(0);
       }
     }
-    if (hours === hh && minutes === mm && seconds === ss) {
+    if (
+      hours === time.hours &&
+      minutes === time.minutes &&
+      seconds === time.seconds
+    ) {
       setDelay(null);
       const audio = new Audio('sound/alert.mp3');
       audio.play();
-      alert('목표 시간 달성!!');
+      fireNotification('Online Study', {
+        body: '목표 시간 달성!!',
+      });
     }
-  }, [seconds, minutes, hours, hh, mm, ss]);
+  }, [seconds, minutes, hours, time, fireNotification]);
 
   useInterval(() => {
     countdown();

@@ -5,7 +5,7 @@ import HomePage from './pages/HomePage';
 import AchievementPage from './pages/AchievementPage';
 import AttendancePage from './pages/AttendancePage';
 import MentiManagementPage from './pages/MentiManagementPage';
-import MessagePage from './pages/MessagePage';
+import MessengerListPage from './pages/MessengerListPage';
 import MessengerPage from './pages/MessengerPage';
 import PlannerPage from './pages/PlannerPage';
 import RankingPage from './pages/RankingPage';
@@ -18,7 +18,7 @@ import FindPage from './pages/FindPage';
 const App = () => {
   return (
     <Routes>
-      <Route element={<HomePage />} path="/" exact />
+      <Route element={<HomePage />} path="/" />
       <Route element={<HomePage />} path="home" />
       <Route element={<LoginPage />} path="login" />
       <Route element={<FindPage />} path="find" />
@@ -27,8 +27,8 @@ const App = () => {
       <Route element={<AttendancePage />} path="attendance" />
       <Route element={<MentiManagementPage />} path="management" />
       <Route element={<StudyTimeManagementPage />} path="timeManagement" />
-      <Route element={<MessengerPage />} path="messenger" />
-      <Route element={<MessagePage />} path="messenger/:messengerId" />
+      <Route element={<MessengerListPage />} path="messenger" />
+      <Route element={<MessengerPage />} path="messenger/:messengerId" />
       <Route element={<PlannerPage />} path="planner" />
       <Route element={<RankingPage />} path="ranking" />
       <Route element={<StudyPage />} path="study" />

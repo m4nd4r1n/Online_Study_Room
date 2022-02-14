@@ -7,10 +7,9 @@ const MessaqgeList = ({ user, messages }) => {
   const rowHeight = ({ index }) => {
     return index > 0 &&
       isSameDay(messages[index - 1].messageTime, messages[index].messageTime)
-      ? 83.2
-      : 102.2;
+      ? 83.2 // 메시지만
+      : 102.2; // 메시지 + 날짜구분선
   };
-
   const rowRenderer = useCallback(
     ({ index, key, style }) => {
       const message = messages[index];
