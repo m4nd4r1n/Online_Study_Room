@@ -1,3 +1,17 @@
+import styled from 'styled-components';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import ko from 'date-fns/locale/ko';
+registerLocale('ko', ko);
+
+export const StyledDatePicker = styled(DatePicker)`
+  height: 24px;
+  width: auto;
+  border: none;
+  text-align: center;
+  background-color: transparent;
+`;
+
 // 두 날짜가 같으면 true 반환
 export const isSameDay = (target1, target2) => {
   return (

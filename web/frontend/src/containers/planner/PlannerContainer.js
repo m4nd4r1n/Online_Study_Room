@@ -178,9 +178,7 @@ const PlannerContainer = () => {
   return (
     <>
       {isAddPlan ? (
-        <ContentsBlock
-          style={{ display: 'flex', height: '80vh', flexDirection: 'column' }}
-        >
+        <ContentsBlock style={{ display: 'flex', height: '80vh' }}>
           <AddPlan
             setIsAddPlan={setIsAddPlan}
             plan={plan}
@@ -191,7 +189,13 @@ const PlannerContainer = () => {
           />
         </ContentsBlock>
       ) : (
-        <ContentsBlock style={{ display: 'flex' }}>
+        <ContentsBlock
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+          }}
+        >
           <PlanList
             plans={copyPlans}
             onRemove={onRemove}
