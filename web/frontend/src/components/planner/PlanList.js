@@ -49,9 +49,7 @@ const Plan = ({ plan, index, onRemove }) => {
 
 const PlanList = ({ plans, onRemove, setIsAddPlan }) => {
   return (
-    <div
-      style={{ width: '40%', justifyContent: 'flex-start', height: '744px' }}
-    >
+    <div style={{ width: '40%' }}>
       <ItemBlock>PLAN</ItemBlock>
       {plans ? (
         plans.map((plan, index) => (
