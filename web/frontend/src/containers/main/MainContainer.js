@@ -67,7 +67,7 @@ const MainContainer = () => {
           ) : info.type === 'mentee' ? (
             <>
               <Character />
-              <StudyButton />
+              <StudyButton to="/study" />
             </>
           ) : (
             <>사용자 정보를 불러오지 못했습니다.</>

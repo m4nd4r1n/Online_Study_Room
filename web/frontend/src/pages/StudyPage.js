@@ -1,8 +1,13 @@
 import React from 'react';
+import StudyVideoContainer from '../containers/study/StudyVideoContainer';
+import HeaderContainer from '../containers/common/HeaderContainer';
 
 const StudyPage = () => {
   return (
-    <div>학습 페이지</div>
+    <>
+      <HeaderContainer counter />
+      <StudyVideoContainer />
+    </>
   );
 };
 

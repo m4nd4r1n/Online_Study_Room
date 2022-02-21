@@ -94,3 +94,24 @@ export const StyledClickBox = styled.div`
     color: ${palette.gray[7]};
   }
 `;
+
+export const StyledText = styled.span`
+  color: #000000;
+  ${(props) =>
+    css`
+      font-size: ${props.size};
+      color: ${props.color};
+    `};
+  ${(props) =>
+    props.center &&
+    css`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `}
+  ${(props) =>
+    props.small &&
+    css`
+      font-size: 1rem;
+    `}
+`;

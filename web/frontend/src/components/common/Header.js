@@ -5,6 +5,7 @@ import Responsive from './Responsive';
 import Button from './Button';
 import palette from '../../lib/styles/palette';
 import { useNavigate } from 'react-router-dom';
+import Counter from './Counter';
 
 const HeaderBlock = styled.div`
   position: absolute;
@@ -82,7 +83,7 @@ const Spacer = styled.div`
   height: 4rem;
 `;
 
-const Header = ({ title, back }) => {
+const Header = ({ title, back, counter }) => {
   const navigate = useNavigate();
 
   return (
@@ -93,6 +94,7 @@ const Header = ({ title, back }) => {
             {back && (
               <HeaderButton onClick={() => navigate(-1)}>←</HeaderButton>
             )}
+            {counter && <Counter />}
           </ItemContainer>
 
           <Title>{title}</Title>
