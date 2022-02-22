@@ -114,7 +114,7 @@ const Ranking = () => {
               key={i}
               className="grid w-full select-none grid-cols-3 items-center border-b py-1 text-center"
             >
-              <span className="ml-12 flex aspect-square w-14 items-center justify-center rounded-full border-2 border-teal-400 shadow-md sm:ml-20 ">
+              <span className="ml-8 flex aspect-square w-14 items-center justify-center rounded-full border-2 border-teal-400 shadow-md sm:ml-20">
                 {i + 1}
               </span>
               <div className="flex flex-col items-center justify-center">

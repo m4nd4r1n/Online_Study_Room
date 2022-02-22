@@ -23,6 +23,12 @@ const Wrapper = styled.div`
   border-top: 1px solid grey;
   display: flex;
   justify-content: space-around;
+  overflow-x: scroll;
+  --ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+  }
 `;
 
 const BottomTabBar = () => {
