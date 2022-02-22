@@ -1,8 +1,7 @@
 package com.edu.opensky.controller.api;
 
 import com.edu.opensky.controller.dto.RegisterRequestDto;
-import com.edu.opensky.controller.dto.UserResponseDto;
-import com.edu.opensky.controller.dto.UserSaveRequestDto;
+import com.edu.opensky.controller.dto.LoginRequestDto;
 import com.edu.opensky.controller.dto.UserUpdateRequestDto;
 import com.edu.opensky.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,19 +18,19 @@ public class UserApiController {
     @PostMapping("/auth/register")
     public String register(@RequestBody RegisterRequestDto requestDto){
         userService.register(requestDto);
-        return "/login";
+        return requestDto.getImpUID();
     }
 
     // 로그인
     @PostMapping("/auth/login")
-    public String login(@RequestBody UserResponseDto responseDto){
-        userService.login(responseDto);
-        return "redirect://localhost:3000/home";
+    public String login(@RequestBody LoginRequestDto requestDto){
+        userService.login(requestDto);
+        return requestDto.getEmail();
     }
 
     // 아임포트 인증
     @GetMapping("/certifications")
-    public void certification(@RequestBody UserResponseDto responseDto){
+    public void certification(@RequestBody LoginRequestDto requestDto){
 
     }
 

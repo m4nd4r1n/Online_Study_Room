@@ -6,7 +6,6 @@ import com.edu.opensky.domain.User;
 import com.edu.opensky.domain.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,9 +13,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 
 @RequiredArgsConstructor
 @Service
@@ -54,15 +51,24 @@ public class UserService {
 
     /* 로그인 */
     @Transactional
-    public void login(UserResponseDto responseDto) {
+    public void login(LoginRequestDto responseDto) {
         userRepository.findByEmailAndPassword(responseDto.getEmail(), responseDto.getPassword()).orElseThrow(() ->
                 new IllegalArgumentException("아이디와 비밀번호를 확인해주세요."));
         attendance(responseDto.getEmail());
-
-
-
+        dateUpdate(responseDto);
     }
 
+    /* 마지막 접속일자 업데이트 */
+    public void dateUpdate(LoginRequestDto responseDto){
+        if(userRepository.findByEmail(responseDto.getEmail()).isPresent()){
+            userRepository.save(User
+                    .builder()
+                    .email(responseDto.getEmail())
+                    .password(responseDto.getPassword())
+                    .lastAccessDate(LocalDate.now())
+                    .build());
+        }
+    }
     /* 출석체크 */
     @Transactional
     public void attendance(String stdId){
