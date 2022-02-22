@@ -14,25 +14,90 @@ import StudyTimeManagementPage from './pages/StudyTimeManagementPage';
 import TimerPage from './pages/TimerPage';
 import FindPage from './pages/FindPage';
 import StatisticsPage from './pages/StatisticsPage';
+import BottomTabBar from './components/common/BottomTabBar';
 
 const App = () => {
   return (
     <Routes>
-      <Route element={<HomePage />} path="/" />
-      <Route element={<HomePage />} path="home" />
+      <Route
+        element={
+          <>
+            <HomePage />
+            <BottomTabBar />
+          </>
+        }
+        path="/"
+      />
+      <Route
+        element={
+          <>
+            <HomePage />
+            <BottomTabBar />
+          </>
+        }
+        path="home"
+      />
       <Route element={<LoginPage />} path="login" />
       <Route element={<FindPage />} path="find" />
       <Route element={<RegisterPage />} path="register" />
-      <Route element={<AchievementPage />} path="achievement" />
+      <Route
+        element={
+          <>
+            <AchievementPage />
+            <BottomTabBar />
+          </>
+        }
+        path="achievement"
+      />
       <Route element={<MentiManagementPage />} path="management" />
       <Route element={<StudyTimeManagementPage />} path="timeManagement" />
-      <Route element={<MessengerListPage />} path="messenger" />
+      <Route
+        element={
+          <>
+            <MessengerListPage />
+            <BottomTabBar />
+          </>
+        }
+        path="messenger"
+      />
       <Route element={<MessengerPage />} path="messenger/:messengerId" />
-      <Route element={<PlannerPage />} path="planner" />
-      <Route element={<RankingPage />} path="ranking" />
+      <Route
+        element={
+          <>
+            <PlannerPage />
+            <BottomTabBar />
+          </>
+        }
+        path="planner"
+      />
+      <Route
+        element={
+          <>
+            <RankingPage />
+            <BottomTabBar />
+          </>
+        }
+        path="ranking"
+      />
       <Route element={<StudyPage />} path="study" />
-      <Route element={<TimerPage />} path="timer" />
-      <Route element={<StatisticsPage />} path="statistics" />
+      <Route
+        element={
+          <>
+            <TimerPage />
+            <BottomTabBar />
+          </>
+        }
+        path="timer"
+      />
+      <Route
+        element={
+          <>
+            <StatisticsPage />
+            <BottomTabBar />
+          </>
+        }
+        path="statistics"
+      />
     </Routes>
   );
 };
