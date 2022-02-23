@@ -1,68 +1,7 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
-import palette from '../../lib/styles/palette';
 import { ItemBlock } from '../common/Contents';
-import DatePicker, { registerLocale } from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import ko from 'date-fns/locale/ko';
-registerLocale('ko', ko);
-
-const StyledDatePicker = styled(DatePicker)`
-  height: 24px;
-  width: auto;
-  border: none;
-  text-align: center;
-  background-color: transparent;
-`;
-
-const planColor = ['#7B68EE', '#F8F8FF', '#E6E6FA', '#6A5ACD'];
-
-const TimeUnit = styled.div`
-  border: 1px solid ${palette.gray[4]};
-  width: 16.5%;
-  height: 31px;
-  margin-bottom: -1px;
-  margin-right: -1px;
-
-  ${(props) =>
-    props.color &&
-    css`
-      background-color: ${props.color};
-    `}
-`;
-
-const HourOfPlan = ({ plans, hour }) => {
-  const minutes = ['00', '10', '20', '30', '40', '50'];
-
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <TimeUnit>
-        <span>{hour}시</span>
-      </TimeUnit>
-      {minutes.map((minute) => {
-        let color = '#ffffff';
-        // plans null check
-        if (plans) {
-          for (let i = 0; i < plans.length; i++) {
-            if (
-              parseInt(hour + minute) >= parseInt(plans[i].startTime) &&
-              parseInt(hour + minute) < parseInt(plans[i].endTime)
-            )
-              color = planColor[i];
-          }
-        }
-        return <TimeUnit key={minute} color={color}></TimeUnit>;
-      })}
-    </div>
-  );
-};
+import { Minutes } from '../common/Table';
+import { StyledDatePicker } from '../common/Date';
 
 const Planner = ({ plans, date, handleDate }) => {
   const hours = [
@@ -96,7 +35,6 @@ const Planner = ({ plans, date, handleDate }) => {
     <div
       style={{
         width: '60%',
-        height: '744px',
       }}
     >
       <ItemBlock>
@@ -111,7 +49,7 @@ const Planner = ({ plans, date, handleDate }) => {
         />
       </ItemBlock>
       {hours.map((hour) => (
-        <HourOfPlan hour={hour} key={hour} plans={plans}></HourOfPlan>
+        <Minutes hour={hour} key={hour} plans={plans}></Minutes>
       ))}
     </div>
   );

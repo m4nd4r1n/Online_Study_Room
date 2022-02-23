@@ -171,16 +171,14 @@ const PlannerContainer = () => {
   const onRemove = ({ subject, date }) => {
     if (window.confirm(`'${subject}' 플랜을 삭제하시겠습니까?`)) {
       setCopyPlans(copyPlans.filter((plan) => plan.subject !== subject));
-      asyncRemove({ subject, month: date.getMonth(), day: date.getDate() });
+      asyncRemove({ subject, month: date.getMonth() + 1, day: date.getDate() });
     }
   };
 
   return (
     <>
       {isAddPlan ? (
-        <ContentsBlock
-          style={{ display: 'flex', height: '80vh', flexDirection: 'column' }}
-        >
+        <ContentsBlock style={{ display: 'flex', height: '80vh' }}>
           <AddPlan
             setIsAddPlan={setIsAddPlan}
             plan={plan}
@@ -191,7 +189,13 @@ const PlannerContainer = () => {
           />
         </ContentsBlock>
       ) : (
-        <ContentsBlock style={{ display: 'flex' }}>
+        <ContentsBlock
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+          }}
+        >
           <PlanList
             plans={copyPlans}
             onRemove={onRemove}

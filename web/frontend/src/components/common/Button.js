@@ -6,6 +6,9 @@ import { MdPlayCircleOutline } from 'react-icons/md';
 import { MdStopCircle } from 'react-icons/md';
 
 const buttonStyle = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-decoration: none;
   border: none;
   border-radius: 4px;
@@ -79,19 +82,20 @@ const Button = (props) => {
 
 export default Button;
 
-export const StudyButton = ({ type }) => {
+export const StudyButton = (props) => {
   return (
     <>
       <Button
-        fullwidth
+        fullwidth="true"
         style={{
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           marginTop: '4rem',
         }}
+        {...props}
       >
-        {type === 'stop' ? (
+        {props.type === 'stop' ? (
           <>
             <MdStopCircle />
             <span style={{ marginLeft: '5px' }}>학습종료</span>

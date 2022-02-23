@@ -26,11 +26,19 @@ public class Mentee {
     @Column(nullable = true, length=15)
     private String school;
 
+    @Column(columnDefinition = "integer default 1")
+    private Integer level;
+
+    @Column(columnDefinition = "integer default 0")
+    private Integer exp;
+
     @Builder
     public Mentee(String mtrId, String mteId, String prtId, String school){
         this.mtrId = mtrId;
         this.mteId = mteId;
         this.prtId = prtId;
         this.school = school;
+        this.level = 1;
+        this.exp = 0;
     }
 }

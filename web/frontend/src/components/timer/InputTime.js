@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../common/Button';
 import styled from 'styled-components';
 import { Menu, Dropdown } from 'antd';
+import 'antd/dist/antd.css';
 
 const hours = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
@@ -79,7 +80,7 @@ const InputTime = ({ changeTimer, isTimer, onClickTimer, setTime, time }) => {
           <StyledAnchor>{time.seconds}</StyledAnchor>
         </Dropdown>
       </div>
-      <div style={{ flexDirection: 'row', marginTop: '10px' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', marginTop: '10px' }}>
         <Button onClick={changeTimer} style={{ marginRight: '5px' }}>
           {isTimer ? '타이머' : '알람'}
         </Button>

@@ -1,6 +1,6 @@
 package com.edu.opensky.controller;
 
-import com.edu.opensky.controller.dto.UserResponseDto;
+import com.edu.opensky.controller.dto.LoginRequestDto;
 import com.edu.opensky.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,7 +14,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/login123")
-    public String login(UserResponseDto responseDto){
+    public String login(LoginRequestDto responseDto){
         return "redirect:/";
     }
 

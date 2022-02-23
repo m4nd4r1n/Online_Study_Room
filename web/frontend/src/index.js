@@ -9,7 +9,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer, { rootSaga } from './modules';
 import { tempSetUser, check } from './modules/user';
-import 'antd/dist/antd.css';
 import { IconContext } from 'react-icons';
 import Modal from 'react-modal';
 

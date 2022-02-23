@@ -3,9 +3,21 @@ import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
-import { StyledInput, InputBlock } from '../common/Input';
+import { InputBlock } from '../common/Input';
 import { StyledBox, StyledClickBox } from '../common/Contents';
-import { Checkbox } from 'antd';
+import {
+  TextField,
+  Checkbox,
+  FormControlLabel,
+  Typography,
+  OutlinedInput,
+  InputLabel,
+  FormControl,
+  InputAdornment,
+  IconButton,
+  FormHelperText,
+} from '@material-ui/core';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 /**
  * login form
  */
@@ -64,24 +76,44 @@ const UserSelectButton = styled(Button)`
   margin-bottom: 1rem;
 `;
 
-const AuthForm = ({
-  type,
-  form,
-  onChange,
-  onSubmit,
-  error,
-  handleImpUID,
-  handleRegType,
-}) => {
+const StyledTextField = styled(TextField)`
+  & label.Mui-focused {
+    color: ${palette.cyan[5]};
+  }
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: ${palette.cyan[5]};
+    }
+  }
+`;
+
+const StyledFormControl = styled(FormControl)`
+  & label.Mui-focused {
+    color: ${palette.cyan[5]};
+  }
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: ${palette.cyan[5]};
+    }
+  }
+`;
+
+const AuthForm = ({ type, form, onChange, onSubmit, errors }) => {
   const text = textMap[type];
-  const [certSuccess, setCertSuccess] = useState(false);
-  const [available, setAvailable] = useState(false);
-  const [agreeContents, setAgreeContents] = useState(false);
-  const [user, setUser] = useState(null);
+  const [state, setState] = useState({
+    certSuccess: false,
+    available: false,
+    agreeContents: false,
+    user: null,
+    showPassword: false,
+  });
   const location = useLocation();
   const sch = location.search;
   const params = new URLSearchParams(sch);
   const keyword = params.get('type');
+  if (location.pathname === '/find' && !keyword) {
+    return null;
+  }
   const findType = textMap[keyword];
 
   const handleCert = (e) => {
@@ -94,28 +126,39 @@ const AuthForm = ({
     };
     IMP.certification(data, (rsp) => {
       if (rsp.success) {
-        setCertSuccess(true);
-        handleImpUID(rsp.imp_uid);
+        setState({ ...state, certSuccess: true });
+        const values = { target: { value: rsp.imp_uid, name: 'impUID' } };
+        onChange(values);
       } else {
         alert(`인증에 실패하였습니다.\n에러 내용: ${rsp.error_msg}`);
       }
     });
   };
 
+  const handleClickShowPassword = () => {
+    setState({ ...state, showPassword: !state.showPassword });
+  };
+
+  const handleMouseDownPassword = (e) => {
+    e.preventDefault();
+  };
+
   // 약관 체크 이벤트 핸들러
-  const handleCheck = () => {
-    setAvailable(!available);
+  const handleCheck = (e) => {
+    e.preventDefault();
+    setState({ ...state, available: !state.available });
   };
 
   // 약관 내용 클릭 이벤트 핸들러
   const handleAgreeContents = () => {
-    setAgreeContents(!agreeContents);
+    setState({ ...state, agreeContents: !state.agreeContents });
   };
 
   const handleUser = (value) => {
     const type = value.target.innerText.slice(0, -3);
-    setUser(type);
-    handleRegType(type);
+    setState({ ...state, user: type });
+    const values = { target: { value: type, name: 'type' } };
+    onChange(values);
   };
 
   const inNumber = (e) => {
@@ -130,7 +173,7 @@ const AuthForm = ({
         fullwidth="true"
         onClick={handleUser}
         type={type}
-        user={user}
+        user={state.user}
       >
         멘토 가입
       </UserSelectButton>
@@ -139,7 +182,7 @@ const AuthForm = ({
         fullwidth="true"
         onClick={handleUser}
         type={type}
-        user={user}
+        user={state.user}
       >
         멘티 가입
       </UserSelectButton>
@@ -148,33 +191,38 @@ const AuthForm = ({
         fullwidth="true"
         onClick={handleUser}
         type={type}
-        user={user}
+        user={state.user}
       >
         학부모 가입
       </UserSelectButton>
-      <AuthFormBlock type={type} user={user}>
+      <AuthFormBlock type={type} user={state.user}>
         <h3>
-          {user} {findType} {text}
+          {state.user} {findType} {text}
         </h3>
         <form onSubmit={onSubmit}>
           {type === 'find' && (
             <>
               {keyword === 'password' && (
                 <InputBlock>
-                  <StyledInput
+                  <StyledTextField
+                    error={errors.email}
                     autoComplete="email"
                     type="email"
                     name="email"
-                    placeholder="E-mail"
+                    label="E-mail"
+                    placeholder="ex) example@example.com"
                     onChange={onChange}
                     value={form.email}
-                    maxLength={30}
+                    inputProps={{ maxLength: 30 }}
                     required
+                    variant="outlined"
+                    fullWidth
+                    helperText={errors.email ? '이메일 형식이 아닙니다.' : ''}
                   />
                 </InputBlock>
               )}
               <InputBlock>
-                {!certSuccess ? (
+                {!state.certSuccess ? (
                   <Button cyan fullwidth="true" onClick={handleCert}>
                     본인인증
                   </Button>
@@ -189,106 +237,182 @@ const AuthForm = ({
           {type !== 'find' && (
             <>
               <InputBlock>
-                <StyledInput
+                <StyledTextField
+                  error={errors.email}
                   autoComplete="email"
                   type="email"
                   name="email"
-                  placeholder="E-mail"
+                  label="E-mail"
+                  placeholder="ex) example@example.com"
                   onChange={onChange}
                   value={form.email}
-                  maxLength={30}
+                  inputProps={{ maxLength: 30 }}
                   required
+                  variant="outlined"
+                  fullWidth
+                  helperText={errors.email ? '이메일 형식이 아닙니다.' : ''}
                 />
               </InputBlock>
               <InputBlock>
-                <StyledInput
-                  autoComplete="new-password"
-                  name="password"
-                  placeholder="비밀번호"
-                  type="password"
-                  onChange={onChange}
-                  value={form.password}
-                  maxLength={16}
+                <StyledFormControl
+                  error={errors.password}
+                  variant="outlined"
+                  fullWidth
                   required
-                />
+                >
+                  <InputLabel>비밀번호</InputLabel>
+                  <OutlinedInput
+                    autoComplete="new-password"
+                    name="password"
+                    placeholder="최소 8자리"
+                    inputProps={{ maxLength: 16 }}
+                    type={state.showPassword ? 'text' : 'password'}
+                    value={form.password}
+                    onChange={onChange}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {state.showPassword ? (
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    labelWidth={70}
+                  />
+                  <FormHelperText error={errors.password}>
+                    {errors.password ? '비밀번호는 최소 8자리입니다.' : ''}
+                  </FormHelperText>
+                </StyledFormControl>
               </InputBlock>
             </>
           )}
           {type === 'register' && (
             <>
               <InputBlock>
-                <StyledInput
-                  autoComplete="new-password"
-                  name="passwordConfirm"
-                  placeholder="비밀번호 확인"
-                  type="password"
-                  onChange={onChange}
-                  value={form.passwordConfirm}
-                  maxLength={16}
+                <StyledFormControl
+                  error={errors.passwordConfirm}
+                  variant="outlined"
+                  fullWidth
                   required
-                />
+                >
+                  <InputLabel>비밀번호 확인</InputLabel>
+                  <OutlinedInput
+                    autoComplete="new-password"
+                    name="passwordConfirm"
+                    placeholder="최소 8자리"
+                    inputProps={{ maxLength: 16 }}
+                    type={state.showPassword ? 'text' : 'password'}
+                    value={form.passwordConfirm}
+                    onChange={onChange}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {state.showPassword ? (
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    labelWidth={100}
+                  />
+                  <FormHelperText error={errors.passwordConfirm}>
+                    {errors.passwordConfirm
+                      ? '비밀번호가 일치하지 않습니다.'
+                      : ''}
+                  </FormHelperText>
+                </StyledFormControl>
               </InputBlock>
-              {user === '멘티' && (
+              {state.user === '멘티' && (
                 <InputBlock>
-                  <StyledInput
+                  <StyledTextField
                     name="school"
-                    placeholder="학교"
+                    label="학교"
+                    placeholder="ex) 스카이고등학교"
                     type="text"
                     onChange={onChange}
                     value={form.school}
-                    maxLength={10}
+                    inputProps={{ maxLength: 10 }}
                     required
+                    variant="outlined"
+                    fullWidth
                   />
                 </InputBlock>
               )}
-              {user === '학부모' && (
+              {state.user === '학부모' && (
                 <>
                   <InputBlock>
-                    <StyledInput
+                    <StyledTextField
                       name="stdName"
-                      placeholder="자녀 이름"
+                      label="자녀 이름"
+                      placeholder="ex) 홍길동"
                       type="text"
                       onChange={onChange}
                       value={form.stdName}
-                      maxLength={10}
+                      inputProps={{ maxLength: 10 }}
                       required
+                      variant="outlined"
+                      fullWidth
                     />
                   </InputBlock>
                   <InputBlock>
-                    <StyledInput
+                    <StyledTextField
                       name="phoneFirst"
-                      placeholder="자녀"
+                      label="자녀"
+                      placeholder="ex) 010"
                       type="text"
                       onChange={inNumber}
                       value={form.phoneFirst}
-                      maxLength={3}
+                      inputProps={{ maxLength: 3 }}
                       required
+                      variant="outlined"
+                      fullWidth
                       style={{ marginRight: '0.5rem' }}
                     />
-                    <StyledInput
+                    <StyledTextField
                       name="phoneMiddle"
-                      placeholder="전화번호"
+                      label="전화번호"
+                      placeholder="ex) 1234"
                       type="text"
                       onChange={inNumber}
                       value={form.phoneMiddle}
-                      maxLength={4}
+                      inputProps={{ maxLength: 4 }}
                       required
+                      variant="outlined"
+                      fullWidth
                     />
-                    <StyledInput
+                    <StyledTextField
                       name="phoneLast"
-                      placeholder="입력"
+                      label="입력"
+                      placeholder="ex) 5678"
                       type="text"
                       onChange={inNumber}
                       value={form.phoneLast}
-                      maxLength={4}
+                      inputProps={{ maxLength: 4 }}
                       required
+                      variant="outlined"
+                      fullWidth
                       style={{ marginLeft: '0.5rem' }}
                     />
                   </InputBlock>
                 </>
               )}
               <InputBlock>
-                {!certSuccess ? (
+                {!state.certSuccess ? (
                   <Button cyan fullwidth="true" onClick={handleCert}>
                     본인인증
                   </Button>
@@ -299,14 +423,23 @@ const AuthForm = ({
                 )}
               </InputBlock>
               <InputBlock>
-                <StyledBox style={{ height: '3rem' }}>
-                  <Checkbox onChange={handleCheck}>약관동의</Checkbox>
+                <StyledBox style={{ height: '3.5rem' }}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={state.available}
+                        onClick={handleCheck}
+                        color="primary"
+                      />
+                    }
+                    label={<Typography variant="button">약관동의</Typography>}
+                  />
                   <StyledClickBox onClick={handleAgreeContents}>
                     약관보기
                   </StyledClickBox>
                 </StyledBox>
               </InputBlock>
-              {agreeContents && (
+              {state.agreeContents && (
                 <StyledBox style={{ marginTop: '-1px', fontSize: '11px' }}>
                   약관에 동의함으로서 회원가입 시 수집한 개인정보의 보관 및
                   이용에 동의함.
@@ -314,15 +447,15 @@ const AuthForm = ({
               )}
             </>
           )}
-          {error && <ErrorMessage>{error}</ErrorMessage>}
+          {errors.message && <ErrorMessage>{errors.message}</ErrorMessage>}
           <ButtonWithMarginTop
             cyan
             fullwidth="true"
             disabled={
               type === 'register'
-                ? !available || !certSuccess
+                ? !state.available || !state.certSuccess
                 : type === 'find'
-                ? !certSuccess
+                ? !state.certSuccess
                 : false
             }
           >

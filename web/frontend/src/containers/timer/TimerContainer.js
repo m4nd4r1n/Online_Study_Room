@@ -2,7 +2,7 @@
  * 타이머 페이지 컨테이너
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ContentsBlock } from '../../components/common/Contents';
 import Timer from '../../components/timer/Timer';
 import InputTime from '../../components/timer/InputTime';
@@ -28,6 +28,12 @@ const TimerContainer = () => {
     setIsTimer(!isTimer);
   };
 
+  useEffect(() => {
+    if (Notification.permission !== 'granted') {
+      Notification.requestPermission();
+    }
+  });
+
   return (
     <ContentsBlock
       style={{ display: 'flex', height: '80vh', flexDirection: 'column' }}
@@ -41,20 +47,9 @@ const TimerContainer = () => {
           setTime={setTime}
         />
       ) : isTimer ? (
-        <Timer
-          onClickTimer={onClickTimer}
-          inputTime={inputTime}
-          hh={time.hours}
-          mm={time.minutes}
-          ss={time.seconds}
-        />
+        <Timer onClickTimer={onClickTimer} inputTime={inputTime} time={time} />
       ) : (
-        <Alarm
-          onClickTimer={onClickTimer}
-          hh={time.hours}
-          mm={time.minutes}
-          ss={time.seconds}
-        />
+        <Alarm onClickTimer={onClickTimer} time={time} />
       )}
     </ContentsBlock>
   );

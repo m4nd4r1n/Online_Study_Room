@@ -5,7 +5,10 @@ import AuthForm from '../../components/auth/AuthForm';
 import { check } from '../../modules/user';
 
 const FindForm = () => {
-  const [error, setError] = useState(null);
+  const [errors, setErrors] = useState({
+    email: false,
+    message: null,
+  });
   const dispatch = useDispatch();
   const { form, auth, authError } = useSelector(({ auth }) => ({
     form: auth.find,
@@ -25,20 +28,17 @@ const FindForm = () => {
     );
   };
 
-  const handleImpUID = (value) => {
-    dispatch(
-      changeField({
-        form: 'find',
-        key: 'impUID',
-        value,
-      }),
-    );
-  };
-
   // 폼 등록 이벤트 핸들러
   const onSubmit = (e) => {
     e.preventDefault();
     const { impUID, email } = form;
+    const regex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!(email !== undefined && regex.test(email))) {
+      setErrors({ email: true });
+      changeField({ form: 'register', key: 'email', value: '' });
+      return;
+    }
     dispatch(find({ impUID, email }));
   };
 
@@ -65,7 +65,7 @@ const FindForm = () => {
     if (authError) {
       console.log('오류 발생');
       console.log(authError);
-      setError('찾기 실패');
+      setErrors({ message: '찾기 실패' });
       return;
     }
     if (auth) {
@@ -81,8 +81,7 @@ const FindForm = () => {
       form={form}
       onChange={onChange}
       onSubmit={onSubmit}
-      error={error}
-      handleImpUID={handleImpUID}
+      errors={errors}
     />
   );
 };

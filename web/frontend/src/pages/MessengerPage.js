@@ -1,8 +1,13 @@
 import React from 'react';
+import HeaderContainer from '../containers/common/HeaderContainer';
+import MessengerContainer from '../containers/messenger/MessengerContainer';
 
 const MessengerPage = () => {
   return (
-    <div>메신저 페이지</div>
+    <>
+      <HeaderContainer title="메시지" back />
+      <MessengerContainer />
+    </>
   );
 };
 

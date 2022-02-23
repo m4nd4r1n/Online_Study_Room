@@ -1,19 +1,11 @@
 import React, { useCallback } from 'react';
-import { List } from 'react-virtualized';
-import styled from 'styled-components';
+import { StyledList } from '../common/List';
 import AchievementListItem from './AchievementListItem';
 import achievementData from './achievement_list.json';
 
-const StyledList = styled(List)`
-  --ms-overflow-style: none;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
 const AchievementList = ({ achievements }) => {
   const achievementList = achievementData.normal;
-
+  const rowHeight = ({ index }) => 114.4;
   const rowRenderer = useCallback(
     ({ index, key, style }) => {
       const achievementItem = achievementList[index]; // 도전과제
@@ -41,10 +33,13 @@ const AchievementList = ({ achievements }) => {
       width={617}
       height={815}
       rowCount={achievementList.length}
-      rowHeight={114.4}
+      rowHeight={rowHeight}
       rowRenderer={rowRenderer}
       list={achievementList}
       style={{ outline: 'none', height: '88vh' }}
+      overscanRowCount={10}
+      scrollToAlignment="start"
+      scrollToIndex={0}
     />
   );
 };

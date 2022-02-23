@@ -1,5 +1,13 @@
 import styled, { css } from 'styled-components';
 import palette from '../../lib/styles/palette';
+import { List } from 'react-virtualized';
+
+export const StyledList = styled(List)`
+  --ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 /**
  * 세로줄
@@ -22,14 +30,22 @@ export const ListItem = styled.div`
   ${(props) =>
     props.column &&
     css`
+      display: flex;
       flex-direction: column;
+    `}
+
+  ${(props) =>
+    props.large &&
+    css`
+      display: flex;
+      width: 80%;
     `}
 
   ${(props) =>
     props.fullwidth &&
     css`
       display: flex;
-      width: 40%;
+      width: 100%;
     `}
 
   ${(props) =>
@@ -58,6 +74,64 @@ export const ListItem = styled.div`
       &:hover {
         background-color: ${palette.LemonChiffon};
       }
+    `}
+
+    ${(props) =>
+    props.left &&
+    css`
+      justify-content: flex-start;
+      border-radius: 6px;
+      background-color: ${palette.gray[1]};
+    `}
+
+    ${(props) =>
+    props.right &&
+    css`
+      justify-content: flex-end;
+      border-radius: 6px;
+      background-color: ${palette.AliceBlue};
+    `}
+`;
+
+/**
+ * 리스트 아이템 텍스트
+ */
+export const ListItemText = styled.span`
+  ${(props) =>
+    props.title &&
+    css`
+      font-weight: bold;
+      margin-bottom: 2px;
+    `}
+
+  ${(props) =>
+    props.small &&
+    css`
+      font-size: 0.8rem;
+    `}
+
+  ${(props) =>
+    props.largeMargin &&
+    css`
+      margin-bottom: 8px;
+    `}
+  
+  ${(props) =>
+    props.center &&
+    css`
+      justify-content: center;
+    `}
+
+    ${(props) =>
+    props.left &&
+    css`
+      text-align: left;
+    `}
+    
+    ${(props) =>
+    props.right &&
+    css`
+      text-align: right;
     `}
 `;
 

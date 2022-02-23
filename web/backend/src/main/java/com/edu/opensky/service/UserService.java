@@ -1,11 +1,9 @@
 package com.edu.opensky.service;
 
 import com.edu.opensky.controller.dto.*;
+import com.edu.opensky.domain.Attendance;
 import com.edu.opensky.domain.User;
-import com.edu.opensky.domain.repository.MenteeRepository;
-import com.edu.opensky.domain.repository.MentorRepository;
-import com.edu.opensky.domain.repository.ParentRepository;
-import com.edu.opensky.domain.repository.UserRepository;
+import com.edu.opensky.domain.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +13,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -22,6 +22,7 @@ public class UserService {
     private final MentorRepository mentorRepository;
     private final MenteeRepository menteeRepository;
     private final ParentRepository parentRepository;
+    private final AttendanceRepository attendanceRepository;
 
 
     /* 인증 토큰 발급 */
@@ -50,13 +51,40 @@ public class UserService {
 
     /* 로그인 */
     @Transactional
-    public void login(UserResponseDto responseDto) {
+    public void login(LoginRequestDto responseDto) {
         userRepository.findByEmailAndPassword(responseDto.getEmail(), responseDto.getPassword()).orElseThrow(() ->
                 new IllegalArgumentException("아이디와 비밀번호를 확인해주세요."));
+        attendance(responseDto.getEmail());
+        dateUpdate(responseDto);
+    }
+
+    /* 마지막 접속일자 업데이트 */
+    public void dateUpdate(LoginRequestDto responseDto){
+        if(userRepository.findByEmail(responseDto.getEmail()).isPresent()){
+            userRepository.save(User
+                    .builder()
+                    .email(responseDto.getEmail())
+                    .password(responseDto.getPassword())
+                    .lastAccessDate(LocalDate.now())
+                    .build());
+        }
+    }
+    /* 출석체크 */
+    @Transactional
+    public void attendance(String stdId){
+        LocalDate today = LocalDate.now();
+
+        // 오늘 출석체크 했는지 확인
+        if(!attendanceRepository.findByStdIdAndDate(stdId, today).isPresent()){
+            attendanceRepository.save(Attendance
+                    .builder()
+                    .stdId(stdId)
+                    .date(today)
+                    .build());
+        }
 
 
     }
-
     /* 회원가입 */
     @Transactional
     public String register(RegisterRequestDto requestDto) {

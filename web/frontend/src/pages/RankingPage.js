@@ -1,8 +1,13 @@
 import React from 'react';
+import HeaderContainer from '../containers/common/HeaderContainer';
+import RankingContainer from '../containers/ranking/RankingContainer';
 
 const RankingPage = () => {
   return (
-    <div>랭킹 페이지</div>
+    <>
+      <HeaderContainer title="랭킹" back />
+      <RankingContainer />
+    </>
   );
 };
 
