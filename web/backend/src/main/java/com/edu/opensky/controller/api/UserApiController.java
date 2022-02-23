@@ -28,11 +28,6 @@ public class UserApiController {
         return requestDto.getEmail();
     }
 
-    // 아임포트 인증
-    @GetMapping("/certifications")
-    public void certification(@RequestBody LoginRequestDto requestDto){
-
-    }
 
     // 토큰
     @PostMapping("/token")
