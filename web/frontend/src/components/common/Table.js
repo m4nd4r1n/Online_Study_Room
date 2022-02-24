@@ -31,7 +31,7 @@ export const Minutes = ({ hour, plans, studyTime }) => {
         width: '100%',
       }}
     >
-      <TimeUnit color={!plans && palette.AliceBlue}>
+      <TimeUnit color={!plans ? palette.AliceBlue : ''}>
         <span>{hour}시</span>
       </TimeUnit>
       {minutes.map((minute) => {

@@ -6,8 +6,8 @@ import palette from '../../lib/styles/palette';
 
 const SendMessage = ({ onChange, onClick, message }) => {
   return (
-    <InputBlock border>
-      <StyledInput none onChange={onChange} value={message} />
+    <InputBlock $border={true}>
+      <StyledInput $none={true} onChange={onChange} value={message} />
       <Button none left right type="send" onClick={onClick}>
         <IoPaperPlaneOutline color={palette.SkyBlue} size="25px" />
       </Button>

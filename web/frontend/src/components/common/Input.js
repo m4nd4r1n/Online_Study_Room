@@ -1,54 +1,36 @@
-import styled, { css } from 'styled-components';
-import palette from '../../lib/styles/palette';
+import styled from 'styled-components';
+import tw from 'tailwind-styled-components';
 
 /**
  * innput container
  */
-export const InputBlock = styled.div`
-  display: flex;
+const StyledInputBlock = styled.div`
   & + & {
     margin-top: 1rem;
   }
+`;
 
-  ${(props) =>
-    props.border &&
-    css`
-      position: fixed;
-      bottom: 0;
-      width: 600px;
-      border: 1px solid ${palette.gray[5]};
-      border-radius: 4px;
-      overflow: hidden;
-      &:focus {
-        color: $oc-teal-7;
-        border: 1px solid ${palette.gray[7]};
-      }
-    `}
+export const InputBlock = tw(StyledInputBlock)`
+  flex
+  ${(p) =>
+    p.$border &&
+    'fixed bottom-4 w-[600px] border border-gray-500 rounded-md overflow-hidden focus:text-teal-700 focus:border focus:border-gray-700'}
 `;
 
 /**
  * styled input
  */
-export const StyledInput = styled.input`
-  font-size: 1rem;
-  border-radius: 4px;
-  border: 1px solid ${palette.gray[5]};
-  outline: none;
-  height: 3rem;
-  width: 100%;
-  padding: 1rem;
-  &:focus {
-    color: $oc-teal-7;
-    border: 1px solid ${palette.gray[7]};
-  }
 
-  ${(props) =>
-    props.none &&
-    css`
-      border: 0px;
-      &:focus {
-        color: $oc-teal-7;
-        border: 0px;
-      }
-    `}
+export const StyledInput = tw.input`
+  text-base
+  rounded-md
+  border-gray-500
+  outline-none
+  h-12
+  w-full
+  p-4
+  focus:text-teal-700
+  focus:border-gray-700
+
+  ${(p) => (p.$none ? 'border-0 focus:border-0' : 'border focus:border')}
 `;

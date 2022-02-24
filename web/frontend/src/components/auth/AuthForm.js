@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import tw from 'tailwind-styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
@@ -22,15 +23,8 @@ import { Visibility, VisibilityOff } from '@material-ui/icons';
  * login form
  */
 
-const AuthFormBlock = styled.div`
-  h3 {
-    margin: 0;
-    color: ${palette.gray[8]};
-    margin-bottom: 1rem;
-  }
-
-  display: ${(props) =>
-    props.type !== 'register' || props.user ? '' : 'none'};
+const AuthFormBlock = tw.div`
+    ${(p) => (p.$type !== 'register' || p.$user ? '' : 'hidden')}
 `;
 
 /**
@@ -48,10 +42,6 @@ const Footer = styled.div`
   }
 `;
 
-const ButtonWithMarginTop = styled(Button)`
-  margin-top: 1rem;
-`;
-
 const textMap = {
   login: '로그인',
   register: '회원가입',
@@ -63,17 +53,17 @@ const textMap = {
 /**
  * 에러
  */
-const ErrorMessage = styled.div`
-  color: red;
-  text-align: center;
-  font-size: 0.875rem;
-  margin-top: 1rem;
+
+const ErrorMessage = tw.div`
+  text-red-500
+  text-center
+  text-sm
+  mt-4
 `;
 
-const UserSelectButton = styled(Button)`
-  display: ${(props) =>
-    props.type === 'register' && !props.user ? '' : 'none'};
-  margin-bottom: 1rem;
+const UserSelectButton = tw(Button)`
+    ${(p) => (p.$type === 'register' && !p.$user ? '' : 'hidden')}
+    mb-4
 `;
 
 const StyledTextField = styled(TextField)`
@@ -166,37 +156,44 @@ const AuthForm = ({ type, form, onChange, onSubmit, errors }) => {
     onChange(e);
   };
 
+  const canRegister =
+    type === 'register'
+      ? !state.available || !state.certSuccess
+      : type === 'find'
+      ? !state.certSuccess
+      : false;
+
   return (
     <>
       <UserSelectButton
-        cyan
+        cyan="true"
         fullwidth="true"
         onClick={handleUser}
-        type={type}
-        user={state.user}
+        $type={type}
+        $user={state.user}
       >
         멘토 가입
       </UserSelectButton>
       <UserSelectButton
-        cyan
+        cyan="true"
         fullwidth="true"
         onClick={handleUser}
-        type={type}
-        user={state.user}
+        $type={type}
+        $user={state.user}
       >
         멘티 가입
       </UserSelectButton>
       <UserSelectButton
-        cyan
+        cyan="true"
         fullwidth="true"
         onClick={handleUser}
-        type={type}
-        user={state.user}
+        $type={type}
+        $user={state.user}
       >
         학부모 가입
       </UserSelectButton>
-      <AuthFormBlock type={type} user={state.user}>
-        <h3>
+      <AuthFormBlock $type={type} $user={state.user}>
+        <h3 className="m-0 mb-4 text-gray-800">
           {state.user} {findType} {text}
         </h3>
         <form onSubmit={onSubmit}>
@@ -223,7 +220,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, errors }) => {
               )}
               <InputBlock>
                 {!state.certSuccess ? (
-                  <Button cyan fullwidth="true" onClick={handleCert}>
+                  <Button cyan="true" fullwidth="true" onClick={handleCert}>
                     본인인증
                   </Button>
                 ) : (
@@ -413,7 +410,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, errors }) => {
               )}
               <InputBlock>
                 {!state.certSuccess ? (
-                  <Button cyan fullwidth="true" onClick={handleCert}>
+                  <Button cyan="true" fullwidth="true" onClick={handleCert}>
                     본인인증
                   </Button>
                 ) : (
@@ -440,27 +437,21 @@ const AuthForm = ({ type, form, onChange, onSubmit, errors }) => {
                 </StyledBox>
               </InputBlock>
               {state.agreeContents && (
-                <StyledBox style={{ marginTop: '-1px', fontSize: '11px' }}>
-                  약관에 동의함으로서 회원가입 시 수집한 개인정보의 보관 및
-                  이용에 동의함.
-                </StyledBox>
+                <>
+                  <div className="mt-4" />
+                  <StyledBox $agreement>
+                    약관에 동의함으로서 회원가입 시 수집한 개인정보의 보관 및
+                    이용에 동의함.
+                  </StyledBox>
+                </>
               )}
             </>
           )}
           {errors.message && <ErrorMessage>{errors.message}</ErrorMessage>}
-          <ButtonWithMarginTop
-            cyan
-            fullwidth="true"
-            disabled={
-              type === 'register'
-                ? !state.available || !state.certSuccess
-                : type === 'find'
-                ? !state.certSuccess
-                : false
-            }
-          >
+          <div className="mb-4" />
+          <Button cyan="true" fullwidth="true" disabled={canRegister}>
             {findType} {text}
-          </ButtonWithMarginTop>
+          </Button>
         </form>
         <Footer>
           {type === 'login' ? (

@@ -1,117 +1,68 @@
-import styled, { css } from 'styled-components';
-import Responsive from '../common/Responsive';
-import palette from '../../lib/styles/palette';
+import tw from 'tailwind-styled-components';
 
-export const ContentsBox = styled.div`
-  flex-direction: row;
-  display: flex;
+export const ContentsBox = tw.div`
+  flex
+ flex-row
 `;
 
-export const ContentsBlock = styled(Responsive)`
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  align-items: center;
-  justify-content: center;
-  width: 600px;
-  text-align: center;
+export const ContentsBlock = tw.div`
+  px-4
+  mx-auto 
+  w-full 
+  max-w-2xl
+  items-center
+  justify-center
+  text-center
+  mb-[50px]
+  pb-16
 `;
 
-export const ItemBlock = styled.div`
-  font-size: 1rem;
-  display: flex;
-  justify-content: center;
+export const ItemBlock = tw.div`
+  text-base
+  flex
+  justify-center
 `;
 
 /**
  * styled box
  */
-export const StyledBox = styled.div`
-  .initial {
-    color: #777777;
-  }
-  font-size: 1rem;
-  border-radius: 4px;
-  border: 1px solid ${palette.gray[5]};
-  outline: none;
-  width: 100%;
-  padding: 1rem;
-  align-items: center;
-  justify-content: space-between;
-  display: flex;
-  margin-bottom: -1px;
-  &:focus {
-    color: $oc-teal-7;
-    border: 1px solid ${palette.gray[7]};
-  }
 
-  ${(props) =>
-    props.messenger &&
-    css`
-      border: none;
-      border-radius: 0px;
-      &:hover {
-        background: ${palette.gray[1]};
-      }
-    `}
-
-  ${(props) =>
-    props.message &&
-    css`
-      border: none;
-      border-radius: 0px;
-      flex-direction: column;
-      align-items: flex-start;
-    `}
-
-    ${(props) =>
-    props.right &&
-    css`
-      flex-direction: column;
-      align-items: flex-end;
-    `}
-    
-  ${(props) =>
-    props.isClicked &&
-    css`
-      background: ${palette.gray[2]};
-      &:hover {
-        background: ${palette.gray[2]};
-      }
-    `}
+export const StyledBox = tw.div`
+ -mb-[1px]
+ flex
+ w-full
+ justify-between
+ border
+ border-gray-400
+ p-4
+ text-base
+ outline-none
+ focus:border-gray-700
+ focus:text-teal-700
+ ${(p) => p.$messenger && 'rounded-none border-none hover:bg-gray-100'}
+ ${(p) =>
+   p.$message
+     ? 'flex-col items-start rounded-none border-none'
+     : 'items-center rounded-md'}
+ ${(p) => p.$right && 'flex-col items-end'}
+ ${(p) => p.$isClicked && 'bg-gray-200 hover:bg-gray-200'}
+ ${(p) => p.$agreement && '-mt-[1px] text-xs'}
 `;
 
 /**
  * styled click box
  * 약관보기
  */
-export const StyledClickBox = styled.div`
-  font-size: 0.8rem;
-  color: ${palette.gray[5]};
-  user-select: none;
-  &:hover {
-    color: ${palette.gray[7]};
-  }
+export const StyledClickBox = tw.div`
+  text-xs
+  text-gray-500
+  select-none
+  hover:text-gray-700
 `;
 
-export const StyledText = styled.span`
-  color: #000000;
-  ${(props) =>
-    css`
-      font-size: ${props.size};
-      color: ${props.color};
-    `};
-  ${(props) =>
-    props.center &&
-    css`
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    `}
-  ${(props) =>
-    props.small &&
-    css`
-      font-size: 1rem;
-    `}
+export const StyledText = tw.span`
+  text-gray-900
+  ${(p) => `text-[${p.$size}] text-[${p.$color}]`}
+  ${(p) => p.$center && 'flex items-center justify-center'}
+  ${(p) => p.$small && 'text-base'}
 `;

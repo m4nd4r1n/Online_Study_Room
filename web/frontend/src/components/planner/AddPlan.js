@@ -141,7 +141,7 @@ const AddPlan = ({
           }}
         >
           <Button
-            left
+            $left
             style={{
               width: '120px',
               height: '40px',
@@ -153,7 +153,7 @@ const AddPlan = ({
             추가
           </Button>
           <Button
-            right
+            $right
             style={{
               width: '120px',
               height: '40px',

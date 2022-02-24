@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { readAchievement } from '../../modules/achievement';
-import AchievementList from '../../components/achievement/AchievementList';
 import { ContentsBlock } from '../../components/common/Contents';
+import Achievement from '../../components/achievement/Achievement';
 
 const AchievementContainer = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const AchievementContainer = () => {
 
   return (
     <ContentsBlock>
-      <AchievementList achievements={achievements} />
+      <Achievement achievements={achievements} />
     </ContentsBlock>
   );
 };

@@ -104,7 +104,7 @@ const ObjectDetector = () => {
           className="size"
           autoPlay
           playsInline
-          muted="true"
+          muted={true}
           ref={videoRef}
           width="568"
           height="500"
