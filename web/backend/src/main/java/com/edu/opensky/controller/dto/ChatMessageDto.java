@@ -10,13 +10,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 public class ChatMessageDto {
-    private String roomId;
+    private String messengerId;
     private String writer;
     private String message;
 
     @Builder
-    public ChatMessageDto(String roomId, String writer, String message) {
-        this.roomId = roomId;
+    public ChatMessageDto(String messengerId, String writer, String message) {
+        this.messengerId = messengerId;
         this.writer = writer;
         this.message = message;
     }
