@@ -28,25 +28,25 @@ export const ItemBlock = tw.div`
  */
 
 export const StyledBox = tw.div`
- -mb-[1px]
- flex
- w-full
- justify-between
- border
- border-gray-400
- p-4
- text-base
- outline-none
- focus:border-gray-700
- focus:text-teal-700
- ${(p) => p.$messenger && 'rounded-none border-none hover:bg-gray-100'}
- ${(p) =>
-   p.$message
-     ? 'flex-col items-start rounded-none border-none'
-     : 'items-center rounded-md'}
- ${(p) => p.$right && 'flex-col items-end'}
- ${(p) => p.$isClicked && 'bg-gray-200 hover:bg-gray-200'}
- ${(p) => p.$agreement && '-mt-[1px] text-xs'}
+  -mb-[1px]
+  flex
+  w-full
+  justify-between
+  border
+border-gray-400
+  p-4
+  text-base
+  outline-none
+  focus:border-gray-700
+  focus:text-teal-700
+  ${(p) => p.$messenger && 'rounded-none border-none hover:bg-gray-100'}
+  ${(p) =>
+    p.$message
+      ? 'flex-col items-start rounded-none border-none'
+      : 'items-center rounded-md'}
+  ${(p) => p.$right && 'flex-col items-end'}
+  ${(p) => p.$isClicked && 'bg-gray-200 hover:bg-gray-200'}
+  ${(p) => p.$agreement && '-mt-[1px] text-xs'}
 `;
 
 /**

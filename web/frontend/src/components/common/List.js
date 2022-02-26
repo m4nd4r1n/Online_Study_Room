@@ -21,7 +21,6 @@ export const TwList = tw(NoScrollbar)`
   flex
   justify-between
   px-4
-  
 `;
 
 /**

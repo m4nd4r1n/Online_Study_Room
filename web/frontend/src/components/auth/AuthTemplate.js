@@ -9,7 +9,7 @@ import tw from 'tailwind-styled-components';
 const AuthTemplateBlock = tw.div`
   absolute
   left-0
-  top-16
+  top-14
   bottom-0
   right-0
   flex

@@ -22,6 +22,8 @@ const TwButton = tw.button`
   ${(p) =>
     p.$cyan
       ? 'bg-cyan-500 hover:bg-cyan-400 focus:ring-cyan-500'
+      : p.$white
+      ? 'bg-white hover:bg-white'
       : 'bg-gray-600 hover:bg-gray-500 focus:ring-gray-600'}
   ${(p) =>
     p.$disabled
@@ -50,6 +52,8 @@ const TwLink = tw(Link)`
   ${(p) =>
     p.$cyan
       ? 'bg-cyan-500 hover:bg-cyan-400 focus:ring-cyan-500'
+      : p.$white
+      ? 'bg-white hover:bg-white'
       : 'bg-gray-600 hover:bg-gray-500 focus:ring-gray-600'}
   ${(p) =>
     p.$disabled
@@ -67,6 +71,7 @@ const Button = (props) => {
       $disabled={props.disabled}
       $left={props.left}
       $right={props.right}
+      $white={props.white}
       {...props}
     />
   ) : (
@@ -76,6 +81,7 @@ const Button = (props) => {
       $disabled={props.disabled}
       $left={props.left}
       $right={props.right}
+      $white={props.white}
       {...props}
     />
   );

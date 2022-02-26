@@ -25,14 +25,9 @@ export const Minutes = ({ hour, plans, studyTime }) => {
   let time = 0;
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        width: '100%',
-      }}
-    >
+    <div className="flex w-full">
       <TimeUnit color={!plans ? palette.AliceBlue : ''}>
-        <span>{hour}시</span>
+        <span>{hour}</span>
       </TimeUnit>
       {minutes.map((minute) => {
         let color;

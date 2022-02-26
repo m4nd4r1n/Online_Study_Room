@@ -1,86 +1,77 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import Responsive from './Responsive';
 import Button from './Button';
-import palette from '../../lib/styles/palette';
 import { useNavigate } from 'react-router-dom';
 import Counter from './Counter';
+import tw from 'tailwind-styled-components';
 
-const HeaderBlock = styled.div`
-  position: absolute;
-  width: 100%;
-  background: white;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
+const HeaderBlock = tw.div`
+  absolute
+  w-full
+  bg-white
+  shadow-md
 `;
 
-const ItemContainer = styled.div`
-  width: 33%;
+const ItemContainer = tw.div`
+  w-1/3
 `;
 
 /**
  * 타이틀 글자 설정
  */
-const Title = styled.div`
-  font-size: 2rem;
-  width: 33%;
-  display: flex;
-  justify-content: center;
+const Title = tw.div`
+  text-2xl
+  w-1/3
+  flex
+  justify-center
 `;
 
 /**
  * 밑줄 제거, 글자색 설정된 Link
  */
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  align-items: center;
-  justify-content: center;
-  color: inherit;
-  &:hover {
-    color: ${palette.gray[7]};
-  }
+const StyledLink = tw(Link)`
+  no-underline
+  items-center
+  justify-center
+  text-inherit
+  hover:text-gray-600
+  text-lg
+  font-extrabold
+  tracking-[2px]
 `;
 
 /**
  * 밑줄 없는 redirect 버튼
  */
-const HeaderButton = styled(Button)`
-  text-decoration: none;
-  border: 1px solid ${palette.gray[8]};
-  background-color: #ffffff;
-  color: inherit;
-  &:hover {
-    color: ${palette.gray[8]};
-    border: 1px solid ${palette.gray[5]};
-    background-color: #ffffff;
-  }
+const HeaderButton = tw(Button)`
+  no-underline
+  border-0
+  text-inherit
+  hover:text-gray-700
+  hover:border-0
+  focus:ring-0
 `;
 
 /**
  * Responsive 컴포넌트의 속성에 스타일을 추가해서 새로운 컴포넌트 생성
  */
-const Wrapper = styled(Responsive)`
-  height: 4rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* 자식 엘리먼트 사이에 여백을 최대로 설정 */
-  .logo {
-    font-size: 1.125rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-  }
+const Wrap = styled.div`
   .right {
     display: flex;
     align-items: center;
     justify-content: flex-end;
   }
 `;
-
-/**
- * 헤더가 fixed로 되어 있기 때문에 페이지의 컨텐츠가 4rem 아래 나타나도록 해주는 컴포넌트
- */
-const Spacer = styled.div`
-  height: 4rem;
+const Wrapper = tw(Wrap)`
+  h-14
+  flex
+  items-center
+  justify-between
+  w-11/12
+  pl-4
+  pr-4
+  mx-auto
 `;
 
 const Header = ({ title, back, counter }) => {
@@ -92,7 +83,22 @@ const Header = ({ title, back, counter }) => {
         <Wrapper>
           <ItemContainer>
             {back && (
-              <HeaderButton onClick={() => navigate(-1)}>←</HeaderButton>
+              <HeaderButton white="true" onClick={() => navigate(-1)}>
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M15 19l-7-7 7-7"
+                  ></path>
+                </svg>
+              </HeaderButton>
             )}
             {counter && <Counter />}
           </ItemContainer>
@@ -100,13 +106,13 @@ const Header = ({ title, back, counter }) => {
           <Title>{title}</Title>
 
           <ItemContainer className="right">
-            <StyledLink to="/" className="logo">
-              <div style={{ fontSize: '1rem' }}>open SKY</div>
+            <StyledLink to="/home">
+              <div className="text-base">open SKY</div>
             </StyledLink>
           </ItemContainer>
         </Wrapper>
       </HeaderBlock>
-      <Spacer />
+      <div className="h-14" />
     </>
   );
 };
