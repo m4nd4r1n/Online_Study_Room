@@ -151,13 +151,33 @@ public class UserService {
 
     /* 비밀번호 변경 수정중 */
     @Transactional
-    public String update(String username, UserUpdateRequestDto requestDto) {
-        User user = userRepository.findByEmail(username).orElseThrow(() -> new
-                IllegalArgumentException("해당 아이디가 없습니다. id=" + username));
+    public String update(String email, UserUpdateRequestDto requestDto) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new
+                IllegalArgumentException("해당 아이디가 없습니다. id=" + email));
         user.update(requestDto.getUsername(), requestDto.getPassword());
 
-        return username;
+        return email;
     }
 
+    /* 회원 정보 찾기 */
+    @Transactional
+    public String find(FindRequestDto findRequestDto) {
+        String email = findRequestDto.getEmail();
+        String impUID = findRequestDto.getImpUID();
+        // 이메일 찾기
+        if (impUID != null && email == null){
+            List<String> userInfo = getCertification(impUID);
+            User user = userRepository.findByPhone(userInfo.get(1)).orElseThrow(() -> new
+                    IllegalArgumentException("회원 가입 기록이 없습니다."));
+            return user.getEmail();
+        }
+        // 비밀번호 찾기
+        else if (impUID != null && email != null){
+            User user = userRepository.findByEmail(email).orElseThrow(() -> new
+                    IllegalArgumentException("해당 아이디가 없습니다. id=" + email));
+            return user.getPassword();
+        }
 
+        return null;
+    }
 }
