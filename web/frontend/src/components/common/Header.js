@@ -7,7 +7,7 @@ import Counter from './Counter';
 import tw from 'tailwind-styled-components';
 
 const HeaderBlock = tw.div`
-  absolute
+  fixed
   w-full
   bg-white
   shadow-md

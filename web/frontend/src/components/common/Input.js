@@ -14,7 +14,7 @@ export const InputBlock = tw(StyledInputBlock)`
   flex
   ${(p) =>
     p.$border &&
-    'fixed bottom-4 w-[600px] border border-gray-500 rounded-md overflow-hidden focus:text-teal-700 focus:border focus:border-gray-700'}
+    'fixed bottom-16 z-20 w-[600px] border border-gray-500 rounded-md overflow-hidden focus:text-teal-700 focus:border focus:border-gray-700'}
 `;
 
 /**

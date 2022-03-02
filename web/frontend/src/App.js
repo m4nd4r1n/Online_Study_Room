@@ -15,6 +15,7 @@ import TimerPage from './pages/TimerPage';
 import FindPage from './pages/FindPage';
 import StatisticsPage from './pages/StatisticsPage';
 import BottomTabBar from './components/common/BottomTabBar';
+import NotFound from './pages/404';
 
 const App = () => {
   return (
@@ -98,6 +99,7 @@ const App = () => {
         }
         path="statistics"
       />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

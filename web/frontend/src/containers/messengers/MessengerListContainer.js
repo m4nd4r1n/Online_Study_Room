@@ -5,8 +5,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listMessengers } from '../../modules/messengers';
-import { ContentsBlock } from '../../components/common/Contents';
-import MessengerList from '../../components/messenger/MessengerList';
+import Messenger from '../../components/messenger/Messenger';
 
 const MessengerContainer = () => {
   const dispatch = useDispatch();
@@ -38,11 +37,7 @@ const MessengerContainer = () => {
     dispatch(listMessengers());
   }, [dispatch]);
 
-  return (
-    <ContentsBlock>
-      <MessengerList messengers={test_messengers} />
-    </ContentsBlock>
-  );
+  return <Messenger messengers={test_messengers} />;
 };
 
 export default MessengerContainer;

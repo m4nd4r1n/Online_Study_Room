@@ -5,15 +5,17 @@ import { AiFillTrophy } from 'react-icons/ai';
 const Achievement = ({ achievements }) => {
   const data = achievementData.normal;
 
-  const complete = achievements?.map((data) => ({
-    id: data.id,
-    date:
-      data.date.getFullYear() +
-      '.' +
-      (data.date.getMonth() + 1) +
-      '.' +
-      data.date.getDate(),
-  }));
+  const complete =
+    achievements &&
+    achievements?.map((data) => ({
+      id: data.id,
+      date:
+        data.date.getFullYear() +
+        '.' +
+        (data.date.getMonth() + 1) +
+        '.' +
+        data.date.getDate(),
+    }));
 
   return (
     <>
@@ -28,9 +30,9 @@ const Achievement = ({ achievements }) => {
             <span>{data.description}</span>
             <span>{data.exp}XP</span>
           </div>
-          {complete?.find((d) => d.id === data.id) ? (
+          {complete && complete?.find((d) => d.id === data.id) ? (
             <span className="ml-auto">
-              {complete.find((d) => d.id === data.id).date}
+              {complete?.find((d) => d.id === data.id).date}
             </span>
           ) : (
             <span className="ml-auto">미달성</span>
