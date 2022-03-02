@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 public class UserSaveRequestDto {
-    private String impUID;
     private String email;
     private String password;
     private String name;

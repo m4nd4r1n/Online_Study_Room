@@ -46,8 +46,13 @@ public class User {
 
 
 
-    public void update(String username, String password){
-        this.email = username;
+    public void update(String email, String password, String name, String phone, LocalDate birth){
+        this.email = email;
         this.password = password;
+        this.lastAccessDate = LocalDate.now();
+        this.phone = phone;
+        this.name = name;
+        this.birth = birth;
+
     }
 }

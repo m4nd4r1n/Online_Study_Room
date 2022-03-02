@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7e0ae73-e136-438e-8cf7-b7e0a9d457e9" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/FindRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/FindResponseDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/UserApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/UserApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserSaveRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserSaveRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserUpdateRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserUpdateRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/test/java/com/edu/opensky/ApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/test/java/com/edu/opensky/ApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,12 +101,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="KDH" />
-                    <option name="lastUsedInstant" value="1641039849" />
+                    <option name="branchName" value="jh" />
+                    <option name="lastUsedInstant" value="1646205252" />
                   </RecentBranch>
                   <RecentBranch>
-                    <option name="branchName" value="jh" />
-                    <option name="lastUsedInstant" value="1641039848" />
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1646203485" />
                   </RecentBranch>
                 </list>
               </option>
@@ -371,7 +371,8 @@
       <workItem from="1645635540387" duration="3212000" />
       <workItem from="1645685812827" duration="1104000" />
       <workItem from="1645881323214" duration="6367000" />
-      <workItem from="1646200774064" duration="1739000" />
+      <workItem from="1646200774064" duration="6751000" />
+      <workItem from="1646208940805" duration="3010000" />
     </task>
     <servers />
   </component>

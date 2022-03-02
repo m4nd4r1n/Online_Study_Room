@@ -117,7 +117,7 @@ public class UserService {
     public String register(RegisterRequestDto requestDto) {
         UserSaveRequestDto userSaveRequestDto = new UserSaveRequestDto(requestDto.getEmail(), requestDto.getPassword());
         checkDuplicateUser(userSaveRequestDto);
-
+        
         switch (requestDto.getType()) {
             case "멘티":
                 MenteeSaveRequestDto menteeSaveRequestDto = new MenteeSaveRequestDto(requestDto.getEmail(), requestDto.getSchool());
@@ -149,14 +149,22 @@ public class UserService {
                 });
     }
 
-    /* 비밀번호 변경 수정중 */
+    /* 비밀번호 변경 */
     @Transactional
     public String update(String email, UserUpdateRequestDto requestDto) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new
-                IllegalArgumentException("해당 아이디가 없습니다. id=" + email));
-        user.update(requestDto.getUsername(), requestDto.getPassword());
+        User user = userRepository.findByPassword(requestDto.getOldPassword()).orElseThrow(() -> new
+                IllegalArgumentException("비밀번호가 다릅니다"));
 
-        return email;
+        // 유저 아이디와 입력받은 비밀번호에 해당하는 아이디가 같은 경우에만 업데이트
+        if (user.getEmail().equals(email)){
+            // 새 비밀번호로 업데이트
+            user.update(email, requestDto.getNewPassword(), user.getName(), user.getPhone(),user.getBirth());
+        }
+        else{
+            System.out.println("비밀번호가 다릅니다.");
+        }
+
+        return user.getEmail();
     }
 
     /* 회원 정보 찾기 */
@@ -164,15 +172,17 @@ public class UserService {
     public String find(FindRequestDto findRequestDto) {
         String email = findRequestDto.getEmail();
         String impUID = findRequestDto.getImpUID();
+
+        List<String> userInfo = getCertification(impUID);
+
         // 이메일 찾기
-        if (impUID != null && email == null){
-            List<String> userInfo = getCertification(impUID);
+        if (!userInfo.isEmpty() && email == null){
             User user = userRepository.findByPhone(userInfo.get(1)).orElseThrow(() -> new
                     IllegalArgumentException("회원 가입 기록이 없습니다."));
             return user.getEmail();
         }
         // 비밀번호 찾기
-        else if (impUID != null && email != null){
+        else if (!userInfo.isEmpty() && email != null){
             User user = userRepository.findByEmail(email).orElseThrow(() -> new
                     IllegalArgumentException("해당 아이디가 없습니다. id=" + email));
             return user.getPassword();
