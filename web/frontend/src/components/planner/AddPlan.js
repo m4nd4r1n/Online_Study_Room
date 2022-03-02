@@ -1,41 +1,35 @@
 import React from 'react';
 import { InputBlock, StyledInput } from '../common/Input';
-import styled, { css } from 'styled-components';
 import Select from 'react-select';
-import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
+import tw from 'tailwind-styled-components';
 
-const PlanBlock = styled(InputBlock)`
-  width: 240px;
-  padding: 5px;
-  background-color: ${palette.LightSteelBlue};
-  border: 1px solid ${palette.gray[6]};
-  border-radius: 4px;
-  justify-content: space-between;
+const PlanBlock = tw(InputBlock)`
+  w-60
+  p-[5px]
+  bg-[#B0C4DE]
+  border
+  border-gray-500
+  rounded-md
+  justify-between
 `;
 
-const InputLabel = styled.div`
-  display: flex;
-  height: 38px;
-  align-items: center;
-  padding: 4px;
-  font-weight: bold;
-
-  ${(props) =>
-    props.input &&
-    css`
-      height: 48px;
-    `};
+const InputLabel = tw.div`
+  flex
+  items-center
+  p-1
+  font-bold
+  ${(p) => (p.$input ? 'h-12' : 'h-[38px]')}
 `;
 
-const ErrorMessage = styled.div`
-  width: 240px;
-  display: flex;
-  color: red;
-  justify-content: center;
-  font-size: 0.875rem;
-  margin-top: 1rem;
-  white-space: pre-wrap;
+const ErrorMessage = tw.div`
+  w-60
+  flex
+  text-red-500
+  justify-center
+  text-sm
+  mt-4
+  whitespace-pre-wrap
 `;
 
 const hours = [
@@ -85,7 +79,7 @@ const AddPlan = ({
     <>
       <form onSubmit={onSubmit}>
         <PlanBlock>
-          <InputLabel input>과목</InputLabel>
+          <InputLabel $input>과목</InputLabel>
           <StyledInput
             name="subject"
             type="text"
@@ -141,7 +135,7 @@ const AddPlan = ({
           }}
         >
           <Button
-            left
+            $left
             style={{
               width: '120px',
               height: '40px',
@@ -153,7 +147,7 @@ const AddPlan = ({
             추가
           </Button>
           <Button
-            right
+            $right
             style={{
               width: '120px',
               height: '40px',

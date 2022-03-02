@@ -10,7 +10,7 @@ const MessageListItem = ({ user, messageItem, dateLine }) => {
   return (
     <>
       {dateLine && <Moment date={messageTime} format="YYYY년 M월 D일"></Moment>}
-      <StyledBox message right={isMyMessage}>
+      <StyledBox $message $right={isMyMessage}>
         <ListItem auto column message left={!isMyMessage} right={isMyMessage}>
           <ListItemText left>{message}</ListItemText>
           <ListItemText small right>

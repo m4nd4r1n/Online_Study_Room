@@ -1,82 +1,89 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
-import palette from '../../lib/styles/palette';
 import { MdPlayCircleOutline } from 'react-icons/md';
 import { MdStopCircle } from 'react-icons/md';
+import tw from 'tailwind-styled-components';
 
-const buttonStyle = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: bold;
-  padding: 0.25rem 1rem;
-  color: white;
-  outline: none;
-  cursor: pointer;
-
-  background: ${palette.gray[7]};
-  &:hover {
-    background: ${palette.gray[6]};
-  }
-
-  ${(props) =>
-    props.fullwidth &&
-    css`
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
-      width: 100%;
-      font-size: 1.125rem;
-    `}
-
-  ${(props) =>
-    props.cyan &&
-    css`
-      background: ${palette.cyan[5]};
-      &:hover {
-        background: ${palette.cyan[4]};
-      }
-    `}
-
-    &:disabled {
-    background: ${palette.gray[3]};
-    color: ${palette.gray[5]};
-    cursor: not-allowed;
-  }
-
-  ${(props) =>
-    props.left &&
-    css`
-      border-bottom-right-radius: 0%;
-      border-top-right-radius: 0%;
-    `}
-
-  ${(props) =>
-    props.right &&
-    css`
-      border-bottom-left-radius: 0%;
-      border-top-left-radius: 0%;
-    `}
+const TwButton = tw.button`
+  flex
+  cursor-pointer
+  items-center
+  justify-center
+  rounded-md
+  border-0
+  px-4
+  py-1
+  font-bold
+  outline-none
+  transition-colors
+  focus:ring-2
+  focus:ring-offset-2
+  ${(p) => (p.$fullwidth ? 'w-full pt-3 pb-3 text-lg' : 'text-base')}
+  ${(p) =>
+    p.$cyan
+      ? 'bg-cyan-500 hover:bg-cyan-400 focus:ring-cyan-500'
+      : p.$white
+      ? 'bg-white hover:bg-white'
+      : 'bg-gray-600 hover:bg-gray-500 focus:ring-gray-600'}
+  ${(p) =>
+    p.$disabled
+      ? 'cursor-not-allowed bg-gray-300 text-gray-400 hover:bg-gray-300'
+      : 'text-white'}
+  ${(p) => (p.$left ? 'rounded-r-none' : '')}
+  ${(p) => (p.$right ? 'rounded-l-none' : '')}
 `;
 
-const StyledButton = styled.button`
-  ${buttonStyle}
-`;
-
-const StyledLink = styled(Link)`
-  text-align: center;
-  ${buttonStyle};
+const TwLink = tw(Link)`
+  flex
+  cursor-pointer
+  items-center
+  justify-center
+  rounded-md
+  border-0
+  px-4
+  py-1
+  font-bold
+  outline-none
+  transition-colors
+  focus:ring-2
+  focus:ring-offset-2
+  text-center
+  ${(p) => (p.$fullwidth ? 'w-full pt-3 pb-3 text-lg' : 'text-base')}
+  ${(p) =>
+    p.$cyan
+      ? 'bg-cyan-500 hover:bg-cyan-400 focus:ring-cyan-500'
+      : p.$white
+      ? 'bg-white hover:bg-white'
+      : 'bg-gray-600 hover:bg-gray-500 focus:ring-gray-600'}
+  ${(p) =>
+    p.$disabled
+      ? 'cursor-not-allowed bg-gray-300 text-gray-400 hover:bg-gray-300'
+      : 'text-white'}
+  ${(p) => (p.$left ? 'rounded-r-none' : '')}
+  ${(p) => (p.$right ? 'rounded-l-none' : '')}
 `;
 
 const Button = (props) => {
   return props.to ? (
-    <StyledLink {...props} cyan={props.cyan ? 1 : 0} />
+    <TwLink
+      $cyan={props.cyan}
+      $fullwidth={props.fullwidth}
+      $disabled={props.disabled}
+      $left={props.left}
+      $right={props.right}
+      $white={props.white}
+      {...props}
+    />
   ) : (
-    <StyledButton {...props} />
+    <TwButton
+      $cyan={props.cyan}
+      $fullwidth={props.fullwidth}
+      $disabled={props.disabled}
+      $left={props.left}
+      $right={props.right}
+      $white={props.white}
+      {...props}
+    />
   );
 };
 

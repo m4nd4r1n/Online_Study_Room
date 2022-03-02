@@ -1,5 +1,6 @@
 package com.edu.opensky.controller.api;
 
+import com.edu.opensky.controller.dto.FindRequestDto;
 import com.edu.opensky.controller.dto.RegisterRequestDto;
 import com.edu.opensky.controller.dto.LoginRequestDto;
 import com.edu.opensky.controller.dto.UserUpdateRequestDto;
@@ -28,11 +29,6 @@ public class UserApiController {
         return requestDto.getEmail();
     }
 
-    // 아임포트 인증
-    @GetMapping("/certifications")
-    public void certification(@RequestBody LoginRequestDto requestDto){
-
-    }
 
     // 토큰
     @PostMapping("/token")
@@ -40,10 +36,15 @@ public class UserApiController {
         userService.getToken();
     }
 
-    @PutMapping("/api/v1/user/{username}")
+    @PutMapping("/auth/update/{email}")
     public String update(
-            @PathVariable String username, @RequestBody UserUpdateRequestDto requestDto){
-        return userService.update(username, requestDto);
+            @PathVariable String email, @RequestBody UserUpdateRequestDto requestDto){
+        return userService.update(email, requestDto);
+    }
+
+    @PostMapping("/auth/find")
+    public String find(@RequestBody FindRequestDto findRequestDto) {
+        return userService.find(findRequestDto);
     }
 
     /*@GetMapping("/api/v1/user/{username}")

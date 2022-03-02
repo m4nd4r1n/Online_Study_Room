@@ -1,12 +1,16 @@
 package com.edu.opensky.controller.api;
 
+import com.edu.opensky.controller.dto.ChatRoomDto;
 import com.edu.opensky.domain.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.ui.Model;
+import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,31 +22,37 @@ public class RoomController {
 
     //채팅방 목록 조회
     @GetMapping(value = "/messenger")
-    public ModelAndView rooms(){
+    public List<ChatRoomDto> rooms(){
 
-        log.info("# All Chat Rooms");
-        ModelAndView mv = new ModelAndView("chat/rooms");
-
-        mv.addObject("list", chatRoomRepository.findAllRooms());
-
-        return mv;
+        log.info("# Print Chat Room List ");
+        return chatRoomRepository.findAllRooms();
     }
 
     //채팅방 개설
     @PostMapping(value = "/room")
-    public String create(@RequestParam String name, RedirectAttributes rttr){
+    public String create(@RequestBody String jsonStr){
 
+        JSONParser parser = new JSONParser();
+        Object obj = null;
+        try {
+            obj = parser.parse( jsonStr );
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        JSONObject jsonObj = (JSONObject) obj;
+        String name = (String) Objects.requireNonNull(jsonObj).get("name");
         log.info("# Create Chat Room , name: " + name);
-        rttr.addFlashAttribute("roomName", chatRoomRepository.createChatRoomDto(name));
-        return "redirect:/";
+        return chatRoomRepository.createChatRoomDto(name).getMessengerId();
     }
 
     //채팅방 조회
-    @GetMapping("/room")
-    public void getRoom(String roomId, Model model){
+    @GetMapping("/messenger/{messengerId}")
+    public String getRoom(@PathVariable("messengerId") String messengerId){
 
-        log.info("# get Chat Room, roomID : " + roomId);
+        log.info("# get Chat Room, roomID : " + messengerId);
 
-        model.addAttribute("room", chatRoomRepository.findRoomById(roomId));
+        return chatRoomRepository.findRoomById(messengerId).getName();
     }
+
+
 }

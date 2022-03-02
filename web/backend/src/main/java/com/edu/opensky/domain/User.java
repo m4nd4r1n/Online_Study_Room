@@ -22,14 +22,23 @@ public class User {
 
     private LocalDate lastAccessDate;
 
+    private String name;
+
+    private String phone;
+
+    private LocalDate birth;
+
 
 
 
     @Builder
-    public User(String email, String password,LocalDate lastAccessDate){
+    public User(String email, String password,LocalDate lastAccessDate, String name, String phone, LocalDate birth){
         this.email = email;
         this.password = password;
         this.lastAccessDate = lastAccessDate;
+        this.phone = phone;
+        this.name = name;
+        this.birth = birth;
 
     }
 
@@ -37,8 +46,13 @@ public class User {
 
 
 
-    public void update(String username, String password){
-        this.email = username;
+    public void update(String email, String password, String name, String phone, LocalDate birth){
+        this.email = email;
         this.password = password;
+        this.lastAccessDate = LocalDate.now();
+        this.phone = phone;
+        this.name = name;
+        this.birth = birth;
+
     }
 }
