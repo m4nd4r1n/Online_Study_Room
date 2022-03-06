@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { ContentsBlock } from '../common/Contents';
 import { StudyButton } from '../common/Button';
 import useInterval from '../timer/useInterval';
+import * as studyAPI from '../../lib/api/study';
 
 import * as cocoSsd from '@tensorflow-models/coco-ssd';
 import '@tensorflow/tfjs';
@@ -16,6 +17,11 @@ const ObjectDetector = () => {
   const videoRef = useRef();
   const canvasRef = useRef();
   const capture = useRef();
+
+  // 프레임 전송
+  const uploadFrame = () => {
+    studyAPI.uploadFrame(rejectedFrame);
+  };
 
   // 실공시간 체크
   const checkActualStudyTime = (predictions) => {
@@ -138,7 +144,7 @@ const ObjectDetector = () => {
   const detectFrame = (video, model) => {
     model.detect(video).then((predictions) => {
       renderPredictions(predictions); // 객체 박스 렌더링 필요 x 시 삭제
-      checkActualStudyTime(predictions);
+      //checkActualStudyTime(predictions);
 
       // 다음 리페인트 전에 애니메이션 업데이트 콜백함수 실행
       requestAnimationFrame(() => {
@@ -190,9 +196,10 @@ const ObjectDetector = () => {
 
   useInterval(() => {
     console.log(rejectCount);
-    //captureFrame(); // 캡쳐 테스트
+    captureFrame(); // 캡쳐 테스트
+    uploadFrame(); // 업로드
     captureFlag = true; // 캡쳐가능
-    setRejectedFrame(); // 캡쳐화면 초기화
+    //setRejectedFrame(); // 캡쳐화면 초기화
   }, 60000); // 1분 = 1000(1초) * 60
 
   useInterval(() => {
@@ -219,7 +226,7 @@ const ObjectDetector = () => {
         }}
       >
         {loading ? (
-          <div>로딩중입니다...</div>
+          <div>카메라를 불러오는 중입니다...</div>
         ) : (
           <>
             <video
