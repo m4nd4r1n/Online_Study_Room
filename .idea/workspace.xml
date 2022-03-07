@@ -5,22 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7e0ae73-e136-438e-8cf7-b7e0a9d457e9" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/AchievementController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/AttendanceController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/AttendanceRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/AttendanceService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/UserApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/UserApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/LoginRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Mentee.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Mentee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserSaveRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserSaveRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserUpdateRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserUpdateRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/AttendanceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/AttendanceRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/web/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/frontend/src/lib/api/achievement.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/frontend/src/lib/api/achievement.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/frontend/src/lib/api/study.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/frontend/src/lib/api/study.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/web/frontend/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/test/java/com/edu/opensky/ApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/test/java/com/edu/opensky/ApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,12 +101,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="KDH" />
-                    <option name="lastUsedInstant" value="1641039849" />
+                    <option name="branchName" value="jh" />
+                    <option name="lastUsedInstant" value="1646205252" />
                   </RecentBranch>
                   <RecentBranch>
-                    <option name="branchName" value="jh" />
-                    <option name="lastUsedInstant" value="1641039848" />
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1646203485" />
                   </RecentBranch>
                 </list>
               </option>
@@ -377,6 +367,12 @@
       <workItem from="1645519234002" duration="68000" />
       <workItem from="1645519383885" duration="10413000" />
       <workItem from="1645541395758" duration="2989000" />
+      <workItem from="1645620894277" duration="5210000" />
+      <workItem from="1645635540387" duration="3212000" />
+      <workItem from="1645685812827" duration="1104000" />
+      <workItem from="1645881323214" duration="6367000" />
+      <workItem from="1646200774064" duration="6751000" />
+      <workItem from="1646208940805" duration="3010000" />
     </task>
     <servers />
   </component>

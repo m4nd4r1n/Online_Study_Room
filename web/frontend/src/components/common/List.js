@@ -1,12 +1,26 @@
 import styled, { css } from 'styled-components';
 import palette from '../../lib/styles/palette';
 import { List } from 'react-virtualized';
+import tw from 'tailwind-styled-components';
 
 export const StyledList = styled(List)`
   --ms-overflow-style: none;
   ::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const NoScrollbar = styled.div`
+  --ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export const TwList = tw(NoScrollbar)`
+  flex
+  justify-between
+  px-4
 `;
 
 /**

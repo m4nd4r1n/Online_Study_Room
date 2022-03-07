@@ -1,30 +1,33 @@
 import React from 'react';
-import styled from 'styled-components';
+import tw from 'tailwind-styled-components';
 
-const CharacterContainer = styled.div`
-  display: flex;
-  height: 55vh;
-  justify-content: center;
-  background-image: url('/character/body_default.png');
-  background-position: center;
-  background-size: over;
-  background-repeat: no-repeat;
+const Container = tw.div`
+  flex
+  h-[55vh]
+  justify-center
+  bg-[url('../public/character/body_default.png')]
+  bg-center
+  bg-contain
+  bg-no-repeat
 `;
 
-const CharacterItem = styled.div`
-  position: absolute;
+const Item = tw.div`
+  flex
+  flex-col
+  relative
+  mt-[4vmax]
+  pointer-events-none
+  select-none
 `;
 
 const Character = () => {
   return (
-    <CharacterContainer>
-      <CharacterItem>
-        <img src={'character/muffler.png'} alt="neck" />
-      </CharacterItem>
-      <CharacterItem>
+    <Container>
+      <Item>
+        <img className="bg-contain" src={'character/muffler.png'} alt="neck" />
         <img src={'character/pants1.png'} alt="pants" />
-      </CharacterItem>
-    </CharacterContainer>
+      </Item>
+    </Container>
   );
 };
 

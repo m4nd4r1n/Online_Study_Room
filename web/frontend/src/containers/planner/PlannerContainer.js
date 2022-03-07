@@ -12,13 +12,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { readPlanner, unloadPlanner } from '../../modules/planner';
 import { changeField, initializePlan, addPlan } from '../../modules/plan';
 import { ContentsBlock } from '../../components/common/Contents';
-import PlanList from '../../components/planner/PlanList';
-import Planner from '../../components/planner/Planner';
 import AddPlan from '../../components/planner/AddPlan';
 import { removePlan } from '../../lib/api/planner';
+import Planner from '../../components/planner/Planner';
+import { formatDate } from 'react-day-picker/moment';
 
 const PlannerContainer = () => {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(
+    `${formatDate(new Date(), 'YYYY.MM.DD (ddd)')}`,
+  );
   const [isAddPlan, setIsAddPlan] = useState(false);
   const [addError, setAddError] = useState(null);
   const dispatch = useDispatch();
@@ -32,11 +34,16 @@ const PlannerContainer = () => {
 
   // 날짜 변경 시 새 플래너 요청, 플랜 날짜 변경
   useEffect(() => {
-    dispatch(readPlanner({ month: date.getMonth() + 1, day: date.getDate() }));
+    dispatch(
+      readPlanner({
+        month: new Date(date).getMonth() + 1,
+        day: new Date(date).getDate(),
+      }),
+    );
     dispatch(
       changeField({
         key: 'date',
-        value: date,
+        value: new Date(date),
       }),
     );
     return () => {
@@ -111,12 +118,12 @@ const PlannerContainer = () => {
   };
 
   // 날짜 선택 이벤트 핸들러
-  const handleDate = (date) => {
-    setDate(date);
+  const handleDate = (day) => {
+    setDate(formatDate(day, 'YYYY.MM.DD (ddd)'));
     dispatch(
       changeField({
         key: 'date',
-        value: date,
+        value: new Date(day),
       }),
     );
   };
@@ -189,20 +196,13 @@ const PlannerContainer = () => {
           />
         </ContentsBlock>
       ) : (
-        <ContentsBlock
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-          }}
-        >
-          <PlanList
-            plans={copyPlans}
-            onRemove={onRemove}
-            setIsAddPlan={setIsAddPlan}
-          />
-          <Planner plans={copyPlans} date={date} handleDate={handleDate} />
-        </ContentsBlock>
+        <Planner
+          plans={copyPlans}
+          date={date}
+          handleDate={handleDate}
+          onRemove={onRemove}
+          setIsAddPlan={setIsAddPlan}
+        />
       )}
     </>
   );

@@ -11,6 +11,7 @@ import rootReducer, { rootSaga } from './modules';
 import { tempSetUser, check } from './modules/user';
 import { IconContext } from 'react-icons';
 import Modal from 'react-modal';
+import { HelmetProvider } from 'react-helmet-async';
 
 Modal.setAppElement('#root');
 
@@ -42,7 +43,9 @@ ReactDOM.render(
       }}
     >
       <BrowserRouter>
-        <App />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
       </BrowserRouter>
     </IconContext.Provider>
   </Provider>,

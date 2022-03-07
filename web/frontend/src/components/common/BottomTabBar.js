@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import tw from 'tailwind-styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import {
@@ -14,21 +15,25 @@ import {
 
 /* 네비바 하단 고정 및 세로 길이 설정 */
 const Wrapper = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50px;
-  overflow: hidden;
-  border-top: 1px solid grey;
-  display: flex;
-  justify-content: space-around;
-  overflow-x: scroll;
   --ms-overflow-style: none;
   ::-webkit-scrollbar {
     display: none;
     width: 0 !important;
   }
+`;
+
+const TwWrapper = tw(Wrapper)`
+  fixed
+  bottom-0
+  flex
+  h-[50px]
+  w-full
+  overflow-y-hidden
+  overflow-x-scroll
+  border-t
+  border-gray-400
+  bg-white
+  sm:justify-center
 `;
 
 const BottomTabBar = () => {
@@ -40,7 +45,7 @@ const BottomTabBar = () => {
     navigate(value);
   };
   return (
-    <Wrapper>
+    <TwWrapper>
       <BottomNavigation value={value} onChange={onChange} showLabels>
         <BottomNavigationAction label="홈" value="/home" icon={<Home />} />
         <BottomNavigationAction
@@ -74,7 +79,7 @@ const BottomTabBar = () => {
           icon={<Settings />}
         />
       </BottomNavigation>
-    </Wrapper>
+    </TwWrapper>
   );
 };
 

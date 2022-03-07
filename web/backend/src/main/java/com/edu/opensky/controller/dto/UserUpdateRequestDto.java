@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class
 UserUpdateRequestDto {
-    private String username;
-    private String password;
+    private String newPassword;
+    private String oldPassword;
 
     @Builder
-    public UserUpdateRequestDto(String username, String password){
-        this.username = username;
-        this.password = password;
+    public UserUpdateRequestDto(String oldPassword, String newPassword){
+        this.oldPassword = oldPassword;
+        this.newPassword = newPassword;
     }
 }

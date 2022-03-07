@@ -13,10 +13,8 @@ import {
   subscribe,
   unsubscribe,
 } from '../../modules/messenger';
-import { ContentsBlock } from '../../components/common/Contents';
-import MessageList from '../../components/message/MessageList';
-import SendMessage from '../../components/message/SendMessage';
 import { useParams } from 'react-router';
+import Message from '../../components/message/Message';
 
 const MessageContainer = () => {
   const { messengerId } = useParams();
@@ -86,6 +84,7 @@ const MessageContainer = () => {
   };
 
   const onClick = () => {
+    if ([message].includes('')) return;
     dispatch(sendMessage({ messengerId, message }));
   };
 
@@ -111,10 +110,13 @@ const MessageContainer = () => {
   }, [error]);
 
   return (
-    <ContentsBlock>
-      <MessageList user={user} messages={test_messages} />
-      <SendMessage onChange={onChange} onClick={onClick} message={message} />
-    </ContentsBlock>
+    <Message
+      user={user}
+      messages={test_messages}
+      onChange={onChange}
+      onClick={onClick}
+      message={message}
+    />
   );
 };
 

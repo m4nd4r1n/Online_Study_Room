@@ -6,6 +6,9 @@ import com.edu.opensky.domain.User;
 import com.edu.opensky.domain.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +17,10 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -43,10 +50,26 @@ public class UserService {
     }
 
     /* 토큰으로 정보 조회 */
-    public String getCertification(String impUID){
+    @Transactional
+    public List<String> getCertification(String impUID){
         String url = "https://api.iamport.kr/certifications/" + impUID;
-        return "token";
+        String accessToken = getToken();
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", accessToken);
+
+        HttpEntity request = new HttpEntity(headers);
+
+        RestTemplate rt = new RestTemplate();
+        ResponseEntity<String> response = rt.exchange(url, HttpMethod.GET, request, String.class);
+
+        JSONObject jsonObject = new JSONObject(response.getBody());
+        JSONObject jsonToken = jsonObject.getJSONObject("response");
+        List<String> userInfo = new ArrayList<>();
+        userInfo.add(jsonToken.getString("name"));
+        userInfo.add(jsonToken.getString("phone"));
+        userInfo.add(jsonToken.getString("birthday"));
+        return userInfo;
     }
 
     /* 로그인 */
@@ -60,14 +83,18 @@ public class UserService {
 
     /* 마지막 접속일자 업데이트 */
     public void dateUpdate(LoginRequestDto responseDto){
-        if(userRepository.findByEmail(responseDto.getEmail()).isPresent()){
-            userRepository.save(User
-                    .builder()
-                    .email(responseDto.getEmail())
-                    .password(responseDto.getPassword())
+        Optional<User> user = userRepository.findByEmail(responseDto.getEmail());
+        user.ifPresent(selectUser ->{
+            userRepository.save(User.builder()
+                    .email(selectUser.getEmail())
+                    .password(selectUser.getPassword())
                     .lastAccessDate(LocalDate.now())
-                    .build());
-        }
+                    .birth(selectUser.getBirth())
+                    .name(selectUser.getName())
+                    .phone(selectUser.getPhone())
+                    .build()
+            );
+        });
     }
     /* 출석체크 */
     @Transactional
@@ -88,8 +115,9 @@ public class UserService {
     /* 회원가입 */
     @Transactional
     public String register(RegisterRequestDto requestDto) {
-        UserSaveRequestDto userSaveRequestDto = new UserSaveRequestDto(requestDto.getEmail(), requestDto.getPassword(),requestDto.getImpUID());
+        UserSaveRequestDto userSaveRequestDto = new UserSaveRequestDto(requestDto.getEmail(), requestDto.getPassword());
         checkDuplicateUser(userSaveRequestDto);
+        
         switch (requestDto.getType()) {
             case "멘티":
                 MenteeSaveRequestDto menteeSaveRequestDto = new MenteeSaveRequestDto(requestDto.getEmail(), requestDto.getSchool());
@@ -105,7 +133,11 @@ public class UserService {
                 parentRepository.save(parentSaveRequestDto.toEntity());
 
         }
-        System.out.println("userSaveRequestDto.getImpUID() = " + userSaveRequestDto.getImpUID());
+        // 아임포트에 certification을 이용하여 이름, 전화번호, 생일을 추가로 받아옴
+        List<String> userInfo = getCertification(requestDto.getImpUID());
+        userSaveRequestDto = new UserSaveRequestDto(requestDto.getEmail(), requestDto.getPassword(),
+                userInfo.get(0), userInfo.get(1), LocalDate.parse(userInfo.get(2), DateTimeFormatter.ISO_DATE));
+
         return userRepository.save(userSaveRequestDto.toEntity()).getEmail();
     }
 
@@ -117,15 +149,45 @@ public class UserService {
                 });
     }
 
-    /* 비밀번호 변경 수정중 */
+    /* 비밀번호 변경 */
     @Transactional
-    public String update(String username, UserUpdateRequestDto requestDto) {
-        User user = userRepository.findByEmail(username).orElseThrow(() -> new
-                IllegalArgumentException("해당 아이디가 없습니다. id=" + username));
-        user.update(requestDto.getUsername(), requestDto.getPassword());
+    public String update(String email, UserUpdateRequestDto requestDto) {
+        User user = userRepository.findByPassword(requestDto.getOldPassword()).orElseThrow(() -> new
+                IllegalArgumentException("비밀번호가 다릅니다"));
 
-        return username;
+        // 유저 아이디와 입력받은 비밀번호에 해당하는 아이디가 같은 경우에만 업데이트
+        if (user.getEmail().equals(email)){
+            // 새 비밀번호로 업데이트
+            user.update(email, requestDto.getNewPassword(), user.getName(), user.getPhone(),user.getBirth());
+        }
+        else{
+            System.out.println("비밀번호가 다릅니다.");
+        }
+
+        return user.getEmail();
     }
 
+    /* 회원 정보 찾기 */
+    @Transactional
+    public String find(FindRequestDto findRequestDto) {
+        String email = findRequestDto.getEmail();
+        String impUID = findRequestDto.getImpUID();
 
+        List<String> userInfo = getCertification(impUID);
+
+        // 이메일 찾기
+        if (!userInfo.isEmpty() && email == null){
+            User user = userRepository.findByPhone(userInfo.get(1)).orElseThrow(() -> new
+                    IllegalArgumentException("회원 가입 기록이 없습니다."));
+            return user.getEmail();
+        }
+        // 비밀번호 찾기
+        else if (!userInfo.isEmpty() && email != null){
+            User user = userRepository.findByEmail(email).orElseThrow(() -> new
+                    IllegalArgumentException("해당 아이디가 없습니다. id=" + email));
+            return user.getPassword();
+        }
+
+        return null;
+    }
 }
