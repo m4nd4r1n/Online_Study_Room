@@ -11,6 +11,7 @@ import achievement, { achievementSaga } from './achievement';
 import messenger, { messengerSaga } from './messenger';
 import messengers, { messengersSaga } from './messengers';
 import statistics, { statisticsSaga } from './statistics';
+import management, { managementSaga } from './management';
 
 const rootReducer = combineReducers({
   auth,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   messenger,
   messengers,
   statistics,
+  management,
 });
 
 export function* rootSaga() {
@@ -38,6 +40,7 @@ export function* rootSaga() {
     messengerSaga(),
     messengersSaga(),
     statisticsSaga(),
+    managementSaga(),
   ]);
 }
 

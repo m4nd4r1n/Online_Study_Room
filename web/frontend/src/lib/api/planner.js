@@ -16,10 +16,11 @@ export const removePlan = ({ subject, month, day }) => {
 };
 
 // 플래너 가져오기
-export const readPlanner = ({ month, day }) => {
+export const readPlanner = ({ month, day, userId }) => {
   const queryString = qs.stringify({
     month,
     day,
+    userId,
   });
   return client.get(`/api/planner?${queryString}`);
 };

@@ -8,6 +8,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { readPlanner, unloadPlanner } from '../../modules/planner';
 import { changeField, initializePlan, addPlan } from '../../modules/plan';
@@ -18,6 +19,8 @@ import Planner from '../../components/planner/Planner';
 import { formatDate } from 'react-day-picker/moment';
 
 const PlannerContainer = () => {
+  const { userId } = useParams();
+
   const [date, setDate] = useState(
     `${formatDate(new Date(), 'YYYY.MM.DD (ddd)')}`,
   );
@@ -36,20 +39,21 @@ const PlannerContainer = () => {
   useEffect(() => {
     dispatch(
       readPlanner({
-        month: new Date(date).getMonth() + 1,
-        day: new Date(date).getDate(),
+        month: new Date(plan.date).getMonth() + 1,
+        day: new Date(plan.date).getDate(),
+        userId,
       }),
     );
     dispatch(
       changeField({
         key: 'date',
-        value: new Date(date),
+        value: new Date(plan.date),
       }),
     );
     return () => {
       dispatch(unloadPlanner());
     };
-  }, [dispatch, date]);
+  }, [dispatch, plan, userId]);
 
   useEffect(() => {
     if (!isAddPlan) {

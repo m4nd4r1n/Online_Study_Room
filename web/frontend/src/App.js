@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import AchievementPage from './pages/AchievementPage';
-import MentiManagementPage from './pages/MentiManagementPage';
+import MenteeManagementPage from './pages/MenteeManagementPage';
 import MessengerListPage from './pages/MessengerListPage';
 import MessengerPage from './pages/MessengerPage';
 import PlannerPage from './pages/PlannerPage';
@@ -50,8 +50,11 @@ const App = () => {
         }
         path="achievement"
       />
-      <Route element={<MentiManagementPage />} path="management" />
-      <Route element={<StudyTimeManagementPage />} path="timeManagement" />
+      <Route element={<MenteeManagementPage />} path="management/:studentId" />
+      <Route
+        element={<StudyTimeManagementPage />}
+        path="management/time/:studentId"
+      />
       <Route
         element={
           <>
@@ -62,6 +65,15 @@ const App = () => {
         path="messenger"
       />
       <Route element={<MessengerPage />} path="messenger/:messengerId" />
+      <Route
+        element={
+          <>
+            <PlannerPage />
+            <BottomTabBar />
+          </>
+        }
+        path="planner/:userId"
+      />
       <Route
         element={
           <>

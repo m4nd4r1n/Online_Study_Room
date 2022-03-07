@@ -10,34 +10,34 @@ const Mentee = ({ mentee, index }) => {
   return (
     <ItemBlock>
       <StyledBox>
-        <ListItem>{mentee[1]}</ListItem>
+        <ListItem>{mentee.name}</ListItem>
         <Divider />
-        <ListItem>{mentee[0]}</ListItem>
+        <ListItem>{mentee.school}</ListItem>
         <Divider />
         <ListItem fullwidth>
           {/* 멘티 관리 */}
           <MdManageAccounts
             onClick={() => {
-              navigate('/');
+              navigate(`/management/${mentee.id}`);
             }}
           />
 
           {/* 플래너 */}
           <MdEventNote
             onClick={() => {
-              navigate('/');
+              navigate(`/planner/${mentee.id}`);
             }}
           />
 
           {/* 메신저 */}
           <MdMessage
             onClick={() => {
-              navigate('/');
+              navigate(`/messenger/${mentee.messengerId}`);
             }}
           />
         </ListItem>
         <Divider />
-        <ListItem>{mentee[2]}</ListItem>
+        <ListItem>{mentee.state}</ListItem>
       </StyledBox>
     </ItemBlock>
   );
@@ -45,8 +45,20 @@ const Mentee = ({ mentee, index }) => {
 
 const MenteeList = () => {
   const mentees = [
-    ['서울중', '박서울', '학습중'],
-    ['부산고', '김부산', '오프라인'],
+    {
+      id: '1234',
+      school: '서울중',
+      name: '박서울',
+      state: '학습중',
+      messengerId: 'messengerId1',
+    },
+    {
+      id: '5678',
+      school: '부산고',
+      name: '김부산',
+      state: '오프라인',
+      messengerId: 'messengerId2',
+    },
   ];
 
   return (

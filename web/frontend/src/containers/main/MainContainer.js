@@ -33,7 +33,7 @@ const MainContainer = () => {
 
   // 테스트 info
   // parent/mento/mentee 테스트 후 제거 필요
-  info = { type: 'mentee' };
+  info = { type: 'mentor' };
 
   useEffect(() => {
     if (user !== null) dispatch(getUserInfo());
@@ -62,7 +62,7 @@ const MainContainer = () => {
         {info ? (
           info.type === 'parent' ? (
             <ChildrenList />
-          ) : info.type === 'mento' ? (
+          ) : info.type === 'mentor' ? (
             <MenteeList />
           ) : info.type === 'mentee' ? (
             <>
