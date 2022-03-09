@@ -55,6 +55,14 @@ export const ListItem = styled.div`
       width: 80%;
     `}
 
+    ${(props) =>
+    props.quarter &&
+    css`
+      display: flex;
+      width: 25%;
+    `}
+
+
   ${(props) =>
     props.fullwidth &&
     css`

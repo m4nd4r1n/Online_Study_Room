@@ -9,7 +9,7 @@ const Mentee = ({ mentee, index }) => {
 
   return (
     <ItemBlock>
-      <StyledBox>
+      <StyledBox $border>
         <ListItem>{mentee.name}</ListItem>
         <Divider />
         <ListItem>{mentee.school}</ListItem>

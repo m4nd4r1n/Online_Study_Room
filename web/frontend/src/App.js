@@ -50,10 +50,10 @@ const App = () => {
         }
         path="achievement"
       />
-      <Route element={<MenteeManagementPage />} path="management/:studentId" />
+      <Route element={<MenteeManagementPage />} path="management/:userId" />
       <Route
         element={<StudyTimeManagementPage />}
-        path="management/time/:studentId"
+        path="management/time/:userId"
       />
       <Route
         element={

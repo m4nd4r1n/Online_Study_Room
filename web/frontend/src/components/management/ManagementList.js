@@ -16,12 +16,12 @@ const StyledButton = tw(Button)`
 `;
 
 const ManagementList = () => {
-  const { studentId } = useParams();
+  const { userId } = useParams();
 
   return (
     <>
       <ItemBlock>
-        <StyledBox>
+        <StyledBox $border>
           <ListItem auto>
             <BsFillCameraVideoFill />
           </ListItem>
@@ -29,7 +29,7 @@ const ManagementList = () => {
             학습화면 확인
           </ListItem>
           <ListItem auto>
-            <StyledButton white="true" to={`/study/${studentId}`}>
+            <StyledButton white="true" to={`/study/${userId}`}>
               <svg
                 className="h-6 w-6"
                 fill="none"
@@ -49,7 +49,7 @@ const ManagementList = () => {
         </StyledBox>
       </ItemBlock>
       <ItemBlock>
-        <StyledBox>
+        <StyledBox $border>
           <ListItem auto>
             <BsPencilFill />
           </ListItem>
@@ -57,7 +57,7 @@ const ManagementList = () => {
             학습시간 확인
           </ListItem>
           <ListItem auto>
-            <StyledButton white="true" to={`/management/time/${studentId}`}>
+            <StyledButton white="true" to={`/management/time/${userId}`}>
               <svg
                 className="h-6 w-6"
                 fill="none"

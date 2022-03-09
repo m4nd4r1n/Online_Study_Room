@@ -10,7 +10,7 @@ const Child = ({ child }) => {
 
   return (
     <ItemBlock>
-      <StyledBox>
+      <StyledBox $border>
         <ListItem>{child[1]}</ListItem>
         <Divider />
         <ListItem>{child[0]}</ListItem>

@@ -15,11 +15,19 @@ const [
   ACCEPT_STUDY_TIME_FAILURE,
 ] = createRequestActionTypes('management/ACCEPT_STUDY_TIME');
 
-export const getStudentInfo = createAction(GET_STUDENT_INFO);
-export const getStudyTime = createAction(GET_STUDY_TIME);
-export const acceptStudyTime = createAction(ACCEPT_STUDY_TIME, ({ date }) => ({
-  date,
+export const getStudentInfo = createAction(GET_STUDENT_INFO, ({ userId }) => ({
+  userId,
 }));
+export const getStudyTime = createAction(GET_STUDY_TIME, ({ userId }) => ({
+  userId,
+}));
+export const acceptStudyTime = createAction(
+  ACCEPT_STUDY_TIME,
+  ({ userId, time }) => ({
+    userId,
+    time,
+  }),
+);
 
 const getStudentInfoSaga = createRequestSaga(
   GET_STUDENT_INFO,

@@ -7,7 +7,7 @@ import { getStudentInfo } from '../../modules/management';
 import { useParams } from 'react-router-dom';
 
 const ManagementContainer = () => {
-  const { studentId } = useParams();
+  const { userId } = useParams();
   const dispatch = useDispatch();
   const { studentInfo, error } = useSelector(({ management, loading }) => ({
     studentInfo: management.info,
@@ -22,8 +22,8 @@ const ManagementContainer = () => {
   };
 
   useEffect(() => {
-    dispatch(getStudentInfo(studentId));
-  }, [dispatch, studentId]);
+    dispatch(getStudentInfo({ userId }));
+  }, [dispatch, userId]);
 
   return (
     <ContentsBlock>

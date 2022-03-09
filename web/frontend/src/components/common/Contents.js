@@ -26,19 +26,18 @@ export const ItemBlock = tw.div`
 /**
  * styled box
  */
-
 export const StyledBox = tw.div`
   -mb-[1px]
   flex
   w-full
   justify-between
-  border
-border-gray-400
   p-4
   text-base
   outline-none
   focus:border-gray-700
   focus:text-teal-700
+  ${(p) => p.$border && 'border border-gray-400'}
+  ${(p) => p.$borderb && 'rounded-none border-b'}
   ${(p) => p.$messenger && 'rounded-none border-none hover:bg-gray-100'}
   ${(p) =>
     p.$message
