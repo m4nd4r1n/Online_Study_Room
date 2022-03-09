@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7e0ae73-e136-438e-8cf7-b7e0a9d457e9" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/ManagementController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/ManagementService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserSaveRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserSaveRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserUpdateRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserUpdateRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/test/java/com/edu/opensky/ApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/test/java/com/edu/opensky/ApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -373,6 +371,14 @@
       <workItem from="1645881323214" duration="6367000" />
       <workItem from="1646200774064" duration="6751000" />
       <workItem from="1646208940805" duration="3010000" />
+      <workItem from="1646589309222" duration="798000" />
+      <workItem from="1646590337000" duration="725000" />
+      <workItem from="1646718095516" duration="180000" />
+      <workItem from="1646801957837" duration="642000" />
+      <workItem from="1646803777610" duration="596000" />
+      <workItem from="1646807236214" duration="4836000" />
+      <workItem from="1646814879683" duration="6000" />
+      <workItem from="1646822984635" duration="6301000" />
     </task>
     <servers />
   </component>
