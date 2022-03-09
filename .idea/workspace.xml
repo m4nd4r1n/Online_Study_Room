@@ -157,7 +157,7 @@
     <property name="project.structure.last.edited" value="프로젝트" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.3156863" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2021.1.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
@@ -378,7 +378,9 @@
       <workItem from="1646803777610" duration="596000" />
       <workItem from="1646807236214" duration="4836000" />
       <workItem from="1646814879683" duration="6000" />
-      <workItem from="1646822984635" duration="6301000" />
+      <workItem from="1646822984635" duration="6986000" />
+      <workItem from="1646837218300" duration="16000" />
+      <workItem from="1646837268429" duration="212000" />
     </task>
     <servers />
   </component>
