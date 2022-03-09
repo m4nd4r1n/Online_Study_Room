@@ -13,7 +13,6 @@ import javax.persistence.Id;
 @Entity
 public class Parent {
     @Id
-    @Column(length = 15)
     private String prtId;
 
     @Column(nullable = true, length=15)

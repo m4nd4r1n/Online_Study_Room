@@ -30,12 +30,6 @@ public class UserApiController {
     }
 
 
-    // 토큰
-    @PostMapping("/token")
-    public void token(){
-        userService.getToken();
-    }
-
     @PutMapping("/auth/update/{email}")
     public String update(
             @PathVariable String email, @RequestBody UserUpdateRequestDto requestDto){

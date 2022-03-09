@@ -14,7 +14,6 @@ import javax.persistence.Id;
 public class Mentee {
 
     @Id
-    @Column(length = 15)
     private String mteId;
 
     @Column(nullable = true, length=15)
