@@ -1,17 +1,12 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import HeaderContainer from '../containers/common/HeaderContainer';
 import StudyTimeContainer from '../containers/management/StudyTimeContainer';
+import Layout from '../components/common/Layout';
 
 const StudyTimeManagementPage = () => {
   return (
-    <>
-      <Helmet>
-        <title>학습시간 관리</title>
-      </Helmet>
-      <HeaderContainer title="학습시간 관리" back />
+    <Layout title="학습 관리">
       <StudyTimeContainer />
-    </>
+    </Layout>
   );
 };
 

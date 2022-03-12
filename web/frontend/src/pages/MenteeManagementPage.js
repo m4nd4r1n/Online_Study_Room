@@ -1,17 +1,12 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import HeaderContainer from '../containers/common/HeaderContainer';
 import ManagementContainer from '../containers/management/ManagementContainer';
+import Layout from '../components/common/Layout';
 
 const MenteeManagementPage = () => {
   return (
-    <>
-      <Helmet>
-        <title>멘티 관리</title>
-      </Helmet>
-      <HeaderContainer title="멘티 관리" back />
+    <Layout title="멘티 관리">
       <ManagementContainer />
-    </>
+    </Layout>
   );
 };
 

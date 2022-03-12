@@ -1,45 +1,49 @@
 import React from 'react';
-import { ItemBlock, StyledBox } from '../common/Contents';
 import { useNavigate } from 'react-router-dom';
-import { Divider, ListItem } from '../common/List';
 import { MdManageAccounts, MdMessage, MdEventNote } from 'react-icons/md';
+import tw from 'tailwind-styled-components';
 
-const Mentee = ({ mentee, index }) => {
+const Block = tw.span`
+  flex
+  h-3/5
+  w-1/3
+  items-center
+  justify-center
+  px-1
+  ${(p) => p.$border && 'border-r'}
+`;
+
+const Mentee = ({ mentee }) => {
   const navigate = useNavigate();
-
+  const { name, school, id, messengerId, state } = mentee;
   return (
-    <ItemBlock>
-      <StyledBox $border>
-        <ListItem>{mentee.name}</ListItem>
-        <Divider />
-        <ListItem>{mentee.school}</ListItem>
-        <Divider />
-        <ListItem fullwidth>
-          {/* 멘티 관리 */}
-          <MdManageAccounts
-            onClick={() => {
-              navigate(`/management/${mentee.id}`);
-            }}
-          />
+    <div className="flex h-20 w-full items-center justify-between border-b border-gray-300 text-center sm:px-4">
+      <Block $border>{name}</Block>
+      <Block $border>{school}</Block>
+      <div className="flex h-3/5 w-full items-center justify-around border-r px-1">
+        {/* 멘티 관리 */}
+        <MdManageAccounts
+          onClick={() => {
+            navigate(`/management/${id}`);
+          }}
+        />
 
-          {/* 플래너 */}
-          <MdEventNote
-            onClick={() => {
-              navigate(`/planner/${mentee.id}`);
-            }}
-          />
+        {/* 플래너 */}
+        <MdEventNote
+          onClick={() => {
+            navigate(`/planner/${id}`);
+          }}
+        />
 
-          {/* 메신저 */}
-          <MdMessage
-            onClick={() => {
-              navigate(`/messenger/${mentee.messengerId}`);
-            }}
-          />
-        </ListItem>
-        <Divider />
-        <ListItem>{mentee.state}</ListItem>
-      </StyledBox>
-    </ItemBlock>
+        {/* 메신저 */}
+        <MdMessage
+          onClick={() => {
+            navigate(`/messenger/${messengerId}`);
+          }}
+        />
+      </div>
+      <Block>{state}</Block>
+    </div>
   );
 };
 
@@ -64,7 +68,7 @@ const MenteeList = () => {
   return (
     <>
       {mentees.map((mentee, index) => (
-        <Mentee mentee={mentee} index={index} />
+        <Mentee mentee={mentee} key={index} />
       ))}
     </>
   );

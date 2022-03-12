@@ -1,17 +1,12 @@
 import React from 'react';
 import StudyVideoContainer from '../containers/study/StudyVideoContainer';
-import HeaderContainer from '../containers/common/HeaderContainer';
-import { Helmet } from 'react-helmet-async';
+import Layout from '../components/common/Layout';
 
 const StudyPage = () => {
   return (
-    <>
-      <Helmet>
-        <title>학습 중</title>
-      </Helmet>
-      <HeaderContainer counter />
+    <Layout title="학습 중..." counter back={false}>
       <StudyVideoContainer />
-    </>
+    </Layout>
   );
 };
 

@@ -1,17 +1,12 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import AchievementContainer from '../containers/achievement/AchievementContainer';
-import HeaderContainer from '../containers/common/HeaderContainer';
+import Layout from '../components/common/Layout';
 
 const AchievementPage = () => {
   return (
-    <>
-      <Helmet>
-        <title>도전과제</title>
-      </Helmet>
-      <HeaderContainer title="도전과제" back />
+    <Layout title="도전과제">
       <AchievementContainer />
-    </>
+    </Layout>
   );
 };
 

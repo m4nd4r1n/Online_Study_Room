@@ -14,8 +14,8 @@ const InfoBar = styled.div`
 const StudentInfo = ({ studentInfo }) => {
   return (
     <InfoBar>
-      <div style={{ width: '20%' }}>{studentInfo.school}</div>
-      <div style={{ width: '20%' }}>{studentInfo.name} 학생</div>
+      <span className="w-1/3 sm:w-1/5">{studentInfo.school}</span>
+      <span className="w-1/3 sm:w-1/5">{studentInfo.name} 학생</span>
     </InfoBar>
   );
 };

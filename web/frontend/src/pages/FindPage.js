@@ -1,20 +1,15 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import AuthTemplate from '../components/auth/AuthTemplate';
 import FindForm from '../containers/auth/FindForm';
-import HeaderContainer from '../containers/common/HeaderContainer';
+import Layout from '../components/common/Layout';
 
 const FindPage = () => {
   return (
-    <>
-      <Helmet>
-        <title>찾기</title>
-      </Helmet>
-      <HeaderContainer title="찾기" back />
+    <Layout title="찾기">
       <AuthTemplate center>
         <FindForm />
       </AuthTemplate>
-    </>
+    </Layout>
   );
 };
 

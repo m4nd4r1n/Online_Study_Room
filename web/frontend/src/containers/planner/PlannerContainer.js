@@ -24,6 +24,9 @@ const PlannerContainer = () => {
   const [date, setDate] = useState(
     `${formatDate(new Date(), 'YYYY.MM.DD (ddd)')}`,
   );
+  const [crossBrowserDate, setCrossBrowserDate] = useState(
+    `${formatDate(new Date(), 'YYYY-MM-DD')}`,
+  );
   const [isAddPlan, setIsAddPlan] = useState(false);
   const [addError, setAddError] = useState(null);
   const dispatch = useDispatch();
@@ -37,7 +40,7 @@ const PlannerContainer = () => {
 
   // 날짜 변경 시 새 플래너 요청, 플랜 날짜 변경
   useEffect(() => {
-    const formattedDate = new Date(date);
+    const formattedDate = new Date(crossBrowserDate);
     dispatch(
       readPlanner({
         month: formattedDate.getMonth() + 1,
@@ -54,7 +57,7 @@ const PlannerContainer = () => {
     return () => {
       dispatch(unloadPlanner());
     };
-  }, [dispatch, date, userId]);
+  }, [dispatch, crossBrowserDate, userId]);
 
   useEffect(() => {
     if (!isAddPlan) {
@@ -125,10 +128,11 @@ const PlannerContainer = () => {
   // 날짜 선택 이벤트 핸들러
   const handleDate = (day) => {
     setDate(formatDate(day, 'YYYY.MM.DD (ddd)'));
+    setCrossBrowserDate(formatDate(day, 'YYYY-MM-DD'));
     dispatch(
       changeField({
         key: 'date',
-        value: new Date(day),
+        value: new Date(crossBrowserDate),
       }),
     );
   };

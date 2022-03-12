@@ -21,7 +21,8 @@ const ItemContainer = tw.div`
  * 타이틀 글자 설정
  */
 const Title = tw.div`
-  text-2xl
+  text-xl
+  sm:text-2xl
   w-1/3
   flex
   justify-center
@@ -107,7 +108,7 @@ const Header = ({ title, back, counter }) => {
 
           <ItemContainer className="right">
             <StyledLink to="/home">
-              <div className="text-base">open SKY</div>
+              <div className="text-xs sm:text-base">open SKY</div>
             </StyledLink>
           </ItemContainer>
         </Wrapper>

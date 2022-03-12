@@ -1,17 +1,12 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import HeaderContainer from '../containers/common/HeaderContainer';
 import MainContainer from '../containers/main/MainContainer';
+import Layout from '../components/common/Layout';
 
 const HomePage = () => {
   return (
-    <>
-      <Helmet>
-        <title>홈</title>
-      </Helmet>
-      <HeaderContainer title="Main" back={false} />
+    <Layout title="홈" back={false}>
       <MainContainer />
-    </>
+    </Layout>
   );
 };
 

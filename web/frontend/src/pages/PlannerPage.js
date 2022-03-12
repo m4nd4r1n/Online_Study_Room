@@ -1,17 +1,12 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import HeaderContainer from '../containers/common/HeaderContainer';
 import PlannerContainer from '../containers/planner/PlannerContainer';
+import Layout from '../components/common/Layout';
 
 const PlannerPage = () => {
   return (
-    <>
-      <Helmet>
-        <title>플래너</title>
-      </Helmet>
-      <HeaderContainer title="플래너" back />
+    <Layout title="플래너">
       <PlannerContainer />
-    </>
+    </Layout>
   );
 };
 
