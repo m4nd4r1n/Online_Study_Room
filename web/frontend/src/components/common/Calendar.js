@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import DayPicker from 'react-day-picker';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { formatDate, parseDate } from 'react-day-picker/moment';
@@ -77,13 +77,13 @@ export function SelectCalendar({ date, handleChange }) {
         todayButton: 'Go to Today',
         showOutsideDays: true,
       }}
-      component={(props) => (
+      component={forwardRef((props, ref) => (
         <input
           className="cursor-pointer rounded-md border border-gray-300 text-center transition-colors placeholder:text-center placeholder:text-gray-700 focus:border focus:border-cyan-500 focus:outline-none"
           readOnly
           {...props}
         />
-      )}
+      ))}
       overlayComponent={Overlay}
     />
   );

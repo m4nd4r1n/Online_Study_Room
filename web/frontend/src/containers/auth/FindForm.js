@@ -34,9 +34,14 @@ const FindForm = () => {
     const { impUID, email } = form;
     const regex =
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    if (!(email !== undefined && regex.test(email))) {
+    if (email === '' && impUID !== '') {
+    } else if (impUID === '') {
+      setErrors({ message: '비정상적인 접근입니다.' });
+      changeField({ form: 'find', key: 'impUID', value: '' });
+      return;
+    } else if (!(email !== undefined && regex.test(email))) {
       setErrors({ email: true });
-      changeField({ form: 'register', key: 'email', value: '' });
+      changeField({ form: 'find', key: 'email', value: '' });
       return;
     }
     dispatch(find({ impUID, email }));

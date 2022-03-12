@@ -37,23 +37,24 @@ const PlannerContainer = () => {
 
   // 날짜 변경 시 새 플래너 요청, 플랜 날짜 변경
   useEffect(() => {
+    const formattedDate = new Date(date);
     dispatch(
       readPlanner({
-        month: new Date(plan.date).getMonth() + 1,
-        day: new Date(plan.date).getDate(),
+        month: formattedDate.getMonth() + 1,
+        day: formattedDate.getDate(),
         userId,
       }),
     );
     dispatch(
       changeField({
         key: 'date',
-        value: new Date(plan.date),
+        value: formattedDate,
       }),
     );
     return () => {
       dispatch(unloadPlanner());
     };
-  }, [dispatch, plan, userId]);
+  }, [dispatch, date, userId]);
 
   useEffect(() => {
     if (!isAddPlan) {
