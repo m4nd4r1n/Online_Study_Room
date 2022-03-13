@@ -1,13 +1,10 @@
 import { useRef } from 'react';
+import { isSupported } from '../../lib/utils';
 
 const useNotification = () => {
   const notificationRef = useRef(null);
 
-  if (!Notification) {
-    return;
-  }
-
-  if (Notification.permission !== 'granted') {
+  if (isSupported() && Notification.permission !== 'granted') {
     try {
       Notification.requestPermission().then((permission) => {
         if (permission !== 'granted') return;
@@ -32,6 +29,7 @@ const useNotification = () => {
   };
 
   const fireNotification = (title, options = {}) => {
+    if (!isSupported()) alert(options.body);
     if (Notification.permission !== 'granted') return;
     const newOption = {
       badge: '',

@@ -1,24 +1,42 @@
 import React, { useState } from 'react';
 import { cls } from '../../lib/utils';
+import { getRanking } from '../../lib/api/ranking';
+import useSWRInfinite from 'swr/infinite';
 
 const Ranking = () => {
   const [type, setType] = useState('time');
   const [time, setTime] = useState('day');
+  const getKey = (index) =>
+    `/api/ranking?page=${index + 1}&type=${type}&time=${
+      type === 'time' ? time : ''
+    }`;
+  const { data, size, setSize } = useSWRInfinite(getKey, getRanking, {
+    revalidateFirstPage: false,
+  });
+  const isEnd = data && data[data.length - 1]?.length < 25;
+  const issues = data ? [].concat(...data) : [];
   const onTimeClick = () => {
     setType('time');
+    setSize(0);
   };
   const onLevelClick = () => {
     setType('level');
+    setTime('day');
+    setSize(0);
   };
   const onDayClick = () => {
     setTime('day');
+    setSize(0);
   };
   const onWeekClick = () => {
     setTime('week');
+    setSize(0);
   };
   const onMonthClick = () => {
     setTime('month');
+    setSize(0);
   };
+
   return (
     <div className="mx-auto w-full max-w-2xl">
       <div className="px-4">
@@ -29,7 +47,7 @@ const Ranking = () => {
                 className={cls(
                   'border-b-2 pb-2 text-lg font-medium',
                   type === 'time'
-                    ? ' border-teal-500 text-teal-400'
+                    ? ' border-cyan-500 text-cyan-400'
                     : 'border-transparent text-gray-500 transition-colors hover:text-gray-400',
                 )}
                 onClick={onTimeClick}
@@ -40,7 +58,7 @@ const Ranking = () => {
                 className={cls(
                   'border-b-2 pb-2 text-lg font-medium',
                   type === 'level'
-                    ? ' border-teal-500 text-teal-400'
+                    ? ' border-cyan-500 text-cyan-400'
                     : 'border-transparent text-gray-500 transition-colors hover:text-gray-400',
                 )}
                 onClick={onLevelClick}
@@ -57,7 +75,7 @@ const Ranking = () => {
                   className={cls(
                     'border-b-2 text-sm font-medium',
                     time === 'day'
-                      ? ' border-teal-500 text-teal-400'
+                      ? ' border-cyan-500 text-cyan-400'
                       : 'border-transparent text-gray-500 transition-colors hover:text-gray-400',
                   )}
                   onClick={onDayClick}
@@ -68,7 +86,7 @@ const Ranking = () => {
                   className={cls(
                     'border-b-2 text-sm font-medium',
                     time === 'week'
-                      ? ' border-teal-500 text-teal-400'
+                      ? ' border-cyan-500 text-cyan-400'
                       : 'border-transparent text-gray-500 transition-colors hover:text-gray-400',
                   )}
                   onClick={onWeekClick}
@@ -79,7 +97,7 @@ const Ranking = () => {
                   className={cls(
                     'border-b-2 text-sm font-medium',
                     time === 'month'
-                      ? ' border-teal-500 text-teal-400'
+                      ? ' border-cyan-500 text-cyan-400'
                       : 'border-transparent text-gray-500 transition-colors hover:text-gray-400',
                   )}
                   onClick={onMonthClick}
@@ -90,7 +108,7 @@ const Ranking = () => {
             )}
           </div>
           <div className="my-2 grid h-8 w-full select-none grid-cols-3 items-center text-center">
-            {type === 'time' ? (
+            {type === 'time' && time === 'day' ? (
               <>
                 <span>현재 학습중 ?명</span>
                 <span>금일 전체 ?명</span>
@@ -109,21 +127,29 @@ const Ranking = () => {
             {type === 'time' ? <span>학습시간</span> : <span>레벨</span>}
           </div>
 
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((_, i) => (
+          {issues?.map((data, i) => (
             <div
               key={i}
               className="grid w-full select-none grid-cols-3 items-center border-b py-1 text-center"
             >
-              <span className="ml-8 flex aspect-square w-14 items-center justify-center rounded-full border-2 border-teal-400 shadow-md sm:ml-20">
+              <span className="ml-8 flex aspect-square w-14 items-center justify-center rounded-full border-2 border-cyan-400 shadow-md sm:ml-20">
                 {i + 1}
               </span>
               <div className="flex flex-col items-center justify-center">
-                <span>OOO학교</span>
-                <span>OOO학생</span>
+                <span>{data?.school}</span>
+                <span>{data?.name}</span>
               </div>
-              <span>12:34</span>
+              <span>{type === 'time' ? data?.time : data?.level}</span>
             </div>
           ))}
+          {!isEnd && (
+            <button
+              className="mt-4 h-12 w-full border-t px-4 font-medium"
+              onClick={() => setSize(size + 1)}
+            >
+              더보기
+            </button>
+          )}
         </div>
       </div>
     </div>

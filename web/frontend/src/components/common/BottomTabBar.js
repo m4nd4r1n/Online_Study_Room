@@ -15,9 +15,10 @@ import {
 
 /* 네비바 하단 고정 및 세로 길이 설정 */
 const Wrapper = styled.div`
-  --ms-overflow-style: none;
+  --ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
   ::-webkit-scrollbar {
-    display: none;
+    display: none; /* Chrome, Safari, Opera*/
     width: 0 !important;
   }
 `;
