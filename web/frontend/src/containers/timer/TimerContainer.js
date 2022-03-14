@@ -7,6 +7,7 @@ import { ContentsBlock } from '../../components/common/Contents';
 import Timer from '../../components/timer/Timer';
 import InputTime from '../../components/timer/InputTime';
 import Alarm from '../../components/timer/Alarm';
+import { isSupported } from '../../lib/utils';
 
 const TimerContainer = () => {
   const [inputTime, setInputTime] = useState(true);
@@ -29,10 +30,10 @@ const TimerContainer = () => {
   };
 
   useEffect(() => {
-    if (Notification.permission !== 'granted') {
+    if (isSupported() && Notification.permission !== 'granted') {
       Notification.requestPermission();
     }
-  });
+  }, []);
 
   return (
     <ContentsBlock

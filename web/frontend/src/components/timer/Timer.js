@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '../common/Button';
 import useInterval from './useInterval';
 import useNotification from './useNotification';
+import { playAudio } from '../../lib/utils';
 
 const StyledTimer = styled.div`
   display: flex;
@@ -35,8 +36,7 @@ const Timer = ({ onClickTimer, inputTime, time }) => {
         // 시 분 초 0
         if (hours === 0) {
           setPause(true);
-          const audio = new Audio('sound/alert.mp3');
-          audio.play();
+          playAudio();
           fireNotification('Online Study', {
             body: '타임아웃!!',
           });

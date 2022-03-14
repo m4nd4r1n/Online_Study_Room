@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '../common/Button';
 import useInterval from './useInterval';
 import useNotification from './useNotification';
+import { playAudio } from '../../lib/utils';
 
 const StyledTimer = styled.div`
   display: flex;
@@ -48,8 +49,7 @@ const Alarm = ({ onClickTimer, time }) => {
       seconds === time.seconds
     ) {
       setDelay(null);
-      const audio = new Audio('sound/alert.mp3');
-      audio.play();
+      playAudio();
       fireNotification('Online Study', {
         body: '목표 시간 달성!!',
       });
