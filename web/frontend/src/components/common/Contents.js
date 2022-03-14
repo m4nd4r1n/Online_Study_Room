@@ -1,5 +1,15 @@
 import tw from 'tailwind-styled-components';
 
+export const Block = tw.span`
+  flex
+  h-3/5
+  w-1/3
+  items-center
+  justify-center
+  px-1
+  ${(p) => p.$border && 'border-r'}
+`;
+
 export const ContentsBox = tw.div`
   flex
  flex-row

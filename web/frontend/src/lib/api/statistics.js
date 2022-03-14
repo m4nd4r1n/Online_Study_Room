@@ -13,8 +13,9 @@ import client from './client';
       '목표 공부시간': 240,     
     }, ...  ];
  */
-export const getWeekStudyTime = ({ month, day }) => {
+export const getWeekStudyTime = ({ userId, month, day }) => {
   const queryString = qs.stringify({
+    userId,
     month,
     day,
   });
@@ -38,8 +39,9 @@ export const getWeekStudyTime = ({ month, day }) => {
     { name: '목표 공부시간', value: 240 },  // 특정일의 공부시간
   ],
  */
-export const getDateStudyTime = ({ month, day }) => {
+export const getDateStudyTime = ({ userId, month, day }) => {
   const queryString = qs.stringify({
+    userId,
     month,
     day,
   });

@@ -1,17 +1,7 @@
 import React from 'react';
+import { Block } from '../common/Contents';
 import { useNavigate } from 'react-router-dom';
 import { MdManageAccounts, MdMessage, MdEventNote } from 'react-icons/md';
-import tw from 'tailwind-styled-components';
-
-const Block = tw.span`
-  flex
-  h-3/5
-  w-1/3
-  items-center
-  justify-center
-  px-1
-  ${(p) => p.$border && 'border-r'}
-`;
 
 const Mentee = ({ mentee }) => {
   const navigate = useNavigate();

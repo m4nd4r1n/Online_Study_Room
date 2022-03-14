@@ -33,7 +33,7 @@ const MainContainer = () => {
 
   // 테스트 info
   // parent/mento/mentee 테스트 후 제거 필요
-  info = { type: 'mentor' };
+  info = { type: 'parent' };
 
   useEffect(() => {
     if (user !== null) dispatch(getUserInfo());

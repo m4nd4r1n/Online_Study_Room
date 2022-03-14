@@ -5,6 +5,7 @@
  */
 
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getWeekStudyTime,
@@ -19,6 +20,8 @@ import { StyledDatePicker } from '../../components/common/Date';
 import { useEffect } from 'react';
 
 const StatisticsContainer = () => {
+  const { userId } = useParams();
+
   const [date, setDate] = useState(new Date());
   const [weekStart, setWeekStart] = useState(
     new Date(new Date(date).setDate(date.getDate() - date.getDay())),
@@ -143,6 +146,7 @@ const StatisticsContainer = () => {
   useEffect(() => {
     dispatch(
       getWeekStudyTime({
+        userId,
         month: weekStart.getMonth() + 1,
         day: weekStart.getDate(),
       }),
@@ -150,14 +154,18 @@ const StatisticsContainer = () => {
     return () => {
       dispatch(unloadStatistics());
     };
-  }, [dispatch, weekStart]);
+  }, [dispatch, userId, weekStart]);
 
   // date 변경 시 date의 공부시간 불러오기
   useEffect(() => {
     dispatch(
-      getDateStudyTime({ month: date.getMonth() + 1, day: date.getDate() }),
+      getDateStudyTime({
+        userId,
+        month: date.getMonth() + 1,
+        day: date.getDate(),
+      }),
     );
-  }, [dispatch, date]);
+  }, [dispatch, userId, date]);
 
   // date 변경 시 weekStart 변경
   useEffect(() => {

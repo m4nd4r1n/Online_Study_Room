@@ -19,17 +19,11 @@ const UNLOAD_STATISTICS = 'statistics/UNLOAD_STATISTICS';
 
 export const getWeekStudyTime = createAction(
   GET_WEEK_STUDY_TIME,
-  ({ month, day }) => ({
-    month,
-    day,
-  }),
+  ({ userId, month, day }) => ({ userId, month, day }),
 );
 export const getDateStudyTime = createAction(
   GET_DATE_STUDY_TIME,
-  ({ month, day }) => ({
-    month,
-    day,
-  }),
+  ({ userId, month, day }) => ({ userId, month, day }),
 );
 export const unloadStatistics = createAction(UNLOAD_STATISTICS);
 

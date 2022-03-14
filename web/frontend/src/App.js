@@ -109,6 +109,15 @@ const App = () => {
             <BottomTabBar />
           </>
         }
+        path="statistics/:userId"
+      />
+      <Route
+        element={
+          <>
+            <StatisticsPage />
+            <BottomTabBar />
+          </>
+        }
         path="statistics"
       />
       <Route path="*" element={<NotFound />} />
