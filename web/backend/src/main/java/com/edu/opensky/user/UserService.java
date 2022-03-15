@@ -2,6 +2,7 @@ package com.edu.opensky.user;
 
 import com.edu.opensky.attendance.AttendanceRepository;
 import com.edu.opensky.attendance.Attendance;
+import com.edu.opensky.user.mentee.Mentee;
 import com.edu.opensky.user.mentee.MenteeRepository;
 import com.edu.opensky.user.mentee.dto.MenteeSaveRequestDto;
 import com.edu.opensky.user.mentor.MentorRepository;
@@ -59,16 +60,19 @@ public class UserService {
     @Transactional
     public void attendance(String stdId){
         LocalDate today = LocalDate.now();
-
-        // 오늘 출석체크 했는지 확인
-        if(!attendanceRepository.findByStdIdAndDate(stdId, today).isPresent()){
-            attendanceRepository.save(Attendance
-                    .builder()
-                    .stdId(stdId)
-                    .date(today)
-                    .build());
-        }
-
+        Optional<Mentee> mentee = menteeRepository.findByMteId(stdId);
+        mentee.ifPresent(
+                selectMentee ->{
+                    // 오늘 출석체크 했는지 확인
+                    if(!attendanceRepository.findByMenteeAndDate(selectMentee, today).isPresent()){
+                        attendanceRepository.save(Attendance
+                                .builder()
+                                .mentee(selectMentee)
+                                .date(today)
+                                .build());
+                    }
+                }
+        );
 
     }
     /* 회원가입 */

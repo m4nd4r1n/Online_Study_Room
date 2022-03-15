@@ -1,13 +1,11 @@
 package com.edu.opensky.achievement;
 
+import com.edu.opensky.user.mentee.Mentee;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
@@ -17,13 +15,15 @@ public class Achievement {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long achievementId;
 
-    private String stdId;
+    @ManyToOne
+    @JoinColumn(name = "mte_id")
+    private Mentee mentee;
     private String name;
     private Long experience;
 
     @Builder
-    public Achievement(String stdId, String name, Long experience){
-        this.stdId = stdId;
+    public Achievement(Mentee mentee, String name, Long experience){
+        this.mentee = mentee;
         this.name = name;
         this.experience = experience;
 

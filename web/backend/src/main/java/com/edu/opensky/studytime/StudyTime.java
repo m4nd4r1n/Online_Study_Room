@@ -1,30 +1,32 @@
 package com.edu.opensky.studytime;
 
+import com.edu.opensky.user.mentee.Mentee;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
 @Entity
 public class StudyTime {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String stdId;
+    @ManyToOne
+    @JoinColumn(name = "mte_id")
+    private Mentee mentee;
 
     private LocalDate startTime;
 
     private LocalDate endTime;
 
     @Builder
-    public StudyTime(Long id, String stdId, LocalDate startTime, LocalDate endtime){
+    public StudyTime(Long id, Mentee mentee, LocalDate startTime, LocalDate endtime){
         this.id = id;
-        this.stdId = stdId;
+        this.mentee = mentee;
         this.startTime = startTime;
         this.endTime = endtime;
 

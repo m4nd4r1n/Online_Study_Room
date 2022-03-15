@@ -1,16 +1,14 @@
 package com.edu.opensky.attendance;
 
 
+import com.edu.opensky.user.mentee.Mentee;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Getter
@@ -23,20 +21,22 @@ public class Attendance {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long attendanceId;
 
-    private String stdId;
+    @ManyToOne
+    @JoinColumn(name = "mte_id")
+    private Mentee mentee;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
     @Builder
-    public Attendance(String stdId, LocalDate date){
-        this.stdId = stdId;
+    public Attendance(Mentee mentee, LocalDate date){
+        this.mentee = mentee;
         this.date = date;
 
     }
     public Attendance toEntity(){
         return Attendance.builder()
-                .stdId(stdId)
+                .mentee(mentee)
                 .date(date)
                 .build();
     }
