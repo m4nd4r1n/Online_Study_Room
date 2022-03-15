@@ -5,10 +5,64 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7e0ae73-e136-438e-8cf7-b7e0a9d457e9" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/ManagementController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/ManagementService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/management/ManagementController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/dto/FindResponseDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/HelloController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/HomeController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/AchievementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/achievement/AchievementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/AttendanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/attendance/AttendanceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/MentorApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentor/MentorApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/messenger/RoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/StompChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/messenger/StompChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/api/UserApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/AttendanceRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/attendance/dto/AttendanceRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/ChatMessageDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/messenger/dto/ChatMessageDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/ChatRoomDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/messenger/dto/ChatRoomDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/FindRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/dto/FindRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/FindResponseDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/LoginRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/dto/LoginRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/MenteeSaveRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentee/dto/MenteeSaveRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/MentorSaveRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentor/dto/MentorSaveRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/ParentSaveRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/parent/dto/ParentSaveRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/RegisterRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/dto/RegisterRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserSaveRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/dto/UserSaveRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/controller/dto/UserUpdateRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/dto/UserUpdateRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Achievement.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/achievement/Achievement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Attendance.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/attendance/Attendance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Mentee.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentee/Mentee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Mentor.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentor/Mentor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Parent.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/parent/Parent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/Planner.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/planner/Planner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/StudyTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTime.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/AchievementRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/achievement/AchievementRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/AttendanceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/attendance/AttendanceRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/ChatRoomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/messenger/ChatRoomRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/MenteeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentee/MenteeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/MentorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentor/MentorRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/ParentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/parent/ParentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/PlannerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/planner/PlannerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/StudyTimeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/domain/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/AttendanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/attendance/AttendanceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/ImportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/ImportService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/MenteeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentee/MenteeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/MentorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentor/MentorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/ParentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/parent/ParentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/resources/templates/home.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/resources/templates/index.mustache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/resources/templates/join.mustache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/resources/templates/layout/footer.mustache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/resources/templates/layout/header.mustache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/test/java/com/edu/opensky/ApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/test/java/com/edu/opensky/ApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/test/java/com/edu/opensky/controller/HelloControllerTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/test/java/com/edu/opensky/controller/UserApiControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/test/java/com/edu/opensky/domain/repository/MentorRepositoryTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +206,7 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/repository" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/planner" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="프로젝트" />
     <property name="project.structure.proportion" value="0.15" />
@@ -162,8 +216,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\java\com\edu\opensky\repository" />
-      <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\java\com\edu\opensky\domain" />
+      <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\java\com\edu\opensky\planner" />
+      <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\java\com\edu\opensky\achievement" />
+      <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\java\com\edu\opensky\attendance" />
+      <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\java\com\edu\opensky\management" />
+      <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\java\com\edu\opensky\mentee" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\resources\templates\members" />
@@ -177,6 +234,7 @@
       <recent name="com.edu.opensky.service" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.edu.opensky.studytime.dto" />
       <recent name="com.edu.opensky.domain" />
     </key>
   </component>
@@ -188,12 +246,12 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.Application (1)">
-    <configuration name="MemberRepositoryTest.findByName" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="ApplicationTests.contextLoads" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/web/backend" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;com.edu.opensky.repository.MemberRepositoryTest.findByName&quot;" />
+        <option name="scriptParameters" value="--tests &quot;com.edu.opensky.ApplicationTests.contextLoads&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -288,10 +346,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.Application (1)" />
+        <item itemvalue="Gradle.ApplicationTests.contextLoads" />
         <item itemvalue="Gradle.MentorRepositoryTest.asdasd" />
         <item itemvalue="Gradle.UserApiControllerTest.User_join" />
         <item itemvalue="Gradle.MemberRepositoryTest.member_join" />
-        <item itemvalue="Gradle.MemberRepositoryTest.findByName" />
       </list>
     </recent_temporary>
   </component>
@@ -380,7 +438,9 @@
       <workItem from="1646814879683" duration="6000" />
       <workItem from="1646822984635" duration="6986000" />
       <workItem from="1646837218300" duration="16000" />
-      <workItem from="1646837268429" duration="212000" />
+      <workItem from="1646837268429" duration="1926000" />
+      <workItem from="1647103048377" duration="91000" />
+      <workItem from="1647341513114" duration="3552000" />
     </task>
     <servers />
   </component>
