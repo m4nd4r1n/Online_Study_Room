@@ -2,6 +2,7 @@ package com.edu.opensky.achievement;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,5 +23,10 @@ public class AchievementController {
         return achievementService.getAchievementList(Token_id);
 
 
+    }
+    // achievement_list.json 읽고 달성과제 리스트 데이터 베이스 저장
+    @PostMapping("")
+    public void setAchievementList(){
+        achievementService.setAchievementList();
     }
 }
