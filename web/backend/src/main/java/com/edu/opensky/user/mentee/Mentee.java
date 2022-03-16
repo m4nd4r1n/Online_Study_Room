@@ -1,12 +1,14 @@
 package com.edu.opensky.user.mentee;
 
+import com.edu.opensky.achievement.Achievement;
+import com.edu.opensky.attendance.Attendance;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -31,6 +33,11 @@ public class Mentee {
     @Column(columnDefinition = "integer default 0")
     private Integer exp;
 
+    @OneToMany(mappedBy = "mentee")
+    private List<Attendance> attendanceList = new ArrayList<>();;
+
+    @OneToMany(mappedBy = "mentee")
+    private List<Achievement> achievementList = new ArrayList<>();
     @Builder
     public Mentee(String mtrId, String mteId, String prtId, String school){
         this.mtrId = mtrId;
