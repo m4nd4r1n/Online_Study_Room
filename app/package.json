@@ -15,6 +15,7 @@
     "expo": "~44.0.2",
     "expo-splash-screen": "~0.14.1",
     "expo-status-bar": "~1.2.0",
+    "iamport-react-native": "^2.0.0-rc.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-hook-form": "^7.28.0",
@@ -25,6 +26,7 @@
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
     "react-native-web": "0.17.1",
+    "react-native-webview": "^11.17.2",
     "styled-components": "^5.3.3",
     "twrnc": "^3.0.2"
   },

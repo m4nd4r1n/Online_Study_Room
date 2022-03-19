@@ -152,7 +152,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, errors }) => {
   };
 
   const inNumber = (e) => {
-    e.target.value = e.target.value.replace(/[^-0-9]/g, '');
+    e.target.value = e.target.value.replace(/[^0-9]/g, '');
     onChange(e);
   };
 
@@ -262,7 +262,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, errors }) => {
                     autoComplete="new-password"
                     name="password"
                     placeholder="최소 8자리"
-                    inputProps={{ maxLength: 16 }}
+                    inputProps={{ maxLength: 20 }}
                     type={state.showPassword ? 'text' : 'password'}
                     value={form.password}
                     onChange={onChange}
@@ -305,7 +305,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, errors }) => {
                     autoComplete="new-password"
                     name="passwordConfirm"
                     placeholder="최소 8자리"
-                    inputProps={{ maxLength: 16 }}
+                    inputProps={{ maxLength: 20 }}
                     type={state.showPassword ? 'text' : 'password'}
                     value={form.passwordConfirm}
                     onChange={onChange}
