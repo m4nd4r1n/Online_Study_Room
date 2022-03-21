@@ -8,7 +8,7 @@ import AuthLayout from '../../components/auth/AuthLayout';
 import { isEmail } from '../../libs/utils';
 import { Error } from '../../components/auth/common';
 
-const Login = ({ navigation: { navigate } }) => {
+const Login = ({ navigation: { navigate, replace } }) => {
   const {
     control,
     handleSubmit,
@@ -28,6 +28,7 @@ const Login = ({ navigation: { navigate } }) => {
   return (
     <AuthLayout>
       <Text style={tw`mb-3`}>로그인</Text>
+      <Button onPress={() => replace('Tab')}>홈 화면 이동</Button>
       <Controller
         control={control}
         rules={{

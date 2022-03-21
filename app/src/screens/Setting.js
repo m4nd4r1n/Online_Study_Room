@@ -5,7 +5,7 @@ import { HomeStyle } from '../libs/utils';
 import { Button } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
 
-const Home = ({ navigation: { replace } }) => {
+const Setting = ({ navigation: { replace } }) => {
   const route = useRoute();
   return (
     <View style={HomeStyle}>
@@ -16,4 +16,4 @@ const Home = ({ navigation: { replace } }) => {
   );
 };
 
-export default Home;
+export default Setting;

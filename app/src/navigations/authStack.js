@@ -1,21 +1,21 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from '../screens/Home';
+import { createStackNavigator } from '@react-navigation/stack';
 import Login from '../screens/Auth/Login';
 import Register from '../screens/Auth/Register';
 import Certification from '../screens/Auth/Certification';
 import Find from '../screens/Auth/Find';
+import TabNavigation from './Tab';
+import Header from '../components/common/Header';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 export const AuthStackNavigation = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ header: Header }}>
       <Stack.Screen
         name="Login"
         component={Login}
         options={{
-          headerTitleAlign: 'center',
           title: '로그인',
         }}
       />
@@ -23,8 +23,6 @@ export const AuthStackNavigation = () => {
         name="Register"
         component={Register}
         options={{
-          headerBackVisible: true,
-          headerTitleAlign: 'center',
           title: '회원가입',
         }}
       />
@@ -32,8 +30,6 @@ export const AuthStackNavigation = () => {
         name="Certification"
         component={Certification}
         options={{
-          headerBackVisible: true,
-          headerTitleAlign: 'center',
           title: '본인인증',
         }}
       />
@@ -41,24 +37,13 @@ export const AuthStackNavigation = () => {
         name="Find"
         component={Find}
         options={{
-          headerBackVisible: true,
-          headerTitleAlign: 'center',
           title: '찾기',
         }}
       />
-    </Stack.Navigator>
-  );
-};
-
-export const HomeStackNavigation = () => {
-  return (
-    <Stack.Navigator>
       <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{
-          headerTitleAlign: 'center',
-        }}
+        name="Tab"
+        component={TabNavigation}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

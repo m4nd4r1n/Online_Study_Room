@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import { Text, View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { TextInput, Button } from 'react-native-paper';
@@ -51,10 +51,7 @@ const Find = ({ route, navigation: { navigate } }) => {
                 onChangeText={onChange}
                 value={value}
                 error={errors.email}
-                returnKeyType="next"
-                onSubmitEditing={() => {
-                  inputRef.current.focus();
-                }}
+                returnKeyType="done"
                 activeOutlineColor="#06B6D4"
                 keyboardType="email-address"
               />

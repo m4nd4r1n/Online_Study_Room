@@ -160,7 +160,6 @@ const Register = ({ route, navigation: { navigate } }) => {
                   activeOutlineColor="#06B6D4"
                   ref={(el) => (inputRef.current[0] = el)}
                   maxLength={20}
-                  keyboardType={'visible-password'}
                 />
               )}
               name="password"
@@ -217,7 +216,6 @@ const Register = ({ route, navigation: { navigate } }) => {
                   activeOutlineColor="#06B6D4"
                   ref={(el) => (inputRef.current[1] = el)}
                   maxLength={20}
-                  keyboardType={'visible-password'}
                 />
               )}
               name="passwordConfirm"

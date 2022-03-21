@@ -1,11 +1,13 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import TabNavigation from './navigations/Tab';
+import { AuthStackNavigation } from './navigations/authStack';
+import { StatusBar } from 'expo-status-bar';
 
 const App = () => {
   return (
     <NavigationContainer>
-      <TabNavigation />
+      <AuthStackNavigation />
+      <StatusBar style="auto" />
     </NavigationContainer>
   );
 };
