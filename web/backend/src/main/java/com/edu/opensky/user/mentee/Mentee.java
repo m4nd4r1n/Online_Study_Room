@@ -2,6 +2,8 @@ package com.edu.opensky.user.mentee;
 
 import com.edu.opensky.achievement.Achievement;
 import com.edu.opensky.attendance.Attendance;
+import com.edu.opensky.planner.Planner;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,11 +35,18 @@ public class Mentee {
     @Column(columnDefinition = "integer default 0")
     private Integer exp;
 
-    @OneToMany(mappedBy = "mentee")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
     private List<Attendance> attendanceList = new ArrayList<>();;
 
-    @OneToMany(mappedBy = "mentee")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
     private List<Achievement> achievementList = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
+    private List<Planner> PlannerList = new ArrayList<>();
+
     @Builder
     public Mentee(String mtrId, String mteId, String prtId, String school){
         this.mtrId = mtrId;

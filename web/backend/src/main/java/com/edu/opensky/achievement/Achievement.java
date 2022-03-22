@@ -1,6 +1,7 @@
 package com.edu.opensky.achievement;
 
 import com.edu.opensky.user.mentee.Mentee;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,8 @@ public class Achievement {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long achievementId;
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mte_id")
     private Mentee mentee;
     private String name;
