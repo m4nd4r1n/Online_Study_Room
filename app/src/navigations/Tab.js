@@ -14,7 +14,8 @@ import Header from '../components/common/Header';
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigation = () => {
+const TabNavigation = ({ route }) => {
+  const user = route?.params?.user;
   return (
     <Tab.Navigator
       screenOptions={{
@@ -34,50 +35,57 @@ const TabNavigation = () => {
           title: '홈',
         }}
       />
-      <Tab.Screen
-        name="AchievementTab"
-        component={AchievementStackNavigation}
-        options={{
-          tabBarIcon: (props) => (
-            <MaterialCommunityIcons name="trophy" {...props} />
-          ),
-          tabBarLabel: '도전과제',
-          title: '도전과제',
-        }}
-      />
-      <Tab.Screen
-        name="RankingTab"
-        component={RankingStackNavigation}
-        options={{
-          tabBarIcon: (props) => (
-            <MaterialCommunityIcons name="equalizer" {...props} />
-          ),
-          tabBarLabel: '랭킹',
-          title: '랭킹',
-        }}
-      />
-      <Tab.Screen
-        name="TimerTab"
-        component={TimerStackNavigation}
-        options={{
-          tabBarIcon: (props) => (
-            <MaterialCommunityIcons name="timer-outline" {...props} />
-          ),
-          tabBarLabel: '타이머',
-          title: '타이머',
-        }}
-      />
-      <Tab.Screen
-        name="PlannerTab"
-        component={PlannerStackNavigation}
-        options={{
-          tabBarIcon: (props) => (
-            <MaterialCommunityIcons name="calendar-text" {...props} />
-          ),
-          tabBarLabel: '플래너',
-          title: '플래너',
-        }}
-      />
+      {user === '멘티' && (
+        <>
+          <Tab.Screen
+            name="AchievementTab"
+            component={AchievementStackNavigation}
+            options={{
+              tabBarIcon: (props) => (
+                <MaterialCommunityIcons name="trophy" {...props} />
+              ),
+              tabBarLabel: '도전과제',
+              title: '도전과제',
+            }}
+          />
+          <Tab.Screen
+            name="RankingTab"
+            component={RankingStackNavigation}
+            options={{
+              tabBarIcon: (props) => (
+                <MaterialCommunityIcons name="equalizer" {...props} />
+              ),
+              tabBarLabel: '랭킹',
+              title: '랭킹',
+            }}
+          />
+          <Tab.Screen
+            name="TimerTab"
+            component={TimerStackNavigation}
+            options={{
+              tabBarIcon: (props) => (
+                <MaterialCommunityIcons name="timer-outline" {...props} />
+              ),
+              tabBarLabel: '타이머',
+              title: '타이머',
+            }}
+          />
+        </>
+      )}
+      {(user === '멘토' || user === '멘티') && (
+        <Tab.Screen
+          name="PlannerTab"
+          component={PlannerStackNavigation}
+          options={{
+            tabBarIcon: (props) => (
+              <MaterialCommunityIcons name="calendar-text" {...props} />
+            ),
+            tabBarLabel: '플래너',
+            title: '플래너',
+          }}
+        />
+      )}
+
       <Tab.Screen
         name="MessageTab"
         component={MessageStackNavigation}

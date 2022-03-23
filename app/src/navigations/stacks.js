@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../screens/Home';
-import Achievement from '../screens/Achievement';
+import Achievement from '../screens/achievement/Achievement';
 import Header from '../components/common/Header';
 import Message from '../screens/Message';
 import Planner from '../screens/Planner';

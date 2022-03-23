@@ -28,7 +28,18 @@ const Login = ({ navigation: { navigate, replace } }) => {
   return (
     <AuthLayout>
       <Text style={tw`mb-3`}>로그인</Text>
-      <Button onPress={() => replace('Tab')}>홈 화면 이동</Button>
+      <View style={tw`flex-row justify-center`}>
+        <Button onPress={() => replace('Tab', { user: '멘토' })}>
+          멘토 이동
+        </Button>
+        <Button onPress={() => replace('Tab', { user: '멘티' })}>
+          멘티 이동
+        </Button>
+        <Button onPress={() => replace('Tab', { user: '학부모' })}>
+          학부모 이동
+        </Button>
+      </View>
+
       <Controller
         control={control}
         rules={{

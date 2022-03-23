@@ -1,0 +1,74 @@
+{
+  "normal": [
+    {
+      "id": 1,
+      "title": "개근 1",
+      "description": "일주일 개근",
+      "precondition": null,
+      "exp": 50
+    },
+    {
+      "id": 2,
+      "title": "개근 2",
+      "description": "한 달 개근",
+      "precondition": 1,
+      "exp": 200
+    },
+    {
+      "id": 3,
+      "title": "개근 3",
+      "description": "석 달 개근",
+      "precondition": 2,
+      "exp": 600
+    },
+    {
+      "id": 4,
+      "title": "개근 4",
+      "description": "반 년 개근",
+      "precondition": 3,
+      "exp": 1200
+    },
+    {
+      "id": 5,
+      "title": "개근 5",
+      "description": "일 년 개근",
+      "precondition": 4,
+      "exp": 2400
+    },
+    {
+      "id": 6,
+      "title": "공부 첫걸음",
+      "description": "총 학습시간 10시간 달성",
+      "precondition": null,
+      "exp": 50
+    },
+    {
+      "id": 7,
+      "title": "하루 종일도 공부할 수 있어",
+      "description": "총 학습시간 24시간 달성",
+      "precondition": 6,
+      "exp": 240
+    },
+    {
+      "id": 8,
+      "title": "학습왕 1",
+      "description": "총 학습시간 50시간 달성",
+      "precondition": 7,
+      "exp": 600
+    },
+    {
+      "id": 9,
+      "title": "학습왕 2",
+      "description": "총 학습시간 100시간 달성",
+      "precondition": 8,
+      "exp": 1200
+    },
+    {
+      "id": 10,
+      "title": "학습왕 3",
+      "description": "총 학습시간 500시간 달성",
+      "precondition": 9,
+      "exp": 2400
+    }
+  ]
+}
