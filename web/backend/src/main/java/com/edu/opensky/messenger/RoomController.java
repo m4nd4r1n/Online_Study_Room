@@ -50,7 +50,10 @@ public class RoomController {
 
         log.info("# get Chat Room, roomID : " + messengerId);
 
-        return chatRoomRepository.findRoomById(messengerId).getName();
+        ChatRoomDto room = chatRoomRepository.findRoomById(messengerId);
+        String name = room == null ? null : room.getName();
+
+        return name;
     }
 
 

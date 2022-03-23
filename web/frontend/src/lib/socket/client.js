@@ -5,38 +5,13 @@
  *
  * https://dev-gorany.tistory.com/235 백서버는 여기 참고
  */
+import SockJS from 'sockjs-client';
+import webstomp from 'webstomp-client';
 
-import { Client } from '@stomp/stompjs';
+// 클라이언트 생성
+export const createClient = () => {
+  const sock = new SockJS('/stomp');
+  const client = webstomp.over(sock);
 
-const client = new Client({
-  brokerURL: 'ws://localhost:8080/', // endpoint
-  connenctHeaders: {
-    login: 'user',
-    passcode: 'password',
-  },
-  debug: (str) => {
-    console.log(str);
-  },
-  reconnectDelay: 5000, // 자동 재연결
-  heartbeatIncoming: 4000,
-  heartbeatOutgoing: 4000,
-});
-
-// 연결 시 실행할 함수
-client.onConnect = (frame) => {
-  console.log('Connection successful');
+  return client;
 };
-
-// 에러처리 함수
-client.onStompError = (frame) => {
-  console.log('Broker reported error: ' + frame.headers['message']);
-  console.log('Additional details: ' + frame.body);
-};
-
-// 활성화
-client.activate();
-
-// 비활성화
-//client.deactivate();
-
-export default client;

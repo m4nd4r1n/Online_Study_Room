@@ -2,34 +2,27 @@
  * 메신저 컨테이너
  */
 
-import React, { useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  changeField,
-  initializeMessenger,
-  listMessages,
-  sendMessage,
-  receiveMessage,
-  subscribe,
-  unsubscribe,
-} from '../../modules/messenger';
+import { listMessages } from '../../modules/messenger';
 import { useParams } from 'react-router';
 import Message from '../../components/message/Message';
+import { createClient } from '../../lib/socket/client';
 
 const MessageContainer = () => {
+  const [client, setClient] = useState(createClient());
+
   const { messengerId } = useParams();
   const dispatch = useDispatch();
-  const { messages, message, subscription, error } = useSelector(
-    ({ messenger }) => ({
-      messages: messenger.messages,
-      message: messenger.message,
-      subscription: messenger.subscription,
-      error: messenger.error,
-    }),
-  );
+  const { messages, error } = useSelector(({ messenger }) => ({
+    messages: messenger.messages,
+    error: messenger.error,
+  }));
 
-  const user = { name: '김겨울' };
-  const test_messages = [
+  const [message, setMessage] = useState('');
+
+  const [testUser, setTestUser] = useState({ name: '김겨울' });
+  const [testMessages, setTestMessages] = useState([
     {
       name: '멘토',
       message: '6 / 가장 오래된 메시지',
@@ -75,35 +68,52 @@ const MessageContainer = () => {
       message: '1 / 가장 최근 메시지',
       messageTime: new Date(2022, 1, 10, 18, 20),
     },
-  ];
+  ]);
 
   // 인풋 변경 이벤트 핸들러
   const onChange = (e) => {
-    const message = e.target.value;
-    dispatch(changeField({ message }));
+    setMessage(e.target.value);
   };
 
-  const onClick = () => {
-    if ([message].includes('')) return;
-    dispatch(sendMessage({ messengerId, message }));
+  // 메시지 전송
+  const onClick = (e) => {
+    client.send(
+      '/pub/chat/message',
+      JSON.stringify({ messengerId, message, writer: testUser.name }),
+      {},
+    );
+    setMessage('');
   };
 
-  // 메시지 수신 이벤트 핸들러
-  const onMessage = useCallback(
-    (message) => {
-      if (message.body) {
-        dispatch(receiveMessage({ message: JSON.parse(message.body) }));
-      }
-    },
-    [dispatch],
-  );
+  // 존재하는 메시지 리스트 로드
+  useEffect(() => {
+    dispatch(listMessages({ messengerId }));
+  }, [dispatch, messengerId]);
 
   useEffect(() => {
-    dispatch(initializeMessenger());
-    dispatch(listMessages({ messengerId }));
-    dispatch(subscribe({ messengerId, onMessage }));
-    return unsubscribe();
-  }, [dispatch, messengerId, onMessage]);
+    client.connect({}, () => {
+      // 메시지 구독
+      client.subscribe(`/sub/chat/room/${messengerId}`, (msg) => {
+        const content = JSON.parse(msg.body);
+
+        // 새 매시지 수신 시 리스트에 추가
+        setTestMessages((prev) => [
+          ...prev,
+          {
+            name: content.writer,
+            message: content.message,
+            messageTime: new Date(),
+          },
+        ]);
+      });
+    });
+    return () => {
+      if (client.connected) {
+        client.unsubscribe({});
+        client.disconnect();
+      }
+    };
+  }, [client, messengerId]);
 
   useEffect(() => {
     if (error) console.log(error.message);
@@ -111,11 +121,11 @@ const MessageContainer = () => {
 
   return (
     <Message
-      user={user}
-      messages={test_messages}
+      user={testUser}
+      message={message}
+      messages={testMessages}
       onChange={onChange}
       onClick={onClick}
-      message={message}
     />
   );
 };
