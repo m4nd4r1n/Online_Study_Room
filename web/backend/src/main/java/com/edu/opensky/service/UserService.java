@@ -4,21 +4,34 @@ import com.edu.opensky.controller.dto.*;
 import com.edu.opensky.domain.Attendance;
 import com.edu.opensky.domain.User;
 import com.edu.opensky.domain.repository.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Header;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +43,6 @@ public class UserService {
     private final MenteeRepository menteeRepository;
     private final ParentRepository parentRepository;
     private final AttendanceRepository attendanceRepository;
-
 
     /* 인증 토큰 발급 */
     @Transactional
@@ -189,5 +201,14 @@ public class UserService {
         }
 
         return null;
+    }
+
+    /*토큰으로부터 유저엔티티 조회*/
+    public User getUserByToken(Object principal) {
+        String email = ((UserDetails) principal).getUsername();
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자가 없습니다."));
+        //log.info("토큰으로부터 사용자추출"+user.getEmail().toString());
+        return user;
     }
 }
