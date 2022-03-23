@@ -3,6 +3,7 @@ package com.edu.opensky.user.mentee;
 import com.edu.opensky.achievement.Achievement;
 import com.edu.opensky.attendance.Attendance;
 import com.edu.opensky.planner.Planner;
+import com.edu.opensky.user.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,6 +47,10 @@ public class Mentee {
     @JsonManagedReference
     @OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
     private List<Planner> PlannerList = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "email")
+    private User user;
 
     @Builder
     public Mentee(String mtrId, String mteId, String prtId, String school){

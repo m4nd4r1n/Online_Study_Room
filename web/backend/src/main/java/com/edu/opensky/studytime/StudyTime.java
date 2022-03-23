@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @NoArgsConstructor
@@ -21,14 +23,15 @@ public class StudyTime {
     @JoinColumn(name = "mte_id")
     private Mentee mentee;
 
-    private LocalDateTime startTime;
+    private LocalDate date;
+    private LocalTime startTime;
 
-    private LocalDateTime endTime;
+    private LocalTime endTime;
 
     @Builder
-    public StudyTime(Long id, Mentee mentee, LocalDateTime startTime, LocalDateTime endTime){
-        this.id = id;
+    public StudyTime(Mentee mentee,LocalDate date, LocalTime startTime, LocalTime endTime){
         this.mentee = mentee;
+        this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
 

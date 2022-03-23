@@ -36,5 +36,5 @@ public class PlannerController {
 
         plannerService.removePlan(subject,month,day);
 
-        }
     }
+}
