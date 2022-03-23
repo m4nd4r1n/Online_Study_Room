@@ -11,6 +11,8 @@ import com.edu.opensky.user.parent.ParentRepository;
 import com.edu.opensky.user.parent.dto.ParentSaveRequestDto;
 import com.edu.opensky.user.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -152,5 +154,14 @@ public class UserService {
         }
 
         return null;
+    }
+
+    /*토큰으로부터 유저엔티티 조회*/
+    public User getUserByToken(Object principal) {
+        String email = ((UserDetails) principal).getUsername();
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자가 없습니다."));
+        //log.info("토큰으로부터 사용자추출"+user.getEmail().toString());
+        return user;
     }
 }
