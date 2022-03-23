@@ -7,7 +7,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <AuthStackNavigation />
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
     </NavigationContainer>
   );
 };

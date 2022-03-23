@@ -1,6 +1,7 @@
 import React from 'react';
 import IMP, { IMPConst } from 'iamport-react-native';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Colors } from 'react-native-paper';
+import tw from 'twrnc';
 
 const Certification = ({ route, navigation: { navigate } }) => {
   const USERCODE = 'imp34059711';
@@ -12,10 +13,17 @@ const Certification = ({ route, navigation: { navigate } }) => {
     <IMP.Certification
       userCode={USERCODE}
       data={data}
-      loading={<ActivityIndicator color="white" size="large" />}
+      loading={
+        <ActivityIndicator
+          style={tw`flex-1`}
+          color={Colors.cyan500}
+          animating
+          size="large"
+        />
+      }
       callback={(response) => {
         if (route.params.authType === 'find') {
-          navigate('Find', { ...response });
+          navigate('Find', { ...response, type: route.params.type });
         } else if (route.params.authType === 'register') {
           navigate('Register', { ...response, type: route.params.type });
         }

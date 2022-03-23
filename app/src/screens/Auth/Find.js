@@ -13,7 +13,7 @@ const Find = ({ route, navigation: { navigate } }) => {
     handleSubmit,
     formState: { errors },
   } = useForm({ defaultValues: { email: '' }, mode: 'onChange' });
-  const certSuccess = route?.params?.success;
+  const certSuccess = JSON.parse(route?.params?.success || 'false');
   const impUID = route?.params?.imp_uid;
   const onValid = (validForm) => {
     // 백엔드로 전송
@@ -63,7 +63,12 @@ const Find = ({ route, navigation: { navigate } }) => {
       )}
       <Button
         mode="contained"
-        onPress={() => navigate('Certification', { authType: 'find' })}
+        onPress={() =>
+          navigate('Certification', {
+            authType: 'find',
+            type: route.params.type,
+          })
+        }
         style={tw.style(
           ' mt-3 justify-center',
           certSuccess ? 'bg-gray-400' : 'bg-cyan-500',

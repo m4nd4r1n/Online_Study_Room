@@ -22,7 +22,7 @@ const Register = ({ route, navigation: { navigate } }) => {
     visible: false,
   });
   const inputRef = useRef([]);
-  const certSuccess = route?.params?.success;
+  const certSuccess = JSON.parse(route?.params?.success || 'false');
   const impUID = route?.params?.imp_uid;
   const {
     control,

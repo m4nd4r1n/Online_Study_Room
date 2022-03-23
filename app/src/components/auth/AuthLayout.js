@@ -36,7 +36,12 @@ const AuthLayout = ({ children }) => {
             width: (SCREEN_WIDTH / 20) * 19,
           })}
         >
-          <ScrollView scrollEnabled={keyboardShown}>{children}</ScrollView>
+          <ScrollView
+            scrollEnabled={keyboardShown}
+            showsVerticalScrollIndicator={false}
+          >
+            {children}
+          </ScrollView>
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>

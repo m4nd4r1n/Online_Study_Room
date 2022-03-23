@@ -6,7 +6,7 @@ import tw from 'twrnc';
 const Header = ({ navigation, route, options, back }) => {
   const title = getHeaderTitle(options, route.name);
   return (
-    <Appbar.Header style={tw`bg-cyan-500 android:shadow-2xl`}>
+    <Appbar.Header style={tw`bg-cyan-500 android:shadow-2xl`} dark>
       {back ? (
         <Appbar.BackAction onPress={() => navigation?.goBack()} />
       ) : (
