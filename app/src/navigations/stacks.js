@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from '../screens/Home';
+import Home from '../screens/home/Home';
 import Achievement from '../screens/achievement/Achievement';
 import Header from '../components/common/Header';
 import Message from '../screens/Message';
@@ -8,6 +8,8 @@ import Planner from '../screens/Planner';
 import Ranking from '../screens/Ranking';
 import Setting from '../screens/Setting';
 import Timer from '../screens/Timer';
+import ObjectDetect from '../screens/home/ObjectDetect';
+import ObjectClassify from '../screens/home/ObjectClassify';
 
 const Stack = createStackNavigator();
 
@@ -15,6 +17,8 @@ export const HomeStackNavigation = () => {
   return (
     <Stack.Navigator screenOptions={{ header: Header }}>
       <Stack.Screen name="Home" component={Home} options={{ title: '홈' }} />
+      <Stack.Screen name="ObjectDetectTest" component={ObjectDetect} />
+      <Stack.Screen name="ObjectClassifyTest" component={ObjectClassify} />
     </Stack.Navigator>
   );
 };
