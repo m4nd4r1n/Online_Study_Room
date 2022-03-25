@@ -7,7 +7,7 @@ import Message from '../screens/Message';
 import Planner from '../screens/Planner';
 import Ranking from '../screens/Ranking';
 import Setting from '../screens/Setting';
-import Timer from '../screens/Timer';
+import TimerPage from '../screens/Timer';
 import ObjectDetect from '../screens/home/ObjectDetect';
 import ObjectClassify from '../screens/home/ObjectClassify';
 
@@ -88,7 +88,7 @@ export const TimerStackNavigation = () => {
     <Stack.Navigator screenOptions={{ header: Header }}>
       <Stack.Screen
         name="Timer"
-        component={Timer}
+        component={TimerPage}
         options={{
           title: '타이머',
         }}

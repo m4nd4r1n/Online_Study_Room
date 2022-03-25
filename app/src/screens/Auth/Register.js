@@ -41,6 +41,7 @@ const Register = ({ route, navigation: { navigate } }) => {
       phoneMiddle: '',
       phoneLast: '',
     },
+    mode: 'onChange',
   });
 
   const onValid = (validForm) => {
