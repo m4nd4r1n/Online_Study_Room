@@ -48,10 +48,6 @@ public class Mentee {
     @OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
     private List<Planner> PlannerList = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "email")
-    private User user;
-
     @Builder
     public Mentee(String mtrId, String mteId, String prtId, String school){
         this.mtrId = mtrId;

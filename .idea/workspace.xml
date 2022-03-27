@@ -5,11 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7e0ae73-e136-438e-8cf7-b7e0a9d457e9" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/dto/RankingListInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/dto/timeRankingListInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/achievement/Achievement.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/achievement/Achievement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/achievement/AchievementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/achievement/AchievementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/achievement/AchievementRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/achievement/AchievementRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/achievement/AchievementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/achievement/AchievementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTime.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/dto/LevelRankingDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/dto/TimeRankingDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentee/Mentee.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentee/Mentee.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,8 +81,8 @@
         <option value="FxmlFile" />
         <option value="HTML File" />
         <option value="JUnit5 Test Class" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -396,7 +402,13 @@
       <workItem from="1647926082502" duration="3535000" />
       <workItem from="1647929801198" duration="12282000" />
       <workItem from="1647967582727" duration="169000" />
-      <workItem from="1648011536685" duration="11973000" />
+      <workItem from="1648011536685" duration="16956000" />
+      <workItem from="1648028920228" duration="615000" />
+      <workItem from="1648196576886" duration="162000" />
+      <workItem from="1648203197647" duration="402000" />
+      <workItem from="1648210440529" duration="14000" />
+      <workItem from="1648221536151" duration="43000" />
+      <workItem from="1648394011551" duration="11175000" />
     </task>
     <servers />
   </component>

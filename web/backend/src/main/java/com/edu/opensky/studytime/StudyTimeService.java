@@ -1,13 +1,13 @@
 package com.edu.opensky.studytime;
 
-import com.edu.opensky.studytime.dto.LevelRankingDto;
-import com.edu.opensky.studytime.dto.TimeRankingDto;
+import com.edu.opensky.studytime.dto.levelRankingListInterface;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -15,21 +15,23 @@ import org.springframework.transaction.annotation.Transactional;
 public class StudyTimeService {
     private final StudyTimeRepository studyTimeRepository;
 
-    public Page<LevelRankingDto> getRankingOfLevel(PageRequest pageRequest){
-        return studyTimeRepository.findByRankingOfLevel(pageRequest);
+    public List<levelRankingListInterface> getRankingOfLevel(PageRequest pageRequest){
+
+        return studyTimeRepository.findByRankingOfLevel(pageRequest).getContent();
     }
 
-    public Page<TimeRankingDto> getRankingOfTime(String time, PageRequest pageRequest) {
+    public List<? extends Object> getRankingOfTime(String time, PageRequest pageRequest) {
+
         if(time.equals("week")){
-            return studyTimeRepository.findByRankingOfTimeForWeek(pageRequest);
+            return studyTimeRepository.findByRankingOfTimeForWeek(LocalDate.now(),pageRequest).getContent();
 
         }
         else if(time.equals("month")) {
-            return studyTimeRepository.findByRankingOfTimeForMonth(pageRequest);
+            return studyTimeRepository.findByRankingOfTimeForMonth(LocalDate.now(),pageRequest).getContent();
         }
         // default 일간
         else{
-            return studyTimeRepository.findByRankingOfTimeForDay(pageRequest);
+            return studyTimeRepository.findByRankingOfTimeForDay(LocalDate.now(),pageRequest).getContent();
         }
     }
 }
