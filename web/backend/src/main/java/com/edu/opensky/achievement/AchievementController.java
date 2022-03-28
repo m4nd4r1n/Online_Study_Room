@@ -20,7 +20,7 @@ public class AchievementController {
     private final UserService userService;
 
     @GetMapping("")
-    public JSONArray getAchievementList(Authentication authentication){
+    public JSONArray getAchievementList(){
         // 토큰에 있는 학생아이디 받아오도록
         Object principal= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user= userService.getUserByToken(principal);
