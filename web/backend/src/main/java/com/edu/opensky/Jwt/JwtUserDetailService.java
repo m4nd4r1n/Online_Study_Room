@@ -3,6 +3,7 @@ package com.edu.opensky.Jwt;
 import com.edu.opensky.user.User;
 import com.edu.opensky.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @Service
 public class JwtUserDetailService implements UserDetailsService {
 
+    @Autowired
     private final UserRepository userRepository;
 
     // 상세정보를 조회하는 메소드 , 사용자의 계정정보와 권한을 갖는 UserDetails인터페이스를 반환한다.
@@ -29,6 +31,7 @@ public class JwtUserDetailService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user1.get().getEmail())
                 .password(user1.get().getPassword())
+                .authorities("USER")
                 .build();
 
     }

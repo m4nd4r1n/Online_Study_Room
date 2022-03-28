@@ -1,10 +1,13 @@
 package com.edu.opensky.user;
 
+import com.edu.opensky.Jwt.JwtTokenProvider;
+import com.edu.opensky.Jwt.JwtUserDetailService;
 import com.edu.opensky.user.dto.FindRequestDto;
 import com.edu.opensky.user.dto.LoginRequestDto;
 import com.edu.opensky.user.dto.RegisterRequestDto;
 import com.edu.opensky.user.dto.UserUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserApiController {
 
     private final UserService userService;
+    private final JwtUserDetailService jwtUserDetailService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     // 회원가입
     @PostMapping("/auth/register")
@@ -24,6 +29,7 @@ public class UserApiController {
     // 로그인
     @PostMapping("/auth/login")
     public String login(@RequestBody LoginRequestDto requestDto){
+
         userService.login(requestDto);
         return requestDto.getEmail();
     }

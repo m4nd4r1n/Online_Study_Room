@@ -1,5 +1,7 @@
 package com.edu.opensky.user;
 
+import com.edu.opensky.Jwt.JwtTokenProvider;
+import com.edu.opensky.Jwt.JwtUserDetailService;
 import com.edu.opensky.attendance.AttendanceRepository;
 import com.edu.opensky.attendance.Attendance;
 import com.edu.opensky.user.mentee.Mentee;
@@ -11,6 +13,7 @@ import com.edu.opensky.user.parent.ParentRepository;
 import com.edu.opensky.user.parent.dto.ParentSaveRequestDto;
 import com.edu.opensky.user.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -24,13 +27,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
     private final MentorRepository mentorRepository;
     private final MenteeRepository menteeRepository;
     private final ParentRepository parentRepository;
     private final AttendanceRepository attendanceRepository;
     private final ImportService importService;
-
+    private final JwtUserDetailService jwtUserDetailService;
+    private final JwtTokenProvider jwtTokenProvider;
 
 
 
@@ -40,6 +45,10 @@ public class UserService {
         userRepository.findByEmailAndPassword(responseDto.getEmail(), responseDto.getPassword()).orElseThrow(() ->
                 new IllegalArgumentException("아이디와 비밀번호를 확인해주세요."));
         attendance(responseDto.getEmail());
+
+        UserDetails userDetails = jwtUserDetailService.loadUserByUsername(responseDto.getEmail());
+        jwtTokenProvider.createToken(userDetails); //토큰 생성
+
         dateUpdate(responseDto);
     }
 
@@ -158,10 +167,15 @@ public class UserService {
 
     /*토큰으로부터 유저엔티티 조회*/
     public User getUserByToken(Object principal) {
-        String email = ((UserDetails) principal).getUsername();
+        String email;
+        if (principal instanceof UserDetails) {
+            email = ((UserDetails)principal).getUsername();
+        } else {
+            email = principal.toString();
+        }
+        //System.out.println(email);
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자가 없습니다."));
-        //log.info("토큰으로부터 사용자추출"+user.getEmail().toString());
         return user;
     }
 }
