@@ -10,6 +10,7 @@ import PlannerPage from './pages/PlannerPage';
 import RankingPage from './pages/RankingPage';
 import RegisterPage from './pages/RegisterPage';
 import StudyPage from './pages/StudyPage';
+import StudyScreenPage from './pages/StudyScreenPage';
 import StudyTimeManagementPage from './pages/StudyTimeManagementPage';
 import TimerPage from './pages/TimerPage';
 import FindPage from './pages/FindPage';
@@ -93,6 +94,7 @@ const App = () => {
         path="ranking"
       />
       <Route element={<StudyPage />} path="study" />
+      <Route element={<StudyScreenPage />} path="study/:userId" />
       <Route
         element={
           <>

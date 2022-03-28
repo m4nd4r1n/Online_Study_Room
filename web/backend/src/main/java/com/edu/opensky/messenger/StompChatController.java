@@ -1,6 +1,7 @@
 package com.edu.opensky.messenger;
 
 import com.edu.opensky.messenger.dto.ChatMessageDto;
+import com.edu.opensky.messenger.dto.StudyMessageDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONObject;
@@ -24,6 +25,13 @@ public class StompChatController {
     public void message(ChatMessageDto message){
         log.info("# receive message : " + message.getMessage());
         template.convertAndSend("/sub/chat/room/" + message.getMessengerId(), message);
+    }
+
+    //"/pub/study/message"
+    @MessageMapping(value = "/study/message")
+    public void message(StudyMessageDto message){
+        log.info("# receive message : " + message.getType());
+        template.convertAndSend("/sub/study/room/" + message.getUserId(), message);
     }
 
 }

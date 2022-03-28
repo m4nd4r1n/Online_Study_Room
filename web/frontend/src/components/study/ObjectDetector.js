@@ -1,13 +1,19 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { ContentsBlock } from '../common/Contents';
 import { StudyButton } from '../common/Button';
+import { createClient } from './../../lib/socket/client';
 import useInterval from '../timer/useInterval';
 import * as studyAPI from '../../lib/api/study';
 
 import * as cocoSsd from '@tensorflow-models/coco-ssd';
 import '@tensorflow/tfjs';
 
-const ObjectDetector = () => {
+const ObjectDetector = ({ user }) => {
+  const userId = false;
+  const [client, setClient] = useState(createClient()); // 소켓 클라이언트
+  const peerConnectionRef = useRef(); // peer 연결
+  const [dataChannel, setDataChannel] = useState();
+
   let captureFlag = true; // 캡쳐 제한 플래그
   let rejectCount = 0; // 학습인증 실패 횟수
 
@@ -105,8 +111,71 @@ const ObjectDetector = () => {
     );
   };
 
+  // 프레임 객체 감지
+  const detectFrame = useCallback((video, model) => {
+    model.detect(video).then((predictions) => {
+      renderPredictions(predictions); // 객체 박스 렌더링 필요 x 시 삭제
+      //checkActualStudyTime(predictions);
+
+      // 다음 리페인트 전에 애니메이션 업데이트 콜백함수 실행
+      requestAnimationFrame(() => {
+        detectFrame(video, model);
+      });
+    });
+  }, []);
+
+  const handleIce = useCallback(
+    (data) => {
+      client.send(
+        '/pub/study/message',
+        JSON.stringify({
+          userId: user.userId,
+          type: 'ice',
+          ice: data.candidate,
+        }),
+        {},
+      );
+    },
+    [client, user],
+  );
+
+  const handleAddStream = useCallback((data) => {
+    videoRef.current.srcObject = data.stream;
+    setLoading(false);
+  }, []);
+
+  const createPeer = useCallback(() => {
+    const peerConnection = new RTCPeerConnection({
+      // 테스트용 구글 STUN 서버
+      // 실사숑 시 개인 STUN 서버 운용 필요
+      iceServers: [
+        {
+          urls: [
+            'stun:stun.l.google.com:19302',
+            'stun:stun1.l.google.com:19302',
+            'stun:stun2.l.google.com:19302',
+            'stun:stun3.l.google.com:19302',
+            //'stun:stun4.l.google.com:19302',
+          ],
+        },
+      ],
+    });
+
+    // IceCandidate 설정
+    peerConnection.onicecandidate = handleIce;
+    //peerConnection.addEventListener('addstream', handleAddStream);
+
+    videoRef.current.srcObject
+      .getVideoTracks()
+      .forEach((track) =>
+        peerConnection.addTrack(track, videoRef.current.srcObject),
+      );
+
+    peerConnectionRef.current = peerConnection;
+  }, [handleIce]);
+
   // 웹캠 및 텐서플로우 객체감지 수행 함수
-  const run = () => {
+  const run = useCallback(() => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       const webCamPromise = navigator.mediaDevices
         .getUserMedia({
@@ -129,6 +198,7 @@ const ObjectDetector = () => {
 
       Promise.all([modelPromise, webCamPromise])
         .then((values) => {
+          createPeer();
           detectFrame(videoRef.current, values[0]);
         })
         .catch((error) => {
@@ -138,20 +208,7 @@ const ObjectDetector = () => {
       // 로딩 해제
       setLoading(false);
     }
-  };
-
-  // 프레임 객체 감지
-  const detectFrame = (video, model) => {
-    model.detect(video).then((predictions) => {
-      renderPredictions(predictions); // 객체 박스 렌더링 필요 x 시 삭제
-      //checkActualStudyTime(predictions);
-
-      // 다음 리페인트 전에 애니메이션 업데이트 콜백함수 실행
-      requestAnimationFrame(() => {
-        detectFrame(video, model);
-      });
-    });
-  };
+  }, [createPeer, detectFrame]);
 
   // 예측 객체 렌더링
   const renderPredictions = (predictions) => {
@@ -194,10 +251,71 @@ const ObjectDetector = () => {
     run();
   });
 
+  const sendOffer = useCallback(async () => {
+    // offer 생성 (초대장)
+    const offer = await peerConnectionRef.current.createOffer();
+    peerConnectionRef.current.setLocalDescription(offer);
+    // room에 offer 전달
+    client.send(
+      '/pub/study/message',
+      JSON.stringify({ userId: user.userId, type: 'offer', offer }),
+      {},
+    );
+  }, [client, user]);
+
+  // 구독중인 룸의 메시지 수신 이벤트 핸들러
+  const handleMessage = useCallback(
+    (msg) => {
+      const message = JSON.parse(msg.body);
+      switch (message.type) {
+        // 누군가 입장 시 offer 전달
+        case 'enter':
+          sendOffer();
+          break;
+        case 'offer':
+          // 학습페이지에서는 offer 수신해도 동작 x
+          break;
+        case 'answer':
+          console.log(message.answer);
+          peerConnectionRef.current.setRemoteDescription(message.answer);
+          break;
+        case 'ice':
+          peerConnectionRef.current.addIceCandidate(message.ice);
+          break;
+        default:
+          console.log(`Unexpected message type : ${message.type}`);
+          break;
+      }
+    },
+    [sendOffer],
+  );
+
+  useEffect(() => {
+    client.connect({}, () => {
+      // 메시지 구독
+      client.subscribe(`/sub/study/room/${user.userId}`, handleMessage);
+
+      // 학부모, 멘토는 enter 메시지 전송
+      if (userId) {
+        client.send(
+          '/pub/study/message',
+          JSON.stringify({ userId: user.userId, type: 'enter' }),
+          {},
+        );
+      }
+    });
+    return () => {
+      if (client.connected) {
+        client.unsubscribe({});
+        client.disconnect();
+      }
+    };
+  }, [client, userId, user, handleMessage]);
+
   useInterval(() => {
     console.log(rejectCount);
-    captureFrame(); // 캡쳐 테스트
-    uploadFrame(); // 업로드
+    //captureFrame(); // 캡쳐 테스트
+    //uploadFrame(); // 업로드
     captureFlag = true; // 캡쳐가능
     //setRejectedFrame(); // 캡쳐화면 초기화
   }, 60000); // 1분 = 1000(1초) * 60

@@ -2,7 +2,7 @@ package com.edu.opensky.achievement;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import javafx.util.Pair;
+//import javafx.util.Pair;
 
 import java.time.LocalDate;
 import java.util.HashMap;
