@@ -21,8 +21,7 @@ public class UserApiController {
     // 회원가입
     @PostMapping("/auth/register")
     public String register(@RequestBody RegisterRequestDto requestDto){
-        userService.register(requestDto);
-        return requestDto.getImpUID();
+        return userService.register(requestDto);
     }
 
     // 로그인

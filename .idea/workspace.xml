@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7e0ae73-e136-438e-8cf7-b7e0a9d457e9" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentee/Mentee.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentee/Mentee.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentor/Mentor.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentor/Mentor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/parent/Parent.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/parent/Parent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +129,7 @@
         <entry key="JPA Structure" value="false" />
         <entry key="com.haulmont.jpb.jpaInspector" value="false" />
         <entry key="com.haulmont.jpb.jpaPalette" value="false" />
-        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
       </map>
     </option>
   </component>
