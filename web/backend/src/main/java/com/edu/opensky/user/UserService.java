@@ -2,8 +2,9 @@ package com.edu.opensky.user;
 
 import com.edu.opensky.Jwt.JwtTokenProvider;
 import com.edu.opensky.Jwt.JwtUserDetailService;
-import com.edu.opensky.attendance.AttendanceRepository;
 import com.edu.opensky.attendance.Attendance;
+import com.edu.opensky.attendance.AttendanceRepository;
+import com.edu.opensky.user.dto.*;
 import com.edu.opensky.user.mentee.Mentee;
 import com.edu.opensky.user.mentee.MenteeRepository;
 import com.edu.opensky.user.mentee.dto.MenteeSaveRequestDto;
@@ -11,9 +12,7 @@ import com.edu.opensky.user.mentor.MentorRepository;
 import com.edu.opensky.user.mentor.dto.MentorSaveRequestDto;
 import com.edu.opensky.user.parent.ParentRepository;
 import com.edu.opensky.user.parent.dto.ParentSaveRequestDto;
-import com.edu.opensky.user.dto.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -41,37 +40,30 @@ public class UserService {
 
     /* 로그인 */
     @Transactional
-    public void login(LoginRequestDto responseDto) {
-        userRepository.findByEmailAndPassword(responseDto.getEmail(), responseDto.getPassword()).orElseThrow(() ->
+    public String login(LoginRequestDto responseDto) {
+        User user = userRepository.findByEmailAndPassword(responseDto.getEmail(), responseDto.getPassword()).orElseThrow(() ->
                 new IllegalArgumentException("아이디와 비밀번호를 확인해주세요."));
-        attendance(responseDto.getEmail());
+        attendance(user.getEmail());
 
         UserDetails userDetails = jwtUserDetailService.loadUserByUsername(responseDto.getEmail());
-        jwtTokenProvider.createToken(userDetails); //토큰 생성
 
-        dateUpdate(responseDto);
+        // 마지막 접속일자 업데이트
+        user.setLastAccessDate(LocalDate.now());
+
+        return jwtTokenProvider.createToken(userDetails); //토큰 생성
+
     }
 
     /* 마지막 접속일자 업데이트 */
     public void dateUpdate(LoginRequestDto responseDto){
         Optional<User> user = userRepository.findByEmail(responseDto.getEmail());
-        user.ifPresent(selectUser ->{
-            userRepository.save(User.builder()
-                    .email(selectUser.getEmail())
-                    .password(selectUser.getPassword())
-                    .lastAccessDate(LocalDate.now())
-                    .birth(selectUser.getBirth())
-                    .name(selectUser.getName())
-                    .phone(selectUser.getPhone())
-                    .build()
-            );
-        });
+        user.ifPresent(u -> u.setLastAccessDate(LocalDate.now()));
     }
     /* 출석체크 */
     @Transactional
-    public void attendance(String stdId){
+    public void attendance(String userId){
         LocalDate today = LocalDate.now();
-        Optional<Mentee> mentee = menteeRepository.findByMteId(stdId);
+        Optional<Mentee> mentee = menteeRepository.findByMteId(userId);
         mentee.ifPresent(
                 selectMentee ->{
                     // 오늘 출석체크 했는지 확인
