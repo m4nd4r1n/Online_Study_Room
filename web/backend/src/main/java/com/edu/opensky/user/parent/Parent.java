@@ -15,10 +15,10 @@ public class Parent {
     @Id
     private String prtId;
 
-    @Column(nullable = true, length=15)
+    @Column(nullable = true)
     private String stdName;
 
-    @Column(nullable = true, length = 15)
+    @Column(nullable = true)
     private String stdPhone;
 
     @Builder

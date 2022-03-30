@@ -1,17 +1,12 @@
 package com.edu.opensky.user.mentee;
 
-import com.edu.opensky.achievement.Achievement;
-import com.edu.opensky.attendance.Attendance;
-import com.edu.opensky.planner.Planner;
-import com.edu.opensky.user.User;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Getter
 @NoArgsConstructor
@@ -21,13 +16,13 @@ public class Mentee {
     @Id
     private String mteId;
 
-    @Column(nullable = true, length=15)
+    @Column(nullable = true)
     private String mtrId;
 
-    @Column(nullable = true, length=15)
+    @Column(nullable = true)
     private String prtId;
 
-    @Column(nullable = true, length=15)
+    @Column(nullable = true)
     private String school;
 
     @Column(columnDefinition = "integer default 1")
@@ -36,17 +31,17 @@ public class Mentee {
     @Column(columnDefinition = "integer default 0")
     private Integer exp;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
-    private List<Attendance> attendanceList = new ArrayList<>();;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
-    private List<Achievement> achievementList = new ArrayList<>();
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
-    private List<Planner> PlannerList = new ArrayList<>();
+//    @JsonManagedReference
+//    @OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
+//    private List<Attendance> attendanceList = new ArrayList<>();;
+//
+//    @JsonManagedReference
+//    @OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
+//    private List<Achievement> achievementList = new ArrayList<>();
+//
+//    @JsonManagedReference
+//    @OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
+//    private List<Planner> PlannerList = new ArrayList<>();
 
     @Builder
     public Mentee(String mtrId, String mteId, String prtId, String school){

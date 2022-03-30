@@ -13,10 +13,10 @@ import javax.persistence.Id;
 @Entity
 public class Mentor {
     @Id
-    @Column(name = "mentor_id", length = 15)
+    @Column(name = "mentor_id")
     private String mtrId;
 
-    @Column(name = "fk_mentee_id", nullable = true, length=15)
+    @Column(name = "fk_mentee_id", nullable = true)
     private String mteId;
 
     @Builder
