@@ -28,7 +28,9 @@ public class UserApiController {
     // 로그인
     @PostMapping("/auth/login")
     public String login(@RequestBody LoginRequestDto requestDto){
-        return userService.login(requestDto);
+        userService.login(requestDto);
+        return requestDto.getEmail();
+
     }
 
 
@@ -43,16 +45,16 @@ public class UserApiController {
         return userService.find(findRequestDto);
     }
 
-    // 구현 필요
-    @GetMapping("/auth/check")
-    public boolean authCheck(){
-        return true;
-    }
-
-    // 로그아웃
-    @GetMapping("/auth/logout")
-    public void logout(){
-    }
+    /* 구현 필요 */
+//    @GetMapping("/auth/check")
+//    public void authCheck(){
+//
+//    }
+//
+//    // 로그아웃
+//    @GetMapping("/auth/logout")
+//    public void logout(){
+//    }
 
 
 }
