@@ -7,7 +7,6 @@ import com.edu.opensky.user.dto.LoginRequestDto;
 import com.edu.opensky.user.dto.RegisterRequestDto;
 import com.edu.opensky.user.dto.UserUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -29,9 +28,7 @@ public class UserApiController {
     // 로그인
     @PostMapping("/auth/login")
     public String login(@RequestBody LoginRequestDto requestDto){
-
-        userService.login(requestDto);
-        return requestDto.getEmail();
+        return userService.login(requestDto);
     }
 
 
@@ -46,8 +43,16 @@ public class UserApiController {
         return userService.find(findRequestDto);
     }
 
-    /*@GetMapping("/api/v1/user/{username}")
-    public UserResponseDto findByUsername (@PathVariable String username){
-        return userService.findByEmail(username);
-    }*/
+    // 구현 필요
+    @GetMapping("/auth/check")
+    public boolean authCheck(){
+        return true;
+    }
+
+    // 로그아웃
+    @GetMapping("/auth/logout")
+    public void logout(){
+    }
+
+
 }
