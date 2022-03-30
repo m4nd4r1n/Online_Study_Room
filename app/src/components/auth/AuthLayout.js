@@ -32,7 +32,7 @@ const AuthLayout = ({ children }) => {
         style={tw`bg-gray-200 items-center flex-1 justify-center`}
       >
         <View
-          style={tw.style('p-8 shadow-md rounded-sm bg-white', {
+          style={tw.style('p-8 shadow-md rounded-sm bg-white max-w-2xl', {
             width: (SCREEN_WIDTH / 20) * 19,
           })}
         >

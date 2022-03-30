@@ -154,11 +154,7 @@ const Ranking = () => {
           <TextCenter>레벨</TextCenter>
         )}
       </View>
-      <ScrollView
-        style={tw`w-full`}
-        contentContainerStyle={tw.style(type === 'time' ? 'pb-20' : 'pb-15')}
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView style={tw`w-full`} showsVerticalScrollIndicator={false}>
         {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((data, i) => (
           <View
             key={i}
@@ -173,7 +169,7 @@ const Ranking = () => {
                 <Text>{i + 1}</Text>
               </View>
             </View>
-            <View style={tw`flex-1`}>
+            <View style={tw`flex-1 justify-center items-center`}>
               <TextCenter>학교</TextCenter>
               <TextCenter>학생</TextCenter>
             </View>

@@ -1,9 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { View } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import tw from 'twrnc';
 import InputTime from '../components/timer/InputTime';
 import Timer from '../components/timer/Timer';
+import { ContentsBlock } from '../components/common/Contents';
 import Alarm from '../components/timer/Alarm';
 
 Notifications.setNotificationHandler({
@@ -63,9 +62,7 @@ const TimerPage = () => {
   }, []);
 
   return (
-    <View
-      style={tw`flex-1 px-4 mx-auto w-full items-center justify-center bg-white`}
-    >
+    <ContentsBlock>
       {inputTime ? (
         <InputTime
           changeTimer={changeTimer}
@@ -88,7 +85,7 @@ const TimerPage = () => {
           sendNotification={sendNotification}
         />
       )}
-    </View>
+    </ContentsBlock>
   );
 };
 

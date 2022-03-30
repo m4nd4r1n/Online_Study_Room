@@ -18,7 +18,6 @@ const InputTime = ({
   const [hourOpen, setHourOpen] = useState(false);
   const [minuteOpen, setMinuteOpen] = useState(false);
   const [secondOpen, setSecondOpen] = useState(false);
-  const [start, setStart] = useState(false);
   const onHourOpen = useCallback(() => {
     setMinuteOpen(false);
     setSecondOpen(false);

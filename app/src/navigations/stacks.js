@@ -4,7 +4,7 @@ import Home from '../screens/home/Home';
 import Achievement from '../screens/achievement/Achievement';
 import Header from '../components/common/Header';
 import Message from '../screens/Message';
-import Planner from '../screens/Planner';
+import Planner from '../screens/planner/Planner';
 import Ranking from '../screens/Ranking';
 import Setting from '../screens/Setting';
 import TimerPage from '../screens/Timer';

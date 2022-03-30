@@ -10,7 +10,6 @@ import {
   SettingStackNavigation,
 } from './stacks';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Header from '../components/common/Header';
 
 const Tab = createBottomTabNavigator();
 
@@ -82,6 +81,7 @@ const TabNavigation = ({ route }) => {
             ),
             tabBarLabel: '플래너',
             title: '플래너',
+            tabBarHideOnKeyboard: true,
           }}
         />
       )}
