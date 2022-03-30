@@ -5,22 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7e0ae73-e136-438e-8cf7-b7e0a9d457e9" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/dto/RankingListInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/dto/timeRankingListInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTime.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/config/StompWebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/config/StompWebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/planner/PlannerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/planner/PlannerRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/dto/LevelRankingDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/dto/TimeRankingDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentee/Mentee.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentee/Mentee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/dto/timeRankingListInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/dto/timeRankingListInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentee/MenteeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentee/MenteeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentor/MentorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/mentor/MentorRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -164,7 +164,7 @@
     <property name="project.structure.last.edited" value="프로젝트" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.3156863" />
-    <property name="settings.editor.selected.configurable" value="File.Encoding" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.import" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2021.1.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
@@ -408,7 +408,9 @@
       <workItem from="1648203197647" duration="402000" />
       <workItem from="1648210440529" duration="14000" />
       <workItem from="1648221536151" duration="43000" />
-      <workItem from="1648394011551" duration="11175000" />
+      <workItem from="1648394011551" duration="12538000" />
+      <workItem from="1648563099525" duration="1430000" />
+      <workItem from="1648623524979" duration="3810000" />
     </task>
     <servers />
   </component>
@@ -527,5 +529,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
