@@ -5,6 +5,7 @@ import Timer from '../components/timer/Timer';
 import { ContentsBlock } from '../components/common/Contents';
 import Alarm from '../components/timer/Alarm';
 
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,

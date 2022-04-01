@@ -1,8 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { View, Text, Alert } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { TextInput, Button, Modal, Portal } from 'react-native-paper';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { Error } from '../../components/auth/common';
 import tw from 'twrnc';
 import { addPlanHours, addPlanMinutes } from '../../libs/constants';

@@ -56,15 +56,15 @@ const Timer = ({ onClickTimer, inputTime, time, sendNotification }) => {
   return (
     <>
       <View style={tw`flex-row items-center`}>
-        <Text style={tw`text-3xl font-medium`}>
+        <Text style={tw`flex-1 text-3xl text-center font-medium`}>
           {hour < 10 ? `0${hour}` : hour}
         </Text>
-        <Text style={tw`mx-4`}>:</Text>
-        <Text style={tw`text-3xl font-medium`}>
+        <Text style={tw`mx-2`}>:</Text>
+        <Text style={tw`flex-1 text-3xl text-center font-medium`}>
           {minute < 10 ? `0${minute}` : minute}
         </Text>
-        <Text style={tw`mx-4`}>:</Text>
-        <Text style={tw`text-3xl font-medium`}>
+        <Text style={tw`mx-2`}>:</Text>
+        <Text style={tw`flex-1 text-3xl text-center font-medium`}>
           {second < 10 ? `0${second}` : second}
         </Text>
       </View>
