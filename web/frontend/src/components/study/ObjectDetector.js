@@ -12,7 +12,6 @@ const ObjectDetector = ({ user }) => {
   const userId = false;
   const [client, setClient] = useState(createClient()); // 소켓 클라이언트
   const peerConnectionRef = useRef(); // peer 연결
-  const [dataChannel, setDataChannel] = useState();
 
   let captureFlag = true; // 캡쳐 제한 플래그
   let rejectCount = 0; // 학습인증 실패 횟수
@@ -139,11 +138,6 @@ const ObjectDetector = ({ user }) => {
     [client, user],
   );
 
-  const handleAddStream = useCallback((data) => {
-    videoRef.current.srcObject = data.stream;
-    setLoading(false);
-  }, []);
-
   const createPeer = useCallback(() => {
     const peerConnection = new RTCPeerConnection({
       // 테스트용 구글 STUN 서버
@@ -163,7 +157,6 @@ const ObjectDetector = ({ user }) => {
 
     // IceCandidate 설정
     peerConnection.onicecandidate = handleIce;
-    //peerConnection.addEventListener('addstream', handleAddStream);
 
     videoRef.current.srcObject
       .getVideoTracks()
@@ -270,13 +263,13 @@ const ObjectDetector = ({ user }) => {
       switch (message.type) {
         // 누군가 입장 시 offer 전달
         case 'enter':
+          if (!loading && !peerConnectionRef.current) createPeer();
           sendOffer();
           break;
         case 'offer':
           // 학습페이지에서는 offer 수신해도 동작 x
           break;
         case 'answer':
-          console.log(message.answer);
           peerConnectionRef.current.setRemoteDescription(message.answer);
           break;
         case 'ice':
@@ -287,25 +280,26 @@ const ObjectDetector = ({ user }) => {
           break;
       }
     },
-    [sendOffer],
+    [createPeer, loading, sendOffer],
   );
 
   useEffect(() => {
-    client.connect({}, () => {
-      // 메시지 구독
-      client.subscribe(`/sub/study/room/${user.userId}`, handleMessage);
+    client &&
+      client.connect({}, () => {
+        // 메시지 구독
+        client.subscribe(`/sub/study/room/${user.userId}`, handleMessage);
 
-      // 학부모, 멘토는 enter 메시지 전송
-      if (userId) {
-        client.send(
-          '/pub/study/message',
-          JSON.stringify({ userId: user.userId, type: 'enter' }),
-          {},
-        );
-      }
-    });
+        // 학부모, 멘토는 enter 메시지 전송
+        if (userId) {
+          client.send(
+            '/pub/study/message',
+            JSON.stringify({ userId: user.userId, type: 'enter' }),
+            {},
+          );
+        }
+      });
     return () => {
-      if (client.connected) {
+      if (client && client.connected) {
         client.unsubscribe({});
         client.disconnect();
       }
@@ -333,39 +327,38 @@ const ObjectDetector = ({ user }) => {
 
   return (
     <ContentsBlock>
-      <canvas ref={capture} style={{ display: '' }} />
+      <canvas ref={capture} style={{ display: 'hiddne' }} />
       <div
         style={{
           width: 'auto',
           height: '500px',
-          position: 'relative',
-          top: '0px',
-          left: '0px',
         }}
       >
-        {loading ? (
-          <div>카메라를 불러오는 중입니다...</div>
-        ) : (
-          <>
-            <video
-              className="size"
-              autoPlay
-              playsInline
-              muted
-              ref={videoRef}
-              width="568"
-              height="500"
-              style={{ position: 'absolute', top: '0px', left: '0px' }}
-            />
-            <canvas
-              className="size"
-              ref={canvasRef}
-              width="568"
-              height="500"
-              style={{ position: 'absolute', top: '0px', left: '0px' }}
-            />
-          </>
-        )}
+        {loading && <div>카메라를 불러오는 중입니다...</div>}{' '}
+        <video
+          className="size"
+          autoPlay
+          playsInline
+          muted
+          ref={videoRef}
+          width="568"
+          height="500"
+          style={{
+            display: 'inline',
+          }}
+        />
+        {/* 이 캔버스는 최종버전에서 삭제 */}
+        <canvas
+          className="size"
+          ref={canvasRef}
+          width="568"
+          height="500"
+          style={{
+            display: 'inline',
+            position: 'absolute',
+            left: '400px',
+          }}
+        />
       </div>
       <StudyButton to="/home" type="stop" />
     </ContentsBlock>

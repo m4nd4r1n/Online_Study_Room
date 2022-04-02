@@ -121,7 +121,7 @@ const VideoViewer = () => {
       }
     });
     return () => {
-      if (client.connected) {
+      if (client && client.connected) {
         client.unsubscribe({});
         client.disconnect();
       }
@@ -137,10 +137,8 @@ const VideoViewer = () => {
       <div
         style={{
           width: 'auto',
-          height: '500px',
-          position: 'relative',
-          top: '0px',
-          left: '0px',
+          height: 'auto',
+          marginTop: '150px',
         }}
       >
         {loading && <div>카메라를 불러오는 중입니다...</div>}
@@ -152,7 +150,7 @@ const VideoViewer = () => {
           ref={videoRef}
           width="568"
           height="500"
-          style={{ position: 'absolute', top: '0px', left: '0px' }}
+          style={{ display: 'inline' }}
         />
       </div>
     </ContentsBlock>
