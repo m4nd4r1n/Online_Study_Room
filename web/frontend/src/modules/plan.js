@@ -37,8 +37,8 @@ const initialState = {
   plan: {
     subject: '',
     date: new Date(),
-    startTime: '0000',
-    endTime: '0000',
+    startTime: '00:00:00',
+    endTime: '00:00:00',
   },
   error: null,
 };

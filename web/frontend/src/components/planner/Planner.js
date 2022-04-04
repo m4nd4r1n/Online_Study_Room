@@ -61,8 +61,10 @@ const Table = ({ hour, plans }) => {
         if (plans) {
           for (let j = 0; j < plans.length; j++) {
             if (
-              parseInt(hour + minute) >= parseInt(plans[j].startTime) &&
-              parseInt(hour + minute) < parseInt(plans[j].endTime)
+              parseInt((hour + minute) * 100) >=
+                parseInt(plans[j].startTime.replaceAll(':', '')) &&
+              parseInt((hour + minute) * 100) <
+                parseInt(plans[j].endTime.replaceAll(':', ''))
             )
               color = COLORS[j];
           }
@@ -81,7 +83,7 @@ const Table = ({ hour, plans }) => {
   );
 };
 
-const Plan = ({ plan, index, onRemove }) => {
+const Plan = ({ plan, index, onRemove, plannerOwner }) => {
   const color = COLORS[index % 5];
 
   return (
@@ -90,40 +92,56 @@ const Plan = ({ plan, index, onRemove }) => {
         <span className="text-center text-base font-normal">
           {plan.subject}
         </span>
-        <IconWrapper
-          onClick={() =>
-            onRemove({
-              subject: plan.subject,
-              date: plan.date,
-            })
-          }
-        >
-          <BsX size="25px" />
-        </IconWrapper>
+        {plannerOwner && (
+          <IconWrapper
+            onClick={() =>
+              onRemove({
+                subject: plan.subject,
+              })
+            }
+          >
+            <BsX size="25px" />
+          </IconWrapper>
+        )}
       </PlanBox>
     </ItemBlock>
   );
 };
 
-const PlanList = ({ plans, onRemove, setIsAddPlan }) => {
+const PlanList = ({ plans, onRemove, setIsAddPlan, plannerOwner }) => {
   return (
     <>
       {plans?.map((plan, index) => (
-        <Plan plan={plan} index={index} key={index} onRemove={onRemove} />
+        <Plan
+          plan={plan}
+          index={index}
+          key={index}
+          onRemove={onRemove}
+          plannerOwner={plannerOwner}
+        />
       ))}
-      <PlanBox $color="bg-gray-700">
-        <span className="text-center text-base font-normal text-white">
-          플랜 추가
-        </span>
-        <IconWrapper onClick={() => setIsAddPlan(true)}>
-          <BsPlus size="25px" color="#ffffff" />
-        </IconWrapper>
-      </PlanBox>
+      {plannerOwner && (
+        <PlanBox $color="bg-gray-700">
+          <span className="text-center text-base font-normal text-white">
+            플랜 추가
+          </span>
+          <IconWrapper onClick={() => setIsAddPlan(true)}>
+            <BsPlus size="25px" color="#ffffff" />
+          </IconWrapper>
+        </PlanBox>
+      )}
     </>
   );
 };
 
-const Planner = ({ plans, date, handleDate, onRemove, setIsAddPlan }) => {
+const Planner = ({
+  plans,
+  date,
+  handleDate,
+  onRemove,
+  setIsAddPlan,
+  plannerOwner,
+}) => {
   return (
     <ContentsBlock>
       <div className="mt-4 grid grid-cols-3">
@@ -133,6 +151,7 @@ const Planner = ({ plans, date, handleDate, onRemove, setIsAddPlan }) => {
             plans={plans}
             onRemove={onRemove}
             setIsAddPlan={setIsAddPlan}
+            plannerOwner={plannerOwner}
           />
         </div>
         <div className="col-span-2 ml-4">

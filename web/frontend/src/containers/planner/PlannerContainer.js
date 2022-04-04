@@ -30,11 +30,12 @@ const PlannerContainer = () => {
   const [isAddPlan, setIsAddPlan] = useState(false);
   const [addError, setAddError] = useState(null);
   const dispatch = useDispatch();
-  const { plans, plan, planLoading } = useSelector(
-    ({ planner, plan, loading }) => ({
+  const { plans, plan, planLoading, user } = useSelector(
+    ({ planner, plan, loading, user }) => ({
       plans: planner.plans,
       plan: plan.plan,
       planLoading: loading['plan/ADD_PLAN'],
+      user: user.user,
     }),
   );
 
@@ -45,7 +46,7 @@ const PlannerContainer = () => {
       readPlanner({
         month: formattedDate.getMonth() + 1,
         day: formattedDate.getDate(),
-        userId,
+        userId: userId ? userId : user && user.userId,
       }),
     );
     dispatch(
@@ -57,7 +58,7 @@ const PlannerContainer = () => {
     return () => {
       dispatch(unloadPlanner());
     };
-  }, [dispatch, crossBrowserDate, userId]);
+  }, [dispatch, crossBrowserDate, userId, user]);
 
   useEffect(() => {
     if (!isAddPlan) {
@@ -73,28 +74,6 @@ const PlannerContainer = () => {
   useEffect(() => {
     if (!planLoading) setIsAddPlan(false);
   }, [planLoading]);
-
-  // 과목, 시간, 날짜
-  const [copyPlans, setCopyPlans] = useState([
-    {
-      subject: '리액트',
-      date: date,
-      startTime: '0900',
-      endTime: '1000',
-    },
-    {
-      subject: '스프링',
-      date: date,
-      startTime: '1030',
-      endTime: '1200',
-    },
-    {
-      subject: '파이썬',
-      date: date,
-      startTime: '1400',
-      endTime: '1500',
-    },
-  ]);
 
   // 인풋 변경 이벤트 핸들러
   const onChange = (e) => {
@@ -115,8 +94,8 @@ const PlannerContainer = () => {
     value = selectedOption
       ? e.name.includes('Hour')
         ? selectedOption.value + value.substring(2)
-        : value.substring(0, 2) + selectedOption.value
-      : '0000';
+        : value.substring(0, 3) + selectedOption.value + ':00'
+      : '00:00:00';
     dispatch(
       changeField({
         key: name,
@@ -140,38 +119,34 @@ const PlannerContainer = () => {
   // 플랜 등록 이벤트 핸들러
   const onSubmit = (e) => {
     e.preventDefault();
-    const { subject, date, startTime, endTime } = plan;
+    const { startTime, endTime } = {
+      startTime: parseInt(plan.startTime.replaceAll(':', '')),
+      endTime: parseInt(plan.endTime.replaceAll(':', '')),
+    };
 
-    if (parseInt(startTime) >= parseInt(endTime)) {
+    if (startTime >= endTime) {
       setAddError('종료시간을 시작시간 이후로\n선택해주세요.');
       return;
     }
 
-    for (let i = 0; i < copyPlans.length; i++) {
+    for (let i = 0; i < plans.length; i++) {
       if (
         // 시작시간이 다른 플랜 안쪽
-        (parseInt(startTime) >= parseInt(copyPlans[i].startTime) &&
-          parseInt(startTime) < parseInt(copyPlans[i].endTime)) ||
+        (startTime >= parseInt(plans[i].startTime.replaceAll(':', '')) &&
+          startTime < parseInt(plans[i].endTime)) ||
         // 종료시간이 다른 플랜 안쪽
-        (parseInt(endTime) > parseInt(copyPlans[i].startTime) &&
-          parseInt(endTime) <= parseInt(copyPlans[i].endTime)) ||
+        (endTime > parseInt(plans[i].startTime.replaceAll(':', '')) &&
+          endTime <= parseInt(plans[i].endTime.replaceAll(':', ''))) ||
         // 다른 플랜을 포함
-        (parseInt(startTime) <= parseInt(copyPlans[i].startTime) &&
-          parseInt(endTime) >= parseInt(copyPlans[i].endTime))
+        (startTime <= parseInt(plans[i].startTime.replaceAll(':', '')) &&
+          endTime >= parseInt(plans[i].endTime.replaceAll(':', '')))
       ) {
         setAddError('동시간에 다른 플랜이 존재합니다.\n');
         return;
       }
     }
 
-    dispatch(
-      addPlan({
-        subject,
-        date,
-        startTime,
-        endTime,
-      }),
-    );
+    dispatch(addPlan(plan));
   };
 
   // 삭제요청 전송
@@ -184,10 +159,25 @@ const PlannerContainer = () => {
   };
 
   // 플래너 화면에서 제거
-  const onRemove = ({ subject, date }) => {
-    if (window.confirm(`'${subject}' 플랜을 삭제하시겠습니까?`)) {
-      setCopyPlans(copyPlans.filter((plan) => plan.subject !== subject));
-      asyncRemove({ subject, month: date.getMonth() + 1, day: date.getDate() });
+  const onRemove = ({ subject }) => {
+    if (window.confirm(`${subject} 플랜을 삭제하시겠습니까?`)) {
+      const formattedDate = new Date(crossBrowserDate);
+
+      // 삭제
+      asyncRemove({
+        subject,
+        month: formattedDate.getMonth() + 1,
+        day: formattedDate.getDate(),
+      }).then(() => {
+        // 플래너 다시 로드
+        dispatch(
+          readPlanner({
+            month: formattedDate.getMonth() + 1,
+            day: formattedDate.getDate(),
+            userId,
+          }),
+        );
+      });
     }
   };
 
@@ -206,11 +196,12 @@ const PlannerContainer = () => {
         </ContentsBlock>
       ) : (
         <Planner
-          plans={copyPlans}
+          plans={plans}
           date={date}
           handleDate={handleDate}
           onRemove={onRemove}
           setIsAddPlan={setIsAddPlan}
+          plannerOwner={user && userId === user.userId}
         />
       )}
     </>
