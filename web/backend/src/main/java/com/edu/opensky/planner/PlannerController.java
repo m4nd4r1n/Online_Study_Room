@@ -4,7 +4,7 @@ import com.edu.opensky.planner.dto.PlannerAddDto;
 import com.edu.opensky.user.User;
 import com.edu.opensky.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,9 +46,15 @@ public class PlannerController {
     }
 
     @GetMapping("/planner{queryString}")
-    public List<Planner> readPlans(@RequestParam("month") String month,
-                                   @RequestParam("day") String day,
+    public List<Planner> readPlans(@RequestParam("month")@NonNull String month,
+                                   @RequestParam("day")@NonNull String day,
                                    @RequestParam("userId") String userId) {
+//        if (userId.isEmpty()) {
+//            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//            User user= userService.getUserByToken(principal);
+//            return plannerService.getPlans(month, day, user.getEmail());
+//        }
+
         return plannerService.getPlans(month,day,userId);
 
     }
