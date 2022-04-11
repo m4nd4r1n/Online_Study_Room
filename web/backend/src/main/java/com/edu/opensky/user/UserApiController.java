@@ -1,13 +1,14 @@
 package com.edu.opensky.user;
 
-import com.edu.opensky.Jwt.JwtTokenProvider;
-import com.edu.opensky.Jwt.JwtUserDetailService;
 import com.edu.opensky.user.dto.FindRequestDto;
 import com.edu.opensky.user.dto.LoginRequestDto;
 import com.edu.opensky.user.dto.RegisterRequestDto;
 import com.edu.opensky.user.dto.UserUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
 @RestController
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserApiController {
 
     private final UserService userService;
-    private final JwtUserDetailService jwtUserDetailService;
-    private final JwtTokenProvider jwtTokenProvider;
 
     // 회원가입
     @PostMapping("/auth/register")
@@ -26,9 +25,10 @@ public class UserApiController {
 
     // 로그인
     @PostMapping("/auth/login")
-    public String login(@RequestBody LoginRequestDto requestDto){
-        userService.login(requestDto);
-        return requestDto.getEmail();
+    public ResponseEntity<String> login(@RequestBody LoginRequestDto requestDto, HttpServletResponse response){
+        // Authorization header에 access token
+        response.setHeader("Authorization",userService.login(requestDto));
+        return ResponseEntity.ok("login Success");
 
     }
 
@@ -44,12 +44,13 @@ public class UserApiController {
         return userService.find(findRequestDto);
     }
 
-    /* 구현 필요 */
+//    /* 구현 필요 */
 //    @GetMapping("/auth/check")
 //    public void authCheck(){
 //
-//    }
 //
+//    }
+
 //    // 로그아웃
 //    @GetMapping("/auth/logout")
 //    public void logout(){
