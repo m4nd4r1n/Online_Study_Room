@@ -5,7 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7e0ae73-e136-438e-8cf7-b7e0a9d457e9" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/messenger/ChatRoomController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/messenger/dto/ChatRoomResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/messenger/ChatRoomRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/messenger/RoomController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/messenger/StompChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/messenger/StompChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/messenger/dto/ChatMessageDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/messenger/dto/ChatRoomDto.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,8 +83,8 @@
         <option value="FxmlFile" />
         <option value="HTML File" />
         <option value="JUnit5 Test Class" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -169,6 +178,7 @@
       <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\java\com\edu\opensky\mentee" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\java\com\edu\opensky\messenger" />
       <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\resources\templates\members" />
       <recent name="C:\Users\meron\Online_Study_Room\web\backend\src\main\resources\static" />
     </key>
@@ -176,6 +186,7 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.edu.opensky.messenger" />
       <recent name="com.edu.opensky.controller" />
       <recent name="com.edu.opensky.service" />
     </key>
@@ -405,6 +416,20 @@
       <workItem from="1648563099525" duration="1430000" />
       <workItem from="1648623524979" duration="3810000" />
       <workItem from="1648647928269" duration="408000" />
+      <workItem from="1649092317765" duration="4297000" />
+      <workItem from="1649096907785" duration="3895000" />
+      <workItem from="1649177194190" duration="9882000" />
+      <workItem from="1649225247025" duration="855000" />
+      <workItem from="1649414985576" duration="8383000" />
+      <workItem from="1649435975459" duration="1879000" />
+      <workItem from="1649437938604" duration="1684000" />
+      <workItem from="1649483586227" duration="7000" />
+      <workItem from="1649608746345" duration="2266000" />
+      <workItem from="1649613775572" duration="1344000" />
+      <workItem from="1649616343920" duration="5234000" />
+      <workItem from="1649662665176" duration="2422000" />
+      <workItem from="1649665415189" duration="1232000" />
+      <workItem from="1649668496251" duration="5179000" />
     </task>
     <servers />
   </component>
