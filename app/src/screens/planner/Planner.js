@@ -74,8 +74,10 @@ const Table = ({ hour, plans }) => {
         if (plans) {
           for (let j = 0; j < plans.length; j++) {
             if (
-              parseInt(hour + minute) >= parseInt(plans[j].startTime) &&
-              parseInt(hour + minute) < parseInt(plans[j].endTime)
+              parseInt((hour + minute) * 100) >=
+                parseInt(plans[j].startTime.split(':').join('')) &&
+              parseInt((hour + minute) * 100) <
+                parseInt(plans[j].endTime.split(':').join(''))
             )
               color = COLORS[j];
           }
@@ -135,26 +137,26 @@ const Planner = () => {
     {
       subject: '리액트',
       date: date,
-      startTime: '0900',
-      endTime: '1000',
+      startTime: '09:00:00',
+      endTime: '10:00:00',
     },
     {
       subject: '스프링',
       date: date,
-      startTime: '1030',
-      endTime: '1200',
+      startTime: '10:30:00',
+      endTime: '12:00:00',
     },
     {
       subject: '파이썬',
       date: date,
-      startTime: '1400',
-      endTime: '1500',
+      startTime: '14:00:00',
+      endTime: '15:00:00',
     },
     {
       subject: '산학협력캡스톤설계1',
       date: date,
-      startTime: '1600',
-      endTime: '1700',
+      startTime: '16:00:00',
+      endTime: '17:00:00',
     },
   ]);
 

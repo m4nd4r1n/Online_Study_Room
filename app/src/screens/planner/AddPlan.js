@@ -29,9 +29,13 @@ const AddPlan = ({ plans, setVisible, visible, date }) => {
     // swr mutate
     const data = {
       ...validForm,
-      startTime: startHour + startMinute,
-      endTime: endHour + endMinute,
+      startTime: startHour + ':' + startMinute + ':00',
+      endTime: endHour + ':' + endMinute + ':00',
       date,
+    };
+    const { startTime, endTime } = {
+      startTime: startHour + startMinute,
+      endTime: startHour + startMinute,
     };
     if (parseInt(data.startTime) >= parseInt(data.endTime)) {
       Alert.alert('오류', '종료시간을 시작시간 이후로 선택해주세요.');
@@ -40,14 +44,18 @@ const AddPlan = ({ plans, setVisible, visible, date }) => {
     for (let i = 0; i < plans.length; i++) {
       if (
         // 시작시간이 다른 플랜 안쪽
-        (parseInt(data.startTime) >= parseInt(plans[i].startTime) &&
-          parseInt(data.startTime) < parseInt(plans[i].endTime)) ||
+        (parseInt(startTime) >=
+          parseInt(plans[i].startTime.split(':').join('')) &&
+          parseInt(startTime) <
+            parseInt(plans[i].endTime.split(':').join(''))) ||
         // 종료시간이 다른 플랜 안쪽
-        (parseInt(data.endTime) > parseInt(plans[i].startTime) &&
-          parseInt(data.endTime) <= parseInt(plans[i].endTime)) ||
+        (parseInt(endTime) > parseInt(plans[i].startTime.split(':').join('')) &&
+          parseInt(endTime) <=
+            parseInt(plans[i].endTime.split(':').join(''))) ||
         // 다른 플랜을 포함
-        (parseInt(data.startTime) <= parseInt(plans[i].startTime) &&
-          parseInt(data.endTime) >= parseInt(plans[i].endTime))
+        (parseInt(startTime) <=
+          parseInt(plans[i].startTime.split(':').join('')) &&
+          parseInt(endTime) >= parseInt(plans[i].endTime.split(':').join('')))
       ) {
         Alert.alert('오류', '동시간에 다른 플랜이 존재합니다.');
         return;
