@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
@@ -25,11 +26,12 @@ public class UserApiController {
 
     // 로그인
     @PostMapping("/auth/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequestDto requestDto, HttpServletResponse response){
-        // Authorization header에 access token
-        response.setHeader("Authorization",userService.login(requestDto));
-        return ResponseEntity.ok("login Success");
-
+    public void login(@RequestBody LoginRequestDto requestDto, HttpServletResponse response){
+        // access token cookie 생성
+        Cookie authCookie = new Cookie("Authorization", userService.login(requestDto));
+        authCookie.setMaxAge(1000 * 60 * 60 * 24 * 7); // 유효 기간 7일
+        authCookie.setPath("/"); // 모든 경로에서 접근 가능 하도록 설정
+        response.addCookie(authCookie); // response에 cookie 설정
     }
 
 
