@@ -6,9 +6,10 @@ export const addPlan = ({ subject, date, startTime, endTime }) =>
   client.post(`/api/planner`, { subject, date, startTime, endTime });
 
 // 플랜 제거
-export const removePlan = ({ subject, month, day }) => {
+export const removePlan = ({ subject, year, month, day }) => {
   const queryString = qs.stringify({
     subject,
+    year,
     month,
     day,
   });
@@ -16,8 +17,9 @@ export const removePlan = ({ subject, month, day }) => {
 };
 
 // 플래너 가져오기
-export const readPlanner = ({ month, day, userId }) => {
+export const readPlanner = ({ year, month, day, userId }) => {
   const queryString = qs.stringify({
+    year,
     month,
     day,
     userId,

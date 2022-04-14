@@ -44,6 +44,7 @@ const PlannerContainer = () => {
     const formattedDate = new Date(crossBrowserDate);
     dispatch(
       readPlanner({
+        year: formattedDate.getFullYear(),
         month: formattedDate.getMonth() + 1,
         day: formattedDate.getDate(),
         userId: userId ? userId : user && user.userId,
@@ -150,9 +151,9 @@ const PlannerContainer = () => {
   };
 
   // 삭제요청 전송
-  const asyncRemove = async ({ subject, month, day }) => {
+  const asyncRemove = async ({ subject, year, month, day }) => {
     try {
-      await removePlan({ subject, month, day });
+      await removePlan({ subject, year, month, day });
     } catch (e) {
       console.log(e);
     }
@@ -166,12 +167,14 @@ const PlannerContainer = () => {
       // 삭제
       asyncRemove({
         subject,
+        year: formattedDate.getFullYear(),
         month: formattedDate.getMonth() + 1,
         day: formattedDate.getDate(),
       }).then(() => {
         // 플래너 다시 로드
         dispatch(
           readPlanner({
+            year: formattedDate.getFullYear(),
             month: formattedDate.getMonth() + 1,
             day: formattedDate.getDate(),
             userId,
@@ -201,7 +204,7 @@ const PlannerContainer = () => {
           handleDate={handleDate}
           onRemove={onRemove}
           setIsAddPlan={setIsAddPlan}
-          plannerOwner={user && userId === user.userId}
+          plannerOwner={true} //user && userId === user.userId}
         />
       )}
     </>

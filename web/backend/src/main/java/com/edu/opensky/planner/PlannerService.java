@@ -40,16 +40,16 @@ public class PlannerService {
     }
 
 
-    public List<Planner> getPlans(String month, String day, String userId){
-        LocalDate date = LocalDate.of(2022,Integer.parseInt(month),Integer.parseInt(day));
+    public List<Planner> getPlans(String year, String month, String day, String userId){
+        LocalDate date = LocalDate.of(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
 
         return plannerRepository.findPlannersByDateAndMentee_MteId(
                 date, userId);
     }
 
-    public void removePlan(String subject, String month, String day){
+    public void removePlan(String subject, String year, String month, String day){
 
-        LocalDate date = LocalDate.of(2022,Integer.parseInt(month),Integer.parseInt(day));
+        LocalDate date = LocalDate.of(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
         plannerRepository.findBySubjectAndDate(subject,date).ifPresent(plannerRepository::delete);
 
     }

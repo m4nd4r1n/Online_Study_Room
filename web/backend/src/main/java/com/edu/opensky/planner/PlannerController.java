@@ -46,7 +46,8 @@ public class PlannerController {
     }
 
     @GetMapping("/planner{queryString}")
-    public List<Planner> readPlans(@RequestParam("month")@NonNull String month,
+    public List<Planner> readPlans(@RequestParam("year")@NonNull String year,
+                                   @RequestParam("month")@NonNull String month,
                                    @RequestParam("day")@NonNull String day,
                                    @RequestParam("userId") String userId) {
 //        if (userId.isEmpty()) {
@@ -55,15 +56,16 @@ public class PlannerController {
 //            return plannerService.getPlans(month, day, user.getEmail());
 //        }
 
-        return plannerService.getPlans(month,day,userId);
+        return plannerService.getPlans(year,month,day,userId);
 
     }
     @DeleteMapping("/planner{queryString}")
     public void removePlan(@RequestParam("subject") String subject,
+                           @RequestParam("year")@NonNull String year,
                            @RequestParam("month") String month,
                            @RequestParam("day") String day) {
 
-        plannerService.removePlan(subject,month,day);
+        plannerService.removePlan(subject,year,month,day);
 
     }
 }

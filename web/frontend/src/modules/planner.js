@@ -11,7 +11,8 @@ const UNLOAD_PLANNER = 'planner/UNLOAD_PLANNER';
 
 export const readPlanner = createAction(
   READ_PLANNER,
-  ({ month, day, userId }) => ({
+  ({ year, month, day, userId }) => ({
+    year,
     month,
     day,
     userId,
