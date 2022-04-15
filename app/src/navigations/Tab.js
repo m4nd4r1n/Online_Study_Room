@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   HomeStackNavigation,
@@ -10,16 +10,31 @@ import {
   SettingStackNavigation,
 } from './stacks';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigation = ({ route }) => {
-  const user = route?.params?.user;
+const TabNavigation = () => {
+  const [user, setUser] = useState('');
+  useEffect(() => {
+    const bootstrap = async () => {
+      try {
+        const data = await AsyncStorage.getItem('@user');
+        console.log(data);
+        setUser(data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    bootstrap();
+  }, []);
+
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: '#06B6D4',
+        tabBarStyle: { display: user === '학부모' ? 'none' : 'flex' },
       }}
       initialRouteName="HomeTab"
     >
@@ -72,31 +87,32 @@ const TabNavigation = ({ route }) => {
         </>
       )}
       {(user === '멘토' || user === '멘티') && (
-        <Tab.Screen
-          name="PlannerTab"
-          component={PlannerStackNavigation}
-          options={{
-            tabBarIcon: (props) => (
-              <MaterialCommunityIcons name="calendar-text" {...props} />
-            ),
-            tabBarLabel: '플래너',
-            title: '플래너',
-            tabBarHideOnKeyboard: true,
-          }}
-        />
+        <>
+          <Tab.Screen
+            name="PlannerTab"
+            component={PlannerStackNavigation}
+            options={{
+              tabBarIcon: (props) => (
+                <MaterialCommunityIcons name="calendar-text" {...props} />
+              ),
+              tabBarLabel: '플래너',
+              title: '플래너',
+              tabBarHideOnKeyboard: true,
+            }}
+          />
+          <Tab.Screen
+            name="MessageTab"
+            component={MessageStackNavigation}
+            options={{
+              tabBarIcon: (props) => (
+                <MaterialCommunityIcons name="message-text" {...props} />
+              ),
+              tabBarLabel: '메시지',
+              title: '메시지',
+            }}
+          />
+        </>
       )}
-
-      <Tab.Screen
-        name="MessageTab"
-        component={MessageStackNavigation}
-        options={{
-          tabBarIcon: (props) => (
-            <MaterialCommunityIcons name="message-text" {...props} />
-          ),
-          tabBarLabel: '메시지',
-          title: '메시지',
-        }}
-      />
       <Tab.Screen
         name="SettingTab"
         component={SettingStackNavigation}
@@ -104,9 +120,8 @@ const TabNavigation = ({ route }) => {
           tabBarIcon: (props) => (
             <MaterialCommunityIcons name="cog" {...props} />
           ),
-          tabBarLabel: '설정',
-          title: '설정',
           tabBarItemStyle: { display: 'none' },
+          tabBarStyle: { display: 'none' },
         }}
       />
     </Tab.Navigator>

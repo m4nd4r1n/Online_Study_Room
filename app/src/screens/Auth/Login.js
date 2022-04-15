@@ -7,6 +7,7 @@ import { useIsFocused } from '@react-navigation/native';
 import AuthLayout from '../../components/auth/AuthLayout';
 import { isEmail } from '../../libs/utils';
 import { Error } from '../../components/auth/common';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation: { navigate, replace } }) => {
   const {
@@ -25,19 +26,21 @@ const Login = ({ navigation: { navigate, replace } }) => {
   useEffect(() => {
     if (!isFocused) reset();
   }, [isFocused]);
+  const move = async (user) => {
+    try {
+      await AsyncStorage.setItem('@user', user);
+    } catch (e) {
+      console.log(e);
+    }
+    replace('Tab');
+  };
   return (
     <AuthLayout>
       <Text style={tw`mb-3`}>로그인</Text>
       <View style={tw`flex-row justify-center`}>
-        <Button onPress={() => replace('Tab', { user: '멘토' })}>
-          멘토 이동
-        </Button>
-        <Button onPress={() => replace('Tab', { user: '멘티' })}>
-          멘티 이동
-        </Button>
-        <Button onPress={() => replace('Tab', { user: '학부모' })}>
-          학부모 이동
-        </Button>
+        <Button onPress={() => move('멘토')}>멘토 이동</Button>
+        <Button onPress={() => move('멘티')}>멘티 이동</Button>
+        <Button onPress={() => move('학부모')}>학부모 이동</Button>
       </View>
 
       <Controller
