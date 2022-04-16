@@ -17,6 +17,10 @@ configurations {
 repositories {
     mavenCentral()
 }
+// plain.jar 생성방지
+jar {
+    enabled = false
+}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -36,6 +40,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation group: 'org.webjars', name: 'stomp-websocket', version: '2.3.3-1'
     implementation 'io.jsonwebtoken:jjwt:0.9.1' //jwt 의존성추가
+    implementation 'org.springframework.session:spring-session-jdbc'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
