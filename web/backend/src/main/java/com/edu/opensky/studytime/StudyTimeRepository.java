@@ -18,26 +18,26 @@ public interface StudyTimeRepository extends JpaRepository<StudyTime, Long> {
     Page<levelRankingListInterface> findByRankingOfLevel (Pageable pageable);
 
     @Transactional(readOnly = true)
-    @Query(value = "select s.mentee.school as school,u.name as name, sec_to_time(sum(time_to_sec(s.endTime)-time_to_sec(s.startTime))) as time " +
-            "from StudyTime s join User u on s.mentee.mteId = u.email " +
+    @Query(value = "select m.school as school, u.name as name, sec_to_time(sum(time_to_sec(s.endTime)-time_to_sec(s.startTime))) as time " +
+            "from StudyTime s join User u on s.mte_id = u.email join Mentee m on m.mteId = s.mte_id " +
             "where date(s.startTime) = date(:date) " +
-            "group by s.mentee.mteId " +
+            "group by s.mte_id " +
             "order by time desc ",nativeQuery = true)
     Page<timeRankingListInterface> findByRankingOfTimeForDay(LocalDate date, Pageable pageable);
 
     @Transactional(readOnly = true)
-    @Query(value = "select s.mentee.school as school,u.name as name, sec_to_time(sum(time_to_sec(s.endTime)-time_to_sec(s.startTime))) as time " +
-            "from StudyTime s join User u on s.mentee.mteId = u.email " +
+    @Query(value = "select m.school as school,u.name as name, sec_to_time(sum(time_to_sec(s.endTime)-time_to_sec(s.startTime))) as time " +
+            "from StudyTime s join User u on s.mte_id = u.email join Mentee m on m.mteId = s.mte_id " +
             "where datediff(date(s.startTime), :date) < 7 " +
-            "group by s.mentee.mteId " +
+            "group by s.mte_id " +
             "order by time desc ",nativeQuery = true)
     Page<timeRankingListInterface> findByRankingOfTimeForWeek(LocalDate date,Pageable pageable);
 
     @Transactional(readOnly = true)
-    @Query(value = "select u.name as name, s.mentee.school as school, sec_to_time(sum(time_to_sec(s.endTime)-time_to_sec(s.startTime))) as time " +
-            "from StudyTime s join User u on s.mentee.mteId = u.email " +
+    @Query(value = "select u.name as name,m.school as school, sec_to_time(sum(time_to_sec(s.endTime)-time_to_sec(s.startTime))) as time " +
+            "from StudyTime s join User u on s.mte_id = u.email join Mentee m on m.mteId = s.mte_id " +
             "where month(s.startTime)= month(:date) and year(s.startTime) = year(:date) " +
-            "group by s.mentee.mteId " +
+            "group by s.mte_id " +
             "order by time desc ",nativeQuery = true)
     Page<timeRankingListInterface> findByRankingOfTimeForMonth(LocalDate date,Pageable pageable);
 }
