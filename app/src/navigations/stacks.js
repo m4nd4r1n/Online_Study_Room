@@ -10,6 +10,8 @@ import Setting from '../screens/Setting';
 import TimerPage from '../screens/Timer';
 import ObjectDetect from '../screens/home/ObjectDetect';
 import ObjectClassify from '../screens/home/ObjectClassify';
+import Management from '../screens/home/Management';
+import StudyTime from '../screens/home/StudyTime';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +19,16 @@ export const HomeStackNavigation = () => {
   return (
     <Stack.Navigator screenOptions={{ header: Header }}>
       <Stack.Screen name="Home" component={Home} options={{ title: '홈' }} />
+      <Stack.Screen
+        name="Management"
+        component={Management}
+        options={{ title: '멘티 관리' }}
+      />
+      <Stack.Screen
+        name="StudyTime"
+        component={StudyTime}
+        options={{ title: '학습 관리' }}
+      />
       <Stack.Screen name="ObjectDetectTest" component={ObjectDetect} />
       <Stack.Screen name="ObjectClassifyTest" component={ObjectClassify} />
     </Stack.Navigator>

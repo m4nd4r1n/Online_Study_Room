@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import tw from 'twrnc';
+import { useNavigation } from '@react-navigation/native';
 
 const Item = ({ wide = false, borderRight = true, children }) => (
   <View
@@ -17,7 +18,7 @@ const Item = ({ wide = false, borderRight = true, children }) => (
 
 const Mentee = ({ mentee }) => {
   const { name, school, id, messengerId, state } = mentee;
-
+  const { navigate } = useNavigation();
   return (
     <View
       style={tw`flex-row h-20 w-full items-center justify-between border-b border-gray-300 text-center sm:px-4`}
@@ -29,17 +30,19 @@ const Mentee = ({ mentee }) => {
         <Text>{school}</Text>
       </Item>
       <Item wide>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={() => navigate('Management', { id })}>
           <MaterialCommunityIcons name="account-cog" size={36} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={() => navigate('PlannerTab', { id })}>
           <MaterialCommunityIcons
             name="calendar-text"
             size={36}
             color="black"
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity
+          onPress={() => navigate('MessageTab', { messengerId })}
+        >
           <MaterialCommunityIcons name="message-text" size={36} color="black" />
         </TouchableOpacity>
       </Item>
