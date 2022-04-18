@@ -8,17 +8,19 @@ import {
   getStudyTime,
   acceptStudyTime,
 } from '../../modules/management';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const StudyTimeContainer = () => {
+  const navigate = useNavigate();
   const { userId } = useParams();
   const dispatch = useDispatch();
-  const { studentInfo, studyTime, error, loading } = useSelector(
-    ({ management, loading }) => ({
+  const { studentInfo, studyTime, error, loading, user } = useSelector(
+    ({ management, loading, user }) => ({
       studentInfo: management.info,
       studyTime: management.studyTime,
       error: management.error,
       loading: loading['management/ACCEPT_STUDY_TIME'],
+      user: user.user,
     }),
   );
 
@@ -39,6 +41,10 @@ const StudyTimeContainer = () => {
       image: new Blob(),
     },
   ];
+
+  useEffect(() => {
+    !user && navigate('/login');
+  });
 
   // 멘티정보, 공부시간
   useEffect(() => {

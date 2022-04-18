@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { readAchievement } from '../../modules/achievement';
 import { ContentsBlock } from '../../components/common/Contents';
 import Achievement from '../../components/achievement/Achievement';
+import { useNavigate } from 'react-router';
 
 const AchievementContainer = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { achievements } = useSelector(({ achievement }) => ({
+  const { achievements, user } = useSelector(({ achievement, user }) => ({
     achievements: achievement.achievements,
+    user: user.user,
   }));
 
   // const achievements = [
@@ -19,6 +22,10 @@ const AchievementContainer = () => {
   //   { id: 8, date: new Date() },
   //   { id: 9, date: new Date() },
   // ];
+
+  useEffect(() => {
+    !user && navigate('/login');
+  });
 
   useEffect(() => {
     dispatch(readAchievement());

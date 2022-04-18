@@ -8,8 +8,11 @@ import Timer from '../../components/timer/Timer';
 import InputTime from '../../components/timer/InputTime';
 import Alarm from '../../components/timer/Alarm';
 import { isSupported } from '../../lib/utils';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const TimerContainer = () => {
+  const navigate = useNavigate();
   const [inputTime, setInputTime] = useState(true);
   const [isTimer, setIsTimer] = useState(true);
 
@@ -18,6 +21,8 @@ const TimerContainer = () => {
     minutes: 0,
     seconds: 0,
   });
+
+  const { user } = useSelector(({ user }) => ({ user: user.user }));
 
   // 타이머 시작/취소
   const onClickTimer = () => {
@@ -28,6 +33,10 @@ const TimerContainer = () => {
     setTime({ hours: 0, minutes: 0, seconds: 0 });
     setIsTimer(!isTimer);
   };
+
+  useEffect(() => {
+    !user && navigate('/login');
+  });
 
   useEffect(() => {
     if (isSupported() && Notification.permission !== 'granted') {

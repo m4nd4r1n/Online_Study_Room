@@ -8,7 +8,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { readPlanner, unloadPlanner } from '../../modules/planner';
 import { changeField, initializePlan, addPlan } from '../../modules/plan';
@@ -19,6 +19,7 @@ import Planner from '../../components/planner/Planner';
 import { formatDate } from 'react-day-picker/moment';
 
 const PlannerContainer = () => {
+  const navigate = useNavigate();
   const { userId } = useParams();
 
   const [date, setDate] = useState(
@@ -38,6 +39,10 @@ const PlannerContainer = () => {
       user: user.user,
     }),
   );
+
+  useEffect(() => {
+    !user && navigate('/login');
+  });
 
   // 날짜 변경 시 새 플래너 요청, 플랜 날짜 변경
   useEffect(() => {
