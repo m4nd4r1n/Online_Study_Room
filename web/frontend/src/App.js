@@ -15,6 +15,7 @@ import StudyTimeManagementPage from './pages/StudyTimeManagementPage';
 import TimerPage from './pages/TimerPage';
 import FindPage from './pages/FindPage';
 import StatisticsPage from './pages/StatisticsPage';
+import SettingPage from './pages/SettingPage';
 import BottomTabBar from './components/common/BottomTabBar';
 import NotFound from './pages/404';
 
@@ -121,6 +122,15 @@ const App = () => {
           </>
         }
         path="statistics"
+      />
+      <Route
+        element={
+          <>
+            <SettingPage />
+            <BottomTabBar />
+          </>
+        }
+        path="setting"
       />
       <Route path="*" element={<NotFound />} />
     </Routes>
