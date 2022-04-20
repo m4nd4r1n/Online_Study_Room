@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c7e0ae73-e136-438e-8cf7-b7e0a9d457e9" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -424,6 +425,7 @@
       <workItem from="1649668496251" duration="5306000" />
       <workItem from="1649829917605" duration="18981000" />
       <workItem from="1650120773310" duration="3818000" />
+      <workItem from="1650435328847" duration="937000" />
     </task>
     <servers />
   </component>

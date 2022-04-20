@@ -81,9 +81,12 @@ public class UserService {
     /* 회원가입 */
     @Transactional
     public String register(RegisterRequestDto requestDto) {
-        UserSaveRequestDto userSaveRequestDto = new UserSaveRequestDto(requestDto.getEmail(), requestDto.getPassword());
+        // 아임포트에 certification을 이용하여 이름, 전화번호, 생일을 추가로 받아옴
+        List<String> userInfo = importService.getCertification(requestDto.getImpUID());
+        UserSaveRequestDto userSaveRequestDto = new UserSaveRequestDto(requestDto.getEmail(), requestDto.getPassword(),
+                userInfo.get(0), userInfo.get(1), LocalDate.parse(userInfo.get(2), DateTimeFormatter.ISO_DATE));
         checkDuplicateUser(userSaveRequestDto);
-        
+
         switch (requestDto.getType()) {
             case "멘티":
                 MenteeSaveRequestDto menteeSaveRequestDto = new MenteeSaveRequestDto(requestDto.getEmail(), requestDto.getSchool());
@@ -99,10 +102,6 @@ public class UserService {
                 parentRepository.save(parentSaveRequestDto.toEntity());
 
         }
-        // 아임포트에 certification을 이용하여 이름, 전화번호, 생일을 추가로 받아옴
-        List<String> userInfo = importService.getCertification(requestDto.getImpUID());
-        userSaveRequestDto = new UserSaveRequestDto(requestDto.getEmail(), requestDto.getPassword(),
-                userInfo.get(0), userInfo.get(1), LocalDate.parse(userInfo.get(2), DateTimeFormatter.ISO_DATE));
 
         return userRepository.save(userSaveRequestDto.toEntity()).getEmail();
     }
@@ -112,6 +111,10 @@ public class UserService {
         userRepository.findByEmail(requestDto.getEmail())
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 아이디입니다.");
+                });
+        userRepository.findByPhone(requestDto.getPhone())
+                .ifPresent(m -> {
+                    throw new IllegalArgumentException("이미 가입한 사용자입니다.");
                 });
     }
 
