@@ -1,6 +1,5 @@
 package com.edu.opensky.Jwt;
 
-import com.edu.opensky.Jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -12,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @RequiredArgsConstructor
 @EnableWebSecurity //Spring Security를 사용하기위해 Spring Security Filter Chain을 사용한다는것을 명시해줘야함
@@ -54,10 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()// 그외 나머지 요청은 누구나 접근 가능
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated().and()
-                .cors().and() // 이게중요 -> 응답에 cors헤더를 포함해줌 . spring-security에서 cors를 적용한다는설정, 인증성공 여부와 무관하게 origin헤더가 있는 요청에 대해 cors헤더를 포함한 응답을 해준다.
-                // JwtAuthenticationFIlter를 UsernamePasswordAuthenticationFilter전에 넣는다.
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
-                        UsernamePasswordAuthenticationFilter.class)
+                .cors().and() // 이게중요 -> 응답에 cors헤더를 포함해줌 . spring-security에서 cors를 적용한다는설정, 인증성공 여부와 무관하게 origin헤더가 있는 요청에 대해 cors헤더를 포함한 응답을 해준다
                 .formLogin().usernameParameter("email");
 
 
