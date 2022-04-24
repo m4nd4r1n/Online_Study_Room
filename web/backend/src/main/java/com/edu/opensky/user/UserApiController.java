@@ -5,9 +5,11 @@ import com.edu.opensky.user.dto.LoginRequestDto;
 import com.edu.opensky.user.dto.RegisterRequestDto;
 import com.edu.opensky.user.dto.UserUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,12 +48,18 @@ public class UserApiController {
         return userService.find(findRequestDto);
     }
 
-//    /* 구현 필요 */
-//    @GetMapping("/auth/check")
-//    public void authCheck(){
-//
-//
-//    }
+    /* 구현 필요 */
+    @ResponseBody
+    @GetMapping("/auth/check")
+    public ResponseEntity<?> authCheck(ServletRequest request){
+        String token=userService.check(request);
+        if(token==null){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        else{
+            return new ResponseEntity<String>(token,HttpStatus.OK);
+        }
+    }
 
 //    // 로그아웃
 //    @GetMapping("/auth/logout")
