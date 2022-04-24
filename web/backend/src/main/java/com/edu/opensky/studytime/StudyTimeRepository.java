@@ -54,4 +54,37 @@ public interface StudyTimeRepository extends JpaRepository<StudyTime, Long> {
             "where month(s.startTime)= month(:date) and year(s.startTime) = year(:date) and isnull(s.endTime)"
             ,nativeQuery = true)
     Integer countByStartTimeAndEndTimeIsNull(LocalDate date);
+
+    @Transactional(readOnly = true)
+    @Query(value = "select ranking " +
+            "from( " +
+            "select s.mte_id as id, rank() over(order by sec_to_time(sum(time_to_sec(s.endTime)-time_to_sec(s.startTime))) desc) as ranking " +
+            "from StudyTime s join User u on s.mte_id = u.email join Mentee m on m.mteId = s.mte_id " +
+            "where date(s.startTime) = date(:date) and not isnull(s.endTime)  " +
+            "group by s.mte_id) as t " +
+            "where t.id = :id "
+            ,nativeQuery = true)
+    Integer myRankingOfDay(LocalDate date, String id);
+
+    @Transactional(readOnly = true)
+    @Query(value = "select ranking " +
+            "from( " +
+            "select s.mte_id as id, rank() over(order by sec_to_time(sum(time_to_sec(s.endTime)-time_to_sec(s.startTime))) desc) as ranking " +
+            "from StudyTime s join User u on s.mte_id = u.email join Mentee m on m.mteId = s.mte_id " +
+            "where datediff(date(s.startTime), :date) < 7 and not isnull(s.endtime) " +
+            "group by s.mte_id) as t " +
+            "where t.id = :id "
+            ,nativeQuery = true)
+    Integer myRankingOfWeek(LocalDate date, String id);
+
+    @Transactional(readOnly = true)
+    @Query(value = "select ranking " +
+            "from( " +
+            "select s.mte_id as id, rank() over(order by sec_to_time(sum(time_to_sec(s.endTime)-time_to_sec(s.startTime))) desc) as ranking " +
+            "from StudyTime s join User u on s.mte_id = u.email join Mentee m on m.mteId = s.mte_id " +
+            "where month(s.startTime)= month(:date) and year(s.startTime) = year(:date) and not isnull(s.endtime) " +
+            "group by s.mte_id) as t " +
+            "where t.id = :id "
+            ,nativeQuery = true)
+    Integer myRankingOfMonth(LocalDate date, String id);
 }
