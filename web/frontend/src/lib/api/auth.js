@@ -36,3 +36,5 @@ export const logout = () => client.post('/auth/logout');
 
 export const find = ({ impUID, email }) =>
   client.post('/auth/find', { impUID, email });
+
+export const signout = () => client.delete('/auth/signout');
