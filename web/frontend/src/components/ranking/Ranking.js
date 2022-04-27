@@ -3,7 +3,7 @@ import { cls } from '../../lib/utils';
 import { getRanking } from '../../lib/api/ranking';
 import useSWRInfinite from 'swr/infinite';
 
-const Ranking = () => {
+const Ranking = ({ ranks }) => {
   const [type, setType] = useState('time');
   const [time, setTime] = useState('day');
   const getKey = (index) =>
@@ -110,8 +110,8 @@ const Ranking = () => {
           <div className="my-2 grid h-8 w-full select-none grid-cols-3 items-center text-center">
             {type === 'time' && time === 'day' ? (
               <>
-                <span>현재 학습중 ?명</span>
-                <span>금일 전체 ?명</span>
+                <span>현재 학습중 {ranks.current}명</span>
+                <span>금일 전체 {ranks.today}명</span>
               </>
             ) : (
               <>
@@ -119,7 +119,19 @@ const Ranking = () => {
                 <span></span>
               </>
             )}
-            <span>나의 등수 ?등</span>
+            <span>
+              나의 등수{' '}
+              {type === 'time'
+                ? time === 'day'
+                  ? ranks.day
+                  : time === 'week'
+                  ? ranks.week
+                  : time === 'month'
+                  ? ranks.month
+                  : null
+                : ranks.level}
+              등
+            </span>
           </div>
           <div className="grid w-full select-none grid-cols-3 items-center border-b pb-2 text-center">
             <span>등수</span>
