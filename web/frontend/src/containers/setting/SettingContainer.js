@@ -43,7 +43,7 @@ const RankingContainer = () => {
   ];
 
   useEffect(() => {
-    //!user && navigate('/login');
+    !user && navigate('/login');
   });
 
   return (

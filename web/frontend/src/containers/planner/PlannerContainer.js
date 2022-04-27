@@ -17,11 +17,12 @@ import AddPlan from '../../components/planner/AddPlan';
 import { removePlan } from '../../lib/api/planner';
 import Planner from '../../components/planner/Planner';
 import { formatDate } from 'react-day-picker/moment';
+import SelectMentee from '../../components/planner/SelectMentee';
 
 const PlannerContainer = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
-
+  const [menteeId, setMenteeId] = useState(userId);
   const [date, setDate] = useState(
     `${formatDate(new Date(), 'YYYY.MM.DD (ddd)')}`,
   );
@@ -40,6 +41,8 @@ const PlannerContainer = () => {
     }),
   );
 
+  //const testUser = { type: 'mentor' };
+
   useEffect(() => {
     !user && navigate('/login');
   });
@@ -52,7 +55,7 @@ const PlannerContainer = () => {
         year: formattedDate.getFullYear(),
         month: formattedDate.getMonth() + 1,
         day: formattedDate.getDate(),
-        userId: userId ? userId : user && user.userId,
+        userId: menteeId !== '' ? menteeId : user && user.userId,
       }),
     );
     dispatch(
@@ -64,7 +67,7 @@ const PlannerContainer = () => {
     return () => {
       dispatch(unloadPlanner());
     };
-  }, [dispatch, crossBrowserDate, userId, user]);
+  }, [dispatch, crossBrowserDate, menteeId, user]);
 
   useEffect(() => {
     if (!isAddPlan) {
@@ -189,8 +192,15 @@ const PlannerContainer = () => {
     }
   };
 
+  const handleChange = (e) => {
+    setMenteeId(e.target.value);
+  };
+
   return (
     <>
+      {user.type === 'mentor' && (
+        <SelectMentee menteeId={menteeId} handleChange={handleChange} />
+      )}
       {isAddPlan ? (
         <ContentsBlock style={{ display: 'flex', height: '80vh' }}>
           <AddPlan
