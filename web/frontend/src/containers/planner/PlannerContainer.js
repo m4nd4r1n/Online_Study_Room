@@ -198,7 +198,7 @@ const PlannerContainer = () => {
 
   return (
     <>
-      {user.type === 'mentor' && (
+      {user?.type === 'mentor' && (
         <SelectMentee menteeId={menteeId} handleChange={handleChange} />
       )}
       {isAddPlan ? (
