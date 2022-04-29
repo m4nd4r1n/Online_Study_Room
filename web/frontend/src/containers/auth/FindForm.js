@@ -75,7 +75,7 @@ const FindForm = () => {
     }
     if (auth) {
       console.log('찾기 성공');
-      alert(auth.response.data);
+      alert(auth);
       dispatch(check());
     }
   }, [auth, authError, dispatch]);

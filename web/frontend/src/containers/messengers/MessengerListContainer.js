@@ -3,13 +3,11 @@
  */
 
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { listMessengers } from '../../modules/messengers';
 import Messenger from '../../components/messenger/Messenger';
 
 const MessengerListContainer = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { messengers, error, user } = useSelector(({ messengers, user }) => ({
     messengers: messengers.messengers,
@@ -35,10 +33,6 @@ const MessengerListContainer = () => {
       lastReceivedTime: new Date(),
     },
   ];
-
-  useEffect(() => {
-    !user && navigate('/login');
-  });
 
   useEffect(() => {
     dispatch(listMessengers());

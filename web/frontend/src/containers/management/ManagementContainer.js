@@ -4,10 +4,9 @@ import StudentInfo from '../../components/management/StudentInfo';
 import ManagementList from '../../components/management/ManagementList';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStudentInfo } from '../../modules/management';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const ManagementContainer = () => {
-  const navigate = useNavigate();
   const { userId } = useParams();
   const dispatch = useDispatch();
   const { studentInfo, error, user } = useSelector(({ management, user }) => ({
@@ -22,10 +21,6 @@ const ManagementContainer = () => {
     school: '광운고등학교',
     name: '김광운',
   };
-
-  useEffect(() => {
-    !user && navigate('/login');
-  });
 
   useEffect(() => {
     dispatch(getStudentInfo({ userId }));

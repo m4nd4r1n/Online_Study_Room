@@ -50,8 +50,8 @@ const ChildrenList = () => {
 
   return (
     <>
-      {children.map((child) => (
-        <Child child={child} />
+      {children.map((child, index) => (
+        <Child child={child} key={index} />
       ))}
     </>
   );

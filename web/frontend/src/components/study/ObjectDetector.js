@@ -360,7 +360,7 @@ const ObjectDetector = ({ user }) => {
           }}
         />
       </div>
-      <StudyButton to="/home" type="stop" />
+      <StudyButton to="/" type="stop" />
     </ContentsBlock>
   );
 };

@@ -3,7 +3,6 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { listMessages } from '../../modules/messenger';
 import { useParams } from 'react-router';
@@ -11,7 +10,6 @@ import Message from '../../components/message/Message';
 import { createClient } from '../../lib/socket/client';
 
 const MessageContainer = () => {
-  const navigate = useNavigate();
   const [client, setClient] = useState(createClient());
 
   const { messengerId } = useParams();
@@ -87,10 +85,6 @@ const MessageContainer = () => {
     );
     setMessage('');
   };
-
-  useEffect(() => {
-    !user && navigate('/login');
-  });
 
   // 존재하는 메시지 리스트 로드
   useEffect(() => {

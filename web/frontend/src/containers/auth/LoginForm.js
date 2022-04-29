@@ -66,7 +66,7 @@ const LoginForm = () => {
       setErrors({ message: '로그인 실패' });
       return;
     }
-    if (auth) {
+    if (auth !== null) {
       console.log('로그인 성공');
       dispatch(check());
     }
@@ -74,7 +74,7 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/home');
+      navigate('/');
       try {
         localStorage.setItem('user', JSON.stringify(user));
       } catch (e) {

@@ -17,10 +17,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserInfo } from '../../modules/userInfo';
 import Character from '../../components/main/Character';
 import Attendance from '../../components/main/Attendance';
-import { useNavigate } from 'react-router';
 
 const MainContainer = () => {
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
   const [next, setNext] = useState(false);
   const dispatch = useDispatch();
@@ -36,10 +34,6 @@ const MainContainer = () => {
   // 테스트 info
   // parent/mento/mentee 테스트 후 제거 필요
   info = { type: 'parent' };
-
-  useEffect(() => {
-    !user && navigate('/login');
-  });
 
   useEffect(() => {
     if (user !== null) dispatch(getUserInfo());

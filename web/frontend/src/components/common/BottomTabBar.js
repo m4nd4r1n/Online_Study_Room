@@ -48,7 +48,7 @@ const BottomTabBar = () => {
   return (
     <TwWrapper>
       <BottomNavigation value={value} onChange={onChange} showLabels>
-        <BottomNavigationAction label="홈" value="/home" icon={<Home />} />
+        <BottomNavigationAction label="홈" value="/" icon={<Home />} />
         <BottomNavigationAction
           label="도전과제"
           value="/achievement"

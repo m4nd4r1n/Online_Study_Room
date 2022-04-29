@@ -107,7 +107,7 @@ const Header = ({ title, back, counter }) => {
           <Title>{title}</Title>
 
           <ItemContainer className="right">
-            <StyledLink to="/home">
+            <StyledLink to="/">
               <div className="text-xs sm:text-base">open SKY</div>
             </StyledLink>
           </ItemContainer>

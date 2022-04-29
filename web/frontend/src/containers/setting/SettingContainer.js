@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import SettingList from '../../components/setting/SettingList';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { signout } from '../../lib/api/auth';
 import { logout } from './../../modules/user';
 
 const RankingContainer = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector(({ user }) => ({ user: user.user }));
 
   // 화원탈퇴
   const signOut = async () => {
@@ -41,10 +38,6 @@ const RankingContainer = () => {
       onClick: signOut,
     },
   ];
-
-  useEffect(() => {
-    !user && navigate('/login');
-  });
 
   return (
     <>

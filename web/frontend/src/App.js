@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import AchievementPage from './pages/AchievementPage';
@@ -18,120 +18,122 @@ import StatisticsPage from './pages/StatisticsPage';
 import SettingPage from './pages/SettingPage';
 import BottomTabBar from './components/common/BottomTabBar';
 import NotFound from './pages/404';
+import { useSelector } from 'react-redux';
+
+const PrivateRoute = () => {
+  const { user } = useSelector(({ user }) => ({ user: user.user }));
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+  return <Outlet />;
+};
 
 const App = () => {
   return (
     <Routes>
-      <Route
-        element={
-          <>
-            <HomePage />
-            <BottomTabBar />
-          </>
-        }
-        path="/"
-      />
-      <Route
-        element={
-          <>
-            <HomePage />
-            <BottomTabBar />
-          </>
-        }
-        path="home"
-      />
+      <Route element={<PrivateRoute />}>
+        <Route
+          element={
+            <>
+              <HomePage />
+              <BottomTabBar />
+            </>
+          }
+          path="/"
+        />
+        <Route
+          element={
+            <>
+              <AchievementPage />
+              <BottomTabBar />
+            </>
+          }
+          path="achievement"
+        />
+        <Route element={<MenteeManagementPage />} path="management/:userId" />
+        <Route
+          element={<StudyTimeManagementPage />}
+          path="management/time/:userId"
+        />
+        <Route
+          element={
+            <>
+              <MessengerListPage />
+              <BottomTabBar />
+            </>
+          }
+          path="messenger"
+        />
+        <Route element={<MessengerPage />} path="messenger/:messengerId" />
+        <Route
+          element={
+            <>
+              <PlannerPage />
+              <BottomTabBar />
+            </>
+          }
+          path="planner/:userId"
+        />
+        <Route
+          element={
+            <>
+              <PlannerPage />
+              <BottomTabBar />
+            </>
+          }
+          path="planner"
+        />
+        <Route
+          element={
+            <>
+              <RankingPage />
+              <BottomTabBar />
+            </>
+          }
+          path="ranking"
+        />
+        <Route element={<StudyPage />} path="study" />
+        <Route element={<StudyScreenPage />} path="study/:userId" />
+        <Route
+          element={
+            <>
+              <TimerPage />
+              <BottomTabBar />
+            </>
+          }
+          path="timer"
+        />
+        <Route
+          element={
+            <>
+              <StatisticsPage />
+              <BottomTabBar />
+            </>
+          }
+          path="statistics/:userId"
+        />
+        <Route
+          element={
+            <>
+              <StatisticsPage />
+              <BottomTabBar />
+            </>
+          }
+          path="statistics"
+        />
+        <Route
+          element={
+            <>
+              <SettingPage />
+              <BottomTabBar />
+            </>
+          }
+          path="setting"
+        />
+      </Route>
       <Route element={<LoginPage />} path="login" />
       <Route element={<FindPage />} path="find" />
       <Route element={<RegisterPage />} path="register" />
-      <Route
-        element={
-          <>
-            <AchievementPage />
-            <BottomTabBar />
-          </>
-        }
-        path="achievement"
-      />
-      <Route element={<MenteeManagementPage />} path="management/:userId" />
-      <Route
-        element={<StudyTimeManagementPage />}
-        path="management/time/:userId"
-      />
-      <Route
-        element={
-          <>
-            <MessengerListPage />
-            <BottomTabBar />
-          </>
-        }
-        path="messenger"
-      />
-      <Route element={<MessengerPage />} path="messenger/:messengerId" />
-      <Route
-        element={
-          <>
-            <PlannerPage />
-            <BottomTabBar />
-          </>
-        }
-        path="planner/:userId"
-      />
-      <Route
-        element={
-          <>
-            <PlannerPage />
-            <BottomTabBar />
-          </>
-        }
-        path="planner"
-      />
-      <Route
-        element={
-          <>
-            <RankingPage />
-            <BottomTabBar />
-          </>
-        }
-        path="ranking"
-      />
-      <Route element={<StudyPage />} path="study" />
-      <Route element={<StudyScreenPage />} path="study/:userId" />
-      <Route
-        element={
-          <>
-            <TimerPage />
-            <BottomTabBar />
-          </>
-        }
-        path="timer"
-      />
-      <Route
-        element={
-          <>
-            <StatisticsPage />
-            <BottomTabBar />
-          </>
-        }
-        path="statistics/:userId"
-      />
-      <Route
-        element={
-          <>
-            <StatisticsPage />
-            <BottomTabBar />
-          </>
-        }
-        path="statistics"
-      />
-      <Route
-        element={
-          <>
-            <SettingPage />
-            <BottomTabBar />
-          </>
-        }
-        path="setting"
-      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

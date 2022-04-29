@@ -110,8 +110,8 @@ const Ranking = ({ ranks }) => {
           <div className="my-2 grid h-8 w-full select-none grid-cols-3 items-center text-center">
             {type === 'time' && time === 'day' ? (
               <>
-                <span>현재 학습중 {ranks.current}명</span>
-                <span>금일 전체 {ranks.today}명</span>
+                <span>현재 학습중 {ranks?.current}명</span>
+                <span>금일 전체 {ranks?.today}명</span>
               </>
             ) : (
               <>
@@ -123,13 +123,13 @@ const Ranking = ({ ranks }) => {
               나의 등수{' '}
               {type === 'time'
                 ? time === 'day'
-                  ? ranks.day
+                  ? ranks?.day
                   : time === 'week'
-                  ? ranks.week
+                  ? ranks?.week
                   : time === 'month'
-                  ? ranks.month
+                  ? ranks?.month
                   : null
-                : ranks.level}
+                : ranks?.level}
               등
             </span>
           </div>

@@ -8,10 +8,9 @@ import {
   getStudyTime,
   acceptStudyTime,
 } from '../../modules/management';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const StudyTimeContainer = () => {
-  const navigate = useNavigate();
   const { userId } = useParams();
   const dispatch = useDispatch();
   const { studentInfo, studyTime, error, loading, user } = useSelector(
@@ -41,10 +40,6 @@ const StudyTimeContainer = () => {
       image: new Blob(),
     },
   ];
-
-  useEffect(() => {
-    !user && navigate('/login');
-  });
 
   // 멘티정보, 공부시간
   useEffect(() => {

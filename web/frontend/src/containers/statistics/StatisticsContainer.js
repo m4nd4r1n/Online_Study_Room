@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getWeekStudyTime,
@@ -20,7 +20,6 @@ import { StyledDatePicker } from '../../components/common/Date';
 import { useEffect } from 'react';
 
 const StatisticsContainer = () => {
-  const navigate = useNavigate();
   const { userId } = useParams();
 
   const [date, setDate] = useState(new Date());
@@ -142,10 +141,6 @@ const StatisticsContainer = () => {
   const handleDate = (date) => {
     setDate(date);
   };
-
-  useEffect(() => {
-    !user && navigate('/login');
-  });
 
   // weekStart 변경 시 해당 주의 공부시간 불러오기
   // 주간 공부시간 언마운트 시 전체 데이터 언로드
