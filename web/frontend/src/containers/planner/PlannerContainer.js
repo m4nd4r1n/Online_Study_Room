@@ -18,6 +18,7 @@ import { removePlan } from '../../lib/api/planner';
 import Planner from '../../components/planner/Planner';
 import { formatDate } from 'react-day-picker/moment';
 import SelectMentee from '../../components/planner/SelectMentee';
+import { getUserInfo } from '../../modules/userInfo';
 
 const PlannerContainer = () => {
   const { userId } = useParams();
@@ -31,16 +32,41 @@ const PlannerContainer = () => {
   const [isAddPlan, setIsAddPlan] = useState(false);
   const [addError, setAddError] = useState(null);
   const dispatch = useDispatch();
-  const { plans, plan, planLoading, user } = useSelector(
-    ({ planner, plan, loading, user }) => ({
+  const { plans, plan, planLoading, user, info } = useSelector(
+    ({ planner, plan, loading, user, userInfo }) => ({
       plans: planner.plans,
       plan: plan.plan,
       planLoading: loading['plan/ADD_PLAN'],
       user: user.user,
+      info: userInfo.info,
     }),
   );
 
   //const testUser = { type: 'mentor' };
+
+  const testMenteeList = [
+    {
+      id: '1234',
+      school: '서울중',
+      name: '박서울',
+      state: '학습중',
+      messengerId: 'messengerId1',
+    },
+    {
+      id: '5678',
+      school: '부산고',
+      name: '김부산',
+      state: '오프라인',
+      messengerId: 'messengerId2',
+    },
+  ];
+
+  // 멘토 계정이면서 menteeList 없을 시 userInfo 요청
+  useEffect(() => {
+    if (user?.type === 'mentor' && !info?.menteeList) {
+      dispatch(getUserInfo());
+    }
+  }, [user, info, dispatch]);
 
   // 날짜 변경 시 새 플래너 요청, 플랜 날짜 변경
   useEffect(() => {
@@ -194,7 +220,11 @@ const PlannerContainer = () => {
   return (
     <>
       {user?.type === 'mentor' && (
-        <SelectMentee menteeId={menteeId} handleChange={handleChange} />
+        <SelectMentee
+          menteeList={testMenteeList}
+          menteeId={menteeId}
+          handleChange={handleChange}
+        />
       )}
       {isAddPlan ? (
         <ContentsBlock style={{ display: 'flex', height: '80vh' }}>
