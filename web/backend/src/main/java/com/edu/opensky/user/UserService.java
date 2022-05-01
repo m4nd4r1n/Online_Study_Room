@@ -13,11 +13,15 @@ import com.edu.opensky.user.mentor.dto.MentorSaveRequestDto;
 import com.edu.opensky.user.parent.ParentRepository;
 import com.edu.opensky.user.parent.dto.ParentSaveRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -172,5 +176,21 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자가 없습니다."));
         return user;
+    }
+
+    public String check(ServletRequest request){
+
+        //토큰을 가지고 있는지, 토큰이 유효한지.
+        String token = jwtTokenProvider.getToken((HttpServletRequest) request);
+        // 유효한 토큰인지 확인
+        if (token != null && jwtTokenProvider.validateToken(token)) {
+            // 아래두줄 -> 서버로부터 인증된 객체를 얻어올 수 있다.
+            Authentication authentication = jwtTokenProvider.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return token;
+        }
+        return null;
+
+
     }
 }
