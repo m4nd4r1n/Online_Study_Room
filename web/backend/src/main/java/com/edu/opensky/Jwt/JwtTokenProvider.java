@@ -1,4 +1,5 @@
 package com.edu.opensky.Jwt;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -13,9 +14,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -70,7 +70,13 @@ public class JwtTokenProvider {
     // X-AUTH-TOKEN" : "TOKEN값"
     //jwt필터 클래스에서 사용
     public String getToken(HttpServletRequest request) {
-        return request.getHeader("X-AUTH-TOKEN");
+        List<String> authorization = Arrays.stream(request.getCookies()).filter(c -> c.getName().equals("Authorization")).map(c -> c.getValue()).collect(Collectors.toList());
+
+        // authorization이 없는경우 null 리턴
+        if (authorization.isEmpty()){
+            return null;
+        }
+        return authorization.get(0);
     }
 
     // 토큰 만료일자 확인
