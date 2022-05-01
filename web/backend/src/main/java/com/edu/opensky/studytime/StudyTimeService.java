@@ -34,4 +34,29 @@ public class StudyTimeService {
             return studyTimeRepository.findByRankingOfTimeForDay(LocalDate.now(),pageRequest).getContent();
         }
     }
+
+    // 오늘 공부한 사람 수
+    public Integer getNumOfTodayStudying(){
+        return studyTimeRepository.countByStartTime(LocalDate.now());
+    }
+
+    // 지금 공부하는 사람 수 -> endTime == null
+    public Integer getNumOfNowStudying(){
+        return studyTimeRepository.countByStartTimeAndEndTimeIsNull(LocalDate.now());
+    }
+
+    public Integer getMyDailyRanking(String id){
+        return studyTimeRepository.myRankingOfDay(LocalDate.now(),id);
+    }
+    public Integer getMyWeeklyRanking(String id){
+        return studyTimeRepository.myRankingOfWeek(LocalDate.now(),id);
+
+    }
+    public Integer getMyMonthlyRanking(String id){
+        return studyTimeRepository.myRankingOfMonth(LocalDate.now(),id);
+
+    }
+    public Integer getMyLevelRanking(String id){
+        return studyTimeRepository.MyRankingOfLevel(id);
+    }
 }

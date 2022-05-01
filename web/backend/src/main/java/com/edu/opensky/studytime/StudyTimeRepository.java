@@ -87,4 +87,14 @@ public interface StudyTimeRepository extends JpaRepository<StudyTime, Long> {
             "where t.id = :id "
             ,nativeQuery = true)
     Integer myRankingOfMonth(LocalDate date, String id);
+
+    @Transactional(readOnly = true)
+    @Query(value = "select ranking " +
+            "from( " +
+            "select m.mteId as id, m.level as ranking " +
+            "from Mentee m " +
+            "order by m.level desc ) as t " +
+            "where t.id = :id "
+            ,nativeQuery = true)
+    Integer MyRankingOfLevel (String id);
 }
