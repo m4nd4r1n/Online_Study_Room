@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -17,18 +17,19 @@ import StudyTimeTable from '../../components/statistics/StudyTimeTable';
 import StudyTimeGraph from '../../components/statistics/StudyTimeGraph';
 import { ItemBlock } from '../../components/common/Contents';
 import { StyledDatePicker } from '../../components/common/Date';
-import { useEffect } from 'react';
+import SelectMentee from './../../components/planner/SelectMentee';
+import { getUserInfo } from '../../modules/userInfo';
 
 const StatisticsContainer = () => {
   const { userId } = useParams();
-
+  const [menteeId, setMenteeId] = useState(userId);
   const [date, setDate] = useState(new Date());
   const [weekStart, setWeekStart] = useState(
     new Date(new Date(date).setDate(date.getDate() - date.getDay())),
   );
   const dispatch = useDispatch();
-  const { weekStudyTime, dateStudyTime, timeTable, error, user } = useSelector(
-    ({ statistics, user }) => ({
+  const { weekStudyTime, dateStudyTime, timeTable, error, user, info } =
+    useSelector(({ statistics, user, userInfo }) => ({
       weekStudyTime: statistics.weekStudyTime,
       dateStudyTime: statistics.dateStudyTime
         ? statistics.dateStudyTime.dateStudyTime
@@ -38,9 +39,10 @@ const StatisticsContainer = () => {
         : null,
       error: statistics.error,
       user: user.user,
-    }),
-  );
+      info: userInfo.info,
+    }));
 
+  //const testUser = {id:1234, type:"mentee"}
   const testWeekStudyTime = [
     {
       name: '일',
@@ -136,18 +138,46 @@ const StatisticsContainer = () => {
       time: '1500',
     },
   ];
+  const testMenteeList = [
+    {
+      id: '1234',
+      school: '서울중',
+      name: '박서울',
+      state: '학습중',
+      messengerId: 'messengerId1',
+    },
+    {
+      id: '5678',
+      school: '부산고',
+      name: '김부산',
+      state: '오프라인',
+      messengerId: 'messengerId2',
+    },
+  ];
+
+  const handleChange = (e) => {
+    setMenteeId(e.target.value);
+  };
 
   // 날짜 선택 이벤트 핸들러
   const handleDate = (date) => {
     setDate(date);
   };
 
+  // 멘토 계정이면서 menteeList 없을 시 userInfo 요청
+  useEffect(() => {
+    if (user?.type === 'mentor' && !info?.menteeList) {
+      dispatch(getUserInfo());
+    }
+  }, [user, info, dispatch]);
+
   // weekStart 변경 시 해당 주의 공부시간 불러오기
   // 주간 공부시간 언마운트 시 전체 데이터 언로드
   useEffect(() => {
     dispatch(
       getWeekStudyTime({
-        userId,
+        userId: menteeId ? menteeId : user?.id,
+        year: weekStart.getFullYear(),
         month: weekStart.getMonth() + 1,
         day: weekStart.getDate(),
       }),
@@ -155,18 +185,19 @@ const StatisticsContainer = () => {
     return () => {
       dispatch(unloadStatistics());
     };
-  }, [dispatch, userId, weekStart]);
+  }, [dispatch, menteeId, weekStart, user]);
 
   // date 변경 시 date의 공부시간 불러오기
   useEffect(() => {
     dispatch(
       getDateStudyTime({
-        userId,
+        userId: menteeId ? menteeId : user?.id,
+        year: date.getFullYear(),
         month: date.getMonth() + 1,
         day: date.getDate(),
       }),
     );
-  }, [dispatch, userId, date]);
+  }, [dispatch, menteeId, date, user]);
 
   // date 변경 시 weekStart 변경
   useEffect(() => {
@@ -186,6 +217,13 @@ const StatisticsContainer = () => {
         flexDirection: 'column',
       }}
     >
+      {user?.type !== 'mentee' && (
+        <SelectMentee
+          menteeList={testMenteeList}
+          menteeId={menteeId}
+          handleChange={handleChange}
+        />
+      )}
       <ItemBlock
         style={{
           display: 'flex',
