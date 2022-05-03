@@ -93,16 +93,16 @@ public class UserService {
 
         switch (requestDto.getType()) {
             case "멘티":
-                MenteeSaveRequestDto menteeSaveRequestDto = new MenteeSaveRequestDto(requestDto.getEmail(), requestDto.getSchool());
+                MenteeSaveRequestDto menteeSaveRequestDto = new MenteeSaveRequestDto(requestDto.getEmail(), userSaveRequestDto.getName(), requestDto.getSchool());
                 menteeRepository.save(menteeSaveRequestDto.toEntity());
                 break;
             case "멘토":
-                MentorSaveRequestDto mentorSaveRequestDto = new MentorSaveRequestDto(requestDto.getEmail());
+                MentorSaveRequestDto mentorSaveRequestDto = new MentorSaveRequestDto(requestDto.getEmail(), userSaveRequestDto.getName());
                 mentorRepository.save(mentorSaveRequestDto.toEntity());
                 break;
             case "학부모":
                 ParentSaveRequestDto parentSaveRequestDto = new ParentSaveRequestDto(
-                        requestDto.getEmail(), requestDto.getStdName(), requestDto.getPhoneFirst()+requestDto.getPhoneMiddle()+requestDto.getPhoneLast());
+                        requestDto.getEmail(), userSaveRequestDto.getName(), requestDto.getStdName(), requestDto.getPhoneFirst()+requestDto.getPhoneMiddle()+requestDto.getPhoneLast());
                 parentRepository.save(parentSaveRequestDto.toEntity());
 
         }
@@ -193,4 +193,5 @@ public class UserService {
 
 
     }
+
 }

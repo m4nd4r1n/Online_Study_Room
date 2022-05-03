@@ -9,11 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MenteeSaveRequestDto {
     private String email;
+    private String name;
     private String school;
 
     @Builder
-    public MenteeSaveRequestDto(String email, String school){
+    public MenteeSaveRequestDto(String email,String name, String school){
         this.email = email;
+        this.name = name;
         this.school = school;
     }
 
@@ -25,6 +27,7 @@ public class MenteeSaveRequestDto {
         return Mentee.builder()
                 .mteId(email)
                 .school(school)
+                .name(name)
                 .build();
     }
 

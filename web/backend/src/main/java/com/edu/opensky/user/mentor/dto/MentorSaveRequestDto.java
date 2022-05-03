@@ -9,19 +9,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MentorSaveRequestDto {
     private String email;
-    private String mteId;
+    private String name;
 
     public Mentor toEntity(){
         return Mentor.builder()
                 .mtrId(email)
-                .mteId(mteId)
+                .name(name)
                 .build();
     }
 
     @Builder
-    public MentorSaveRequestDto(String email, String mteId){
+    public MentorSaveRequestDto(String email, String name){
         this.email = email;
-        this.mteId = mteId;
+        this.name = name;
     }
     public MentorSaveRequestDto(String email) {
         this.email = email;

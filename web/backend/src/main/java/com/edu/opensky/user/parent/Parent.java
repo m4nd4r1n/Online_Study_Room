@@ -15,6 +15,9 @@ public class Parent {
     @Id
     private String prtId;
 
+    @Column
+    private String name;
+
     @Column(nullable = true)
     private String stdName;
 
@@ -22,15 +25,17 @@ public class Parent {
     private String stdPhone;
 
     @Builder
-    public Parent(String prtId, String stdName, String stdPhone){
+    public Parent(String prtId,String name, String stdName, String stdPhone){
         this.prtId = prtId;
+        this.name = name;
         this.stdName = stdName;
         this.stdPhone = stdPhone;
 
     }
 
-    public void update(String prtId, String stdName, String stdPhone){
+    public void update(String prtId,String name, String stdName, String stdPhone){
         this.prtId = prtId;
+        this.name = name;
         this.stdName = stdName;
         this.stdPhone = stdPhone;
     }

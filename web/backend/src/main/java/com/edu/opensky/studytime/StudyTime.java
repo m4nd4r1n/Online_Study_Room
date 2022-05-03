@@ -18,7 +18,7 @@ public class StudyTime {
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mte_id")
+    @JoinColumn(name = "mteId")
     private Mentee mentee;
 
     private LocalDateTime startTime;

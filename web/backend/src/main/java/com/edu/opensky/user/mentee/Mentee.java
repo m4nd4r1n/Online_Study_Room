@@ -20,6 +20,9 @@ public class Mentee {
     @Id
     private String mteId;
 
+    @Column
+    private String name;
+
     @Column(nullable = true)
     private String mtrId;
 
@@ -37,7 +40,7 @@ public class Mentee {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
-    private List<Attendance> attendanceList = new ArrayList<>();;
+    private List<Attendance> attendanceList = new ArrayList<>();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
@@ -45,10 +48,11 @@ public class Mentee {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
-    private List<Planner> PlannerList = new ArrayList<>();
+    private List<Planner> plannerList = new ArrayList<>();
 
     @Builder
-    public Mentee(String mtrId, String mteId, String prtId, String school){
+    public Mentee(String mtrId,String name, String mteId, String prtId, String school){
+        this.name = name;
         this.mtrId = mtrId;
         this.mteId = mteId;
         this.prtId = prtId;

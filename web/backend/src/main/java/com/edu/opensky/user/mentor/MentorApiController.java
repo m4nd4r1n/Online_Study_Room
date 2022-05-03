@@ -1,5 +1,6 @@
 package com.edu.opensky.user.mentor;
 
+import com.edu.opensky.user.mentee.Mentee;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,7 @@ public class MentorApiController {
     private final MentorService mentorService;
 
     @GetMapping("/menteeList")
-    public List<String> getMenteeList(){
+    public List<Mentee> getMenteeList(){
         // 수정 필요
         // 멘토 아이디
         String id= "dsadsa@naver.com";

@@ -26,7 +26,7 @@ public class Achievement {
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mte_id")
+    @JoinColumn(name = "mteId")
     private Mentee mentee;
 
     @Builder

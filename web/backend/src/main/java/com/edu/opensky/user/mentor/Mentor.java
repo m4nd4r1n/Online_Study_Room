@@ -1,28 +1,33 @@
 package com.edu.opensky.user.mentor;
 
+import com.edu.opensky.user.mentee.Mentee;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @Entity
 public class Mentor {
     @Id
-    @Column(name = "mentor_id")
     private String mtrId;
 
-    @Column(name = "fk_mentee_id", nullable = true)
-    private String mteId;
+    @Column
+    private String name;
+
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mtrId")
+    private List<Mentee> menteeList = new ArrayList<>();
 
     @Builder
-    public Mentor(String mtrId, String mteId){
+    public Mentor(String mtrId, String name){
         this.mtrId = mtrId;
-        this.mteId = mteId;
+        this.name = name;
     }
-
 }

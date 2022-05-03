@@ -22,7 +22,7 @@ public class Attendance {
     private Long attendanceId;
 
     @ManyToOne
-    @JoinColumn(name = "mte_id")
+    @JoinColumn(name = "mteId")
     private Mentee mentee;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
