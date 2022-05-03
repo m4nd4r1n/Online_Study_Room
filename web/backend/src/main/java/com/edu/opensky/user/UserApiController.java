@@ -61,9 +61,25 @@ public class UserApiController {
         }
     }
 
-//    // 로그아웃
-//    @GetMapping("/auth/logout")
-//    public void logout(){
+    // 로그아웃
+    @GetMapping("/auth/logout")
+    public void logout(HttpServletResponse response){
+        Cookie authCookie = new Cookie("Authorization",null);
+        authCookie.setMaxAge(0);
+        authCookie.setPath("/");
+        response.addCookie(authCookie);
+
+    }
+
+//    // 회원탈퇴
+//    @DeleteMapping("/auth/signout")
+//    public ResponseEntity<?> signout(){
+//        if (userService.signout()){
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        }
+//        else{
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
 //    }
 
 
