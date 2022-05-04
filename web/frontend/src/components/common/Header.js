@@ -11,6 +11,7 @@ const HeaderBlock = tw.div`
   w-full
   bg-white
   shadow-md
+  z-[9999]
 `;
 
 const ItemContainer = tw.div`
