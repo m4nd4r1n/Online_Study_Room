@@ -16,7 +16,7 @@ import TimerPage from './pages/TimerPage';
 import FindPage from './pages/FindPage';
 import StatisticsPage from './pages/StatisticsPage';
 import SettingPage from './pages/SettingPage';
-import BottomTabBar from './components/common/BottomTabBar';
+import BottomTabBarContainer from './containers/common/BottomTabBarContainer';
 import NotFound from './pages/404';
 import { useSelector } from 'react-redux';
 
@@ -36,7 +36,7 @@ const App = () => {
           element={
             <>
               <HomePage />
-              <BottomTabBar />
+              <BottomTabBarContainer />
             </>
           }
           path="/"
@@ -45,7 +45,7 @@ const App = () => {
           element={
             <>
               <AchievementPage />
-              <BottomTabBar />
+              <BottomTabBarContainer />
             </>
           }
           path="achievement"
@@ -59,7 +59,7 @@ const App = () => {
           element={
             <>
               <MessengerListPage />
-              <BottomTabBar />
+              <BottomTabBarContainer />
             </>
           }
           path="messenger"
@@ -69,7 +69,7 @@ const App = () => {
           element={
             <>
               <PlannerPage />
-              <BottomTabBar />
+              <BottomTabBarContainer />
             </>
           }
           path="planner/:userId"
@@ -78,7 +78,7 @@ const App = () => {
           element={
             <>
               <PlannerPage />
-              <BottomTabBar />
+              <BottomTabBarContainer />
             </>
           }
           path="planner"
@@ -87,7 +87,7 @@ const App = () => {
           element={
             <>
               <RankingPage />
-              <BottomTabBar />
+              <BottomTabBarContainer />
             </>
           }
           path="ranking"
@@ -98,7 +98,7 @@ const App = () => {
           element={
             <>
               <TimerPage />
-              <BottomTabBar />
+              <BottomTabBarContainer />
             </>
           }
           path="timer"
@@ -107,7 +107,7 @@ const App = () => {
           element={
             <>
               <StatisticsPage />
-              <BottomTabBar />
+              <BottomTabBarContainer />
             </>
           }
           path="statistics/:userId"
@@ -116,7 +116,7 @@ const App = () => {
           element={
             <>
               <StatisticsPage />
-              <BottomTabBar />
+              <BottomTabBarContainer />
             </>
           }
           path="statistics"
@@ -125,7 +125,7 @@ const App = () => {
           element={
             <>
               <SettingPage />
-              <BottomTabBar />
+              <BottomTabBarContainer />
             </>
           }
           path="setting"

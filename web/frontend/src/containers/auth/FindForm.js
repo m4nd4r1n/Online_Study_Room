@@ -3,17 +3,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { changeField, initializeForm, find } from '../../modules/auth';
 import AuthForm from '../../components/auth/AuthForm';
 import { check } from '../../modules/user';
+import { useNavigate } from 'react-router-dom';
 
 const FindForm = () => {
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({
     email: false,
     message: null,
   });
   const dispatch = useDispatch();
-  const { form, auth, authError } = useSelector(({ auth }) => ({
+  const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
     form: auth.find,
     auth: auth.auth,
     authError: auth.authError,
+    user: user.user,
   }));
 
   // 인풋 변경 이벤트 핸들러
@@ -79,6 +82,17 @@ const FindForm = () => {
       dispatch(check());
     }
   }, [auth, authError, dispatch]);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/', { replace: true });
+      try {
+        localStorage.setItem('user', JSON.stringify(user));
+      } catch (e) {
+        console.log('localStorage is not working');
+      }
+    }
+  }, [navigate, user]);
 
   return (
     <AuthForm

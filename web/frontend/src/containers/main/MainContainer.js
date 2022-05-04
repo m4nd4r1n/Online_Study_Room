@@ -31,17 +31,13 @@ const MainContainer = () => {
     }),
   );
 
-  // 테스트 info
-  // parent/mento/mentee 테스트 후 제거 필요
-  info = { type: 'parent' };
-
   useEffect(() => {
     if (user !== null) dispatch(getUserInfo());
   }, [dispatch, user]);
 
   useEffect(() => {
-    if (info.type !== 'mentee') setIsOpen(false);
-  }, [info]);
+    if (user.type !== 'mentee') setIsOpen(false);
+  }, [user]);
 
   useEffect(() => {
     // 출석정보 가져오기 및 설정
@@ -58,13 +54,13 @@ const MainContainer = () => {
     <>
       <Attendance handleClick={handleClick} isOpen={isOpen} next={next} />
       <ContentsBlock>
-        {!error && <UserInfo info={info} />}
-        {info ? (
-          info.type === 'parent' ? (
+        <UserInfo info={info} type={user.type} />
+        {user ? (
+          user.type === 'parent' ? (
             <ChildrenList />
-          ) : info.type === 'mentor' ? (
+          ) : user.type === 'mentor' ? (
             <MenteeList />
-          ) : info.type === 'mentee' ? (
+          ) : user.type === 'mentee' ? (
             <>
               <Character />
               <StudyButton to="/study" />

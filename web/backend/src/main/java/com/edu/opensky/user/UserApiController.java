@@ -52,12 +52,12 @@ public class UserApiController {
     @ResponseBody
     @GetMapping("/auth/check")
     public ResponseEntity<?> authCheck(ServletRequest request){
-        String token=userService.check(request);
-        if(token==null){
+        String user=userService.check(request);
+        if(user==null){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         else{
-            return new ResponseEntity<String>(token,HttpStatus.OK);
+            return new ResponseEntity<String>(user,HttpStatus.OK);
         }
     }
 

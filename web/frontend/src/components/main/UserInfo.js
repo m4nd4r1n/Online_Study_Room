@@ -21,15 +21,15 @@ const printExp = (ExpRatio) => {
   return ExpBar;
 };
 
-const UserInfo = ({ info }) => {
-  const testInfo = { type: 'mentee', name: '김겨울', level: '8', exp: 60 };
+const UserInfo = ({ info, type }) => {
+  const testInfo = { name: '김겨울', level: '8', exp: 60 };
 
   return (
     <InfoBar>
       <div style={{ width: '15%' }}>{testInfo.name} 님</div>
       {
         // 멘티(학생)에게만 레벨, 경험치를 보여줌
-        info.type === 'mentee' && (
+        type === 'mentee' && (
           <>
             <div style={{ width: '15%' }}>Lv. {testInfo.level}</div>
             <div
