@@ -37,6 +37,7 @@ const GraphBox = styled(StyledBox)`
   background-color: ${(props) => props.color};
   font-size: 1.2rem;
   font-weight: bold;
+  border-width: 1px;
   border-radius: 0px;
   display: flex;
   width: 100%;
