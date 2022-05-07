@@ -7,7 +7,7 @@ import { logout } from './../../modules/user';
 const RankingContainer = () => {
   const dispatch = useDispatch();
 
-  // 화원탈퇴
+  // 회원탈퇴
   const signOut = async () => {
     if (window.confirm('정말 탈퇴하시겠습니까?')) {
       try {
@@ -16,7 +16,6 @@ const RankingContainer = () => {
         dispatch(logout());
       } catch (e) {
         window.alert('회원탈퇴에 실패했습니다.\r다시 시도해주세요.');
-        console.log(e);
       }
     }
   };
@@ -32,6 +31,10 @@ const RankingContainer = () => {
     {
       title: '프로그램 버전',
       version: '1.0',
+    },
+    {
+      title: '로그아웃',
+      onClick: () => dispatch(logout()),
     },
     {
       title: '회원탈퇴',
