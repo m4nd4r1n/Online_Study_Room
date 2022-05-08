@@ -24,7 +24,7 @@ const Achievement = ({ achievements }) => {
           key={data.id}
           className="flex w-full select-none flex-row items-center border-b px-4 py-4 sm:px-8"
         >
-          <AiFillTrophy className="fill-teal-600" />
+          <AiFillTrophy className="fill-cyan-500" />
           <div className="ml-4 flex flex-col justify-start text-left sm:ml-10">
             <h3 className="font-bold">{data.title}</h3>
             <span>{data.description}</span>

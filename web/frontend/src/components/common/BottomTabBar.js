@@ -32,7 +32,7 @@ const TwWrapper = tw(Wrapper)`
   w-full
   overflow-y-hidden
   overflow-x-scroll
-  border-t
+  border-t-[0.5px]
   border-gray-400
   bg-white
   sm:justify-center
@@ -41,14 +41,14 @@ const TwWrapper = tw(Wrapper)`
 const BottomTabBar = ({ type }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const value = location.pathname;
+  const value = location.pathname.split('/');
 
   const onChange = (_, value) => {
     navigate(value);
   };
   return (
     <TwWrapper>
-      <BottomNavigation value={value} onChange={onChange} showLabels>
+      <BottomNavigation value={'/' + value[1]} onChange={onChange} showLabels>
         <BottomNavigationAction label="홈" value="/" icon={<Home />} />
         {type === 'mentee' && (
           <BottomNavigationAction

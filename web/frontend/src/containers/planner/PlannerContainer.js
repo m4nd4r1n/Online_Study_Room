@@ -159,7 +159,7 @@ const PlannerContainer = () => {
       return;
     }
 
-    for (let i = 0; i < plans.length; i++) {
+    for (let i = 0; i < plans?.length; i++) {
       if (
         // 시작시간이 다른 플랜 안쪽
         (startTime >= parseInt(plans[i].startTime.replaceAll(':', '')) &&

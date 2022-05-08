@@ -34,7 +34,9 @@ const RankingContainer = () => {
     },
     {
       title: '로그아웃',
-      onClick: () => dispatch(logout()),
+      onClick: () => {
+        if (window.confirm('로그아웃을 진행합니다.')) dispatch(logout());
+      },
     },
     {
       title: '회원탈퇴',

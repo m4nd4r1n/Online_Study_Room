@@ -18,12 +18,45 @@ import StatisticsPage from './pages/StatisticsPage';
 import SettingPage from './pages/SettingPage';
 import BottomTabBarContainer from './containers/common/BottomTabBarContainer';
 import NotFound from './pages/404';
+import AdminPage from './pages/AdminPage';
 import { useSelector } from 'react-redux';
 
 const PrivateRoute = () => {
   const { user } = useSelector(({ user }) => ({ user: user.user }));
   if (!user) {
     return <Navigate to="/login" replace />;
+  }
+  return <Outlet />;
+};
+
+const AdminRoute = () => {
+  const { user } = useSelector(({ user }) => ({ user: user.user }));
+  if (user?.type !== 'admin') {
+    return <Navigate to="/" replace />;
+  }
+  return <Outlet />;
+};
+
+const MenteeRoute = () => {
+  const { user } = useSelector(({ user }) => ({ user: user.user }));
+  if (user?.type !== 'mentee') {
+    return <Navigate to="/" replace />;
+  }
+  return <Outlet />;
+};
+
+const MentorRoute = () => {
+  const { user } = useSelector(({ user }) => ({ user: user.user }));
+  if (user?.type !== 'mentor') {
+    return <Navigate to="/" replace />;
+  }
+  return <Outlet />;
+};
+
+const MentorParentRoute = () => {
+  const { user } = useSelector(({ user }) => ({ user: user.user }));
+  if (user?.type !== 'mentor' && user?.type !== 'parent') {
+    return <Navigate to="/" replace />;
   }
   return <Outlet />;
 };
@@ -41,20 +74,54 @@ const App = () => {
           }
           path="/"
         />
-        <Route
-          element={
-            <>
-              <AchievementPage />
-              <BottomTabBarContainer />
-            </>
-          }
-          path="achievement"
-        />
-        <Route element={<MenteeManagementPage />} path="management/:userId" />
-        <Route
-          element={<StudyTimeManagementPage />}
-          path="management/time/:userId"
-        />
+
+        <Route element={<MenteeRoute />}>
+          <Route
+            element={
+              <>
+                <AchievementPage />
+                <BottomTabBarContainer />
+              </>
+            }
+            path="achievement"
+          />
+          <Route
+            element={
+              <>
+                <RankingPage />
+                <BottomTabBarContainer />
+              </>
+            }
+            path="ranking"
+          />
+          <Route element={<StudyPage />} path="study" />
+          <Route
+            element={
+              <>
+                <TimerPage />
+                <BottomTabBarContainer />
+              </>
+            }
+            path="timer"
+          />
+        </Route>
+
+        <Route element={<MentorRoute />}>
+          <Route element={<MenteeManagementPage />} path="management/:userId" />
+          <Route
+            element={<StudyTimeManagementPage />}
+            path="management/time/:userId"
+          />
+        </Route>
+
+        <Route element={<MentorParentRoute />}>
+          <Route element={<StudyScreenPage />} path="study/:userId" />
+        </Route>
+
+        <Route element={<AdminRoute />}>
+          <Route element={<AdminPage />} path="administrator" />
+        </Route>
+
         <Route
           element={
             <>
@@ -82,26 +149,6 @@ const App = () => {
             </>
           }
           path="planner"
-        />
-        <Route
-          element={
-            <>
-              <RankingPage />
-              <BottomTabBarContainer />
-            </>
-          }
-          path="ranking"
-        />
-        <Route element={<StudyPage />} path="study" />
-        <Route element={<StudyScreenPage />} path="study/:userId" />
-        <Route
-          element={
-            <>
-              <TimerPage />
-              <BottomTabBarContainer />
-            </>
-          }
-          path="timer"
         />
         <Route
           element={
