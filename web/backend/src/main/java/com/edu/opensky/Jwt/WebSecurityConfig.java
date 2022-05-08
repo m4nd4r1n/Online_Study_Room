@@ -11,6 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @RequiredArgsConstructor
 @EnableWebSecurity //Spring Security를 사용하기위해 Spring Security Filter Chain을 사용한다는것을 명시해줘야함
@@ -52,11 +55,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()// 그외 나머지 요청은 누구나 접근 가능
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated().and()
-                .cors().and() // 이게중요 -> 응답에 cors헤더를 포함해줌 . spring-security에서 cors를 적용한다는설정, 인증성공 여부와 무관하게 origin헤더가 있는 요청에 대해 cors헤더를 포함한 응답을 해준다
+                // 이게중요 -> 응답에 cors헤더를 포함해줌 . spring-security에서 cors를 적용한다는설정, 인증성공 여부와 무관하게 origin헤더가 있는 요청에 대해 cors헤더를 포함한 응답을 해준다
+                .cors().configurationSource(corsConfigurationSource()) // cors정책 설정파일 등록
+                .and()
                 .formLogin().usernameParameter("email");
 
 
     }
+
+    // cors 허용 정책 설정
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
     // 함수인자에 있는 WebSecurity는 FilterChainProxy를 생성하는 필터임
     @Override
     public void configure(WebSecurity web) throws Exception {
