@@ -17,7 +17,7 @@ const AuthTemplateBlock = tw.div`
   items-center
   bg-gray-200
 `;
-
+//bg-gray-200
 /* 흰색 박스 */
 const WhiteBox = tw.div`
   w-[360px]
@@ -25,6 +25,8 @@ const WhiteBox = tw.div`
   bg-white
   p-8
   shadow-md
+  backdrop-blur-sm
+  z-50
 `;
 
 const AuthTemplate = ({ children, center }) => {
@@ -49,6 +51,7 @@ const AuthTemplate = ({ children, center }) => {
       >
         {children}
       </WhiteBox>
+      <div className="absolute left-0 right-0 flex h-60 bg-[url('../public/background/kwu.jpg')] opacity-60 blur-sm"></div>
     </AuthTemplateBlock>
   );
 };
