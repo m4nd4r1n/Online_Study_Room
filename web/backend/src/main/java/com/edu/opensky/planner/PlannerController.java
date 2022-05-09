@@ -8,6 +8,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
 import java.util.List;
 
 @RestController
@@ -30,8 +31,10 @@ public class PlannerController {
     */
 
     @PostMapping("/planner")
-    public String createPlan(@RequestBody PlannerAddDto plannerAddDto){
+    public String createPlan(@RequestBody PlannerAddDto plannerAddDto,ServletRequest request){
         // 토큰 아이디로 수정 필요
+        System.out.println("plannerAddDto.getStartTime() = " + plannerAddDto.getStartTime());
+        userService.check(request);
         Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user= userService.getUserByToken(principal);
         String id=user.getEmail();
@@ -49,14 +52,20 @@ public class PlannerController {
     public List<Planner> readPlans(@RequestParam("year")@NonNull String year,
                                    @RequestParam("month")@NonNull String month,
                                    @RequestParam("day")@NonNull String day,
-                                   @RequestParam("userId") String userId) {
-//        if (userId.isEmpty()) {
-//            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            User user= userService.getUserByToken(principal);
-//            return plannerService.getPlans(month, day, user.getEmail());
-//        }
+                                   ServletRequest request)
+//            ,
+//                                   @RequestParam("userId") String userId) {
+    {
+     //   if (userId.isEmpty()) {
 
-        return plannerService.getPlans(year,month,day,userId);
+        userService.check(request);
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user= userService.getUserByToken(principal);
+        return plannerService.getPlans(year, month, day, user.getEmail());
+       // }
+
+        //return plannerService.getPlans(year,month,day,userId);
 
     }
     @DeleteMapping("/planner{queryString}")
