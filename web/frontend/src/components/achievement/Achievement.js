@@ -26,7 +26,7 @@ const Achievement = ({ achievements }) => {
         >
           <AiFillTrophy className="fill-cyan-500" />
           <div className="ml-4 flex flex-col justify-start text-left sm:ml-10">
-            <h3 className="font-bold">{data.title}</h3>
+            <span className="pb-1 text-base font-bold">{data.title}</span>
             <span>{data.description}</span>
             <span>{data.exp}XP</span>
           </div>

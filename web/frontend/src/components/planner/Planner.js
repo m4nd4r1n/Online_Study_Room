@@ -48,7 +48,7 @@ const hours = [
   '04',
 ];
 
-const COLORS = ['bg-teal-400', 'bg-teal-100', 'bg-teal-200', 'bg-teal-300'];
+const COLORS = ['bg-cyan-500', 'bg-cyan-200', 'bg-cyan-400', 'bg-cyan-100'];
 
 const Table = ({ hour, plans }) => {
   return (
@@ -66,7 +66,7 @@ const Table = ({ hour, plans }) => {
               parseInt((hour + minute) * 100) <
                 parseInt(plans[j].endTime.replaceAll(':', ''))
             )
-              color = COLORS[j];
+              color = COLORS[j % 4];
           }
         }
         return (
@@ -84,7 +84,7 @@ const Table = ({ hour, plans }) => {
 };
 
 const Plan = ({ plan, index, onRemove, plannerOwner }) => {
-  const color = COLORS[index % 5];
+  const color = COLORS[index % 4];
 
   return (
     <ItemBlock>
