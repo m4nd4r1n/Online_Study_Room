@@ -22,8 +22,13 @@ public class UserApiController {
 
     // 회원가입
     @PostMapping("/auth/register")
-    public String register(@RequestBody RegisterRequestDto requestDto){
-        return userService.register(requestDto);
+    public void register(@RequestBody RegisterRequestDto requestDto,HttpServletResponse response){
+
+        // access token cookie 생성
+        Cookie authCookie = new Cookie("Authorization", userService.register(requestDto));
+        authCookie.setMaxAge(1000 * 60 * 60 * 24 * 7); // 유효 기간 7일
+        authCookie.setPath("/"); // 모든 경로에서 접근 가능 하도록 설정
+        response.addCookie(authCookie); // response에 cookie 설정
     }
 
     // 로그인
