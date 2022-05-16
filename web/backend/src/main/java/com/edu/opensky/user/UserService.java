@@ -13,15 +13,11 @@ import com.edu.opensky.user.mentor.dto.MentorSaveRequestDto;
 import com.edu.opensky.user.parent.ParentRepository;
 import com.edu.opensky.user.parent.dto.ParentSaveRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -39,6 +35,7 @@ public class UserService {
     private final ImportService importService;
     private final JwtUserDetailService jwtUserDetailService;
     private final JwtTokenProvider jwtTokenProvider;
+
 
 
 
@@ -107,7 +104,20 @@ public class UserService {
 
         }
 
-        return userRepository.save(userSaveRequestDto.toEntity()).getEmail();
+        userRepository.save(userSaveRequestDto.toEntity()).getEmail();
+
+        User user = userRepository.findByEmailAndPassword(requestDto.getEmail(),  requestDto.getPassword()).orElseThrow(() ->
+                new IllegalArgumentException("아이디와 비밀번호를 확인해주세요."));
+        attendance(user.getEmail());
+
+        UserDetails userDetails = jwtUserDetailService.loadUserByUsername(requestDto.getEmail());
+
+        // 마지막 접속일자 업데이트
+        user.setLastAccessDate(LocalDate.now());
+
+        return jwtTokenProvider.createToken(userDetails); //토큰 생성
+
+
     }
 
     // 중복확인
@@ -131,7 +141,7 @@ public class UserService {
         // 유저 아이디와 입력받은 비밀번호에 해당하는 아이디가 같은 경우에만 업데이트
         if (user.getEmail().equals(email)){
             // 새 비밀번호로 업데이트
-            user.update(email, requestDto.getNewPassword(), user.getName(), user.getPhone(),user.getBirth());
+            user.update(email, requestDto.getNewPassword(),user.getRole(), user.getName(), user.getPhone(),user.getBirth());
         }
         else{
             System.out.println("비밀번호가 다릅니다.");
@@ -165,29 +175,27 @@ public class UserService {
     }
 
     /*토큰으로부터 유저엔티티 조회*/
-    public User getUserByToken(Object principal) {
-        String email;
-        if (principal instanceof UserDetails) {
-            email = ((UserDetails)principal).getUsername();
-        } else {
-            email = principal.toString();
-        }
+    public User getUserByToken(String token) {
+        String email= jwtTokenProvider.getUsername(token);
         //System.out.println(email);
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자가 없습니다."));
         return user;
     }
 
-    public String check(ServletRequest request){
+    public CheckResponseDto check(String token){
 
-        //토큰을 가지고 있는지, 토큰이 유효한지.
-        String token = jwtTokenProvider.getToken((HttpServletRequest) request);
+        //토큰을 가지고 있는지, 토큰이 유효한지
         // 유효한 토큰인지 확인
         if (token != null && jwtTokenProvider.validateToken(token)) {
-            // 아래두줄 -> 서버로부터 인증된 객체를 얻어올 수 있다.
-            Authentication authentication = jwtTokenProvider.getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            return token;
+
+            User user=getUserByToken(token);
+
+            CheckResponseDto checkResponseDto=new CheckResponseDto();
+            checkResponseDto.setUserId(user.getEmail());
+            checkResponseDto.setToken(token);
+            checkResponseDto.setRole(user.getRole());
+            return checkResponseDto;
         }
         return null;
 

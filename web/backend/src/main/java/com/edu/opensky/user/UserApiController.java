@@ -1,9 +1,6 @@
 package com.edu.opensky.user;
 
-import com.edu.opensky.user.dto.FindRequestDto;
-import com.edu.opensky.user.dto.LoginRequestDto;
-import com.edu.opensky.user.dto.RegisterRequestDto;
-import com.edu.opensky.user.dto.UserUpdateRequestDto;
+import com.edu.opensky.user.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +19,11 @@ public class UserApiController {
 
     // 회원가입
     @PostMapping("/auth/register")
-    public String register(@RequestBody RegisterRequestDto requestDto){
-        return userService.register(requestDto);
+    public void register(@RequestBody RegisterRequestDto requestDto, HttpServletResponse response){
+        Cookie authCookie = new Cookie("Authorization", userService.register(requestDto));
+        authCookie.setMaxAge(1000 * 60 * 60 * 24 * 7); // 유효 기간 7일
+        authCookie.setPath("/"); // 모든 경로에서 접근 가능 하도록 설정
+        response.addCookie(authCookie); // response에 cookie 설정
     }
 
     // 로그인
@@ -48,17 +48,19 @@ public class UserApiController {
         return userService.find(findRequestDto);
     }
 
-    /* 구현 필요 */
+
     @ResponseBody
     @GetMapping("/auth/check")
-    public ResponseEntity<?> authCheck(ServletRequest request){
-        String token=userService.check(request);
-        if(token==null){
+    public ResponseEntity<?> authCheck(ServletRequest request,@CookieValue(value="Authorization")String token){
+        CheckResponseDto checkResponseDto=userService.check(token);
+
+        if(checkResponseDto==null){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        else{
-            return new ResponseEntity<String>(token,HttpStatus.OK);
+        else {
+            return new ResponseEntity<CheckResponseDto>(checkResponseDto, HttpStatus.OK);
         }
+
     }
 
     // 로그아웃
