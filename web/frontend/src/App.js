@@ -29,14 +29,6 @@ const PrivateRoute = () => {
   return <Outlet />;
 };
 
-const AdminRoute = () => {
-  const { user } = useSelector(({ user }) => ({ user: user.user }));
-  if (user?.type !== 'admin') {
-    return <Navigate to="/" replace />;
-  }
-  return <Outlet />;
-};
-
 const MenteeRoute = () => {
   const { user } = useSelector(({ user }) => ({ user: user.user }));
   if (user?.type !== 'mentee') {
@@ -62,19 +54,23 @@ const MentorParentRoute = () => {
 };
 
 const App = () => {
+  const { user } = useSelector(({ user }) => ({ user: user.user }));
   return (
     <Routes>
       <Route element={<PrivateRoute />}>
         <Route
           element={
-            <>
-              <HomePage />
-              <BottomTabBarContainer />
-            </>
+            user?.type === 'admin' ? (
+              <AdminPage />
+            ) : (
+              <>
+                <HomePage />
+                <BottomTabBarContainer />
+              </>
+            )
           }
           path="/"
         />
-
         <Route element={<MenteeRoute />}>
           <Route
             element={
@@ -116,10 +112,6 @@ const App = () => {
 
         <Route element={<MentorParentRoute />}>
           <Route element={<StudyScreenPage />} path="study/:userId" />
-        </Route>
-
-        <Route element={<AdminRoute />}>
-          <Route element={<AdminPage />} path="administrator" />
         </Route>
 
         <Route

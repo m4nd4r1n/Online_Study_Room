@@ -85,13 +85,11 @@ const BottomTabBar = ({ type }) => {
             icon={<Chat />}
           />
         )}
-        {type !== 'mentee' && (
-          <BottomNavigationAction
-            label="학습통계"
-            value="/statistics"
-            icon={<AssessmentOutlined />}
-          />
-        )}
+        <BottomNavigationAction
+          label="학습통계"
+          value="/statistics"
+          icon={<AssessmentOutlined />}
+        />
         <BottomNavigationAction
           label="설정"
           value="/setting"
