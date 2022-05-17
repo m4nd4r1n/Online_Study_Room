@@ -4,6 +4,8 @@ import com.edu.opensky.planner.dto.PlannerAddDto;
 import com.edu.opensky.user.User;
 import com.edu.opensky.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -31,19 +33,19 @@ public class PlannerController {
     */
 
     @PostMapping("/planner")
-    public String createPlan(@RequestBody PlannerAddDto plannerAddDto,ServletRequest request){
+    public ResponseEntity<?> createPlan(@RequestBody PlannerAddDto plannerAddDto,ServletRequest request){
         // 토큰 아이디로 수정 필요
-        System.out.println("plannerAddDto.getStartTime() = " + plannerAddDto.getStartTime());
+
         userService.check(request);
         Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user= userService.getUserByToken(principal);
-        String id=user.getEmail();
-
         //String id ="asdasd@naver.com";
 
-        plannerService.AddPlan(id,plannerAddDto);
-
-        return id;
+        if (user.getRole().equals("멘티")) {
+            plannerService.AddPlan(user.getEmail(), plannerAddDto);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 
     }

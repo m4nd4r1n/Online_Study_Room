@@ -38,6 +38,10 @@ public class Mentee {
     @Column(columnDefinition = "integer default 0")
     private Integer exp;
 
+
+    @Column(columnDefinition = "varchar(255) default '오프라인'")
+    private String state;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
     private List<Attendance> attendanceList = new ArrayList<>();
@@ -51,7 +55,7 @@ public class Mentee {
     private List<Planner> plannerList = new ArrayList<>();
 
     @Builder
-    public Mentee(String mtrId,String name, String mteId, String prtId, String school){
+    public Mentee(String mtrId,String name, String mteId, String prtId, String school, String state){
         this.name = name;
         this.mtrId = mtrId;
         this.mteId = mteId;
@@ -59,5 +63,11 @@ public class Mentee {
         this.school = school;
         this.level = 1;
         this.exp = 0;
+        this.state = "오프라인";
+    }
+
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

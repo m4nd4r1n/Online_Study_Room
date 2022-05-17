@@ -2,6 +2,7 @@ package com.edu.opensky.planner;
 
 import com.edu.opensky.planner.dto.PlannerAddDto;
 import com.edu.opensky.user.mentee.Mentee;
+import com.edu.opensky.user.mentee.MenteeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import java.util.List;
 @Transactional
 public class PlannerService {
     private final PlannerRepository plannerRepository;
+    private final MenteeRepository menteeRepository;
 
     public void AddPlan(String id, PlannerAddDto plannerAddDto){
 
@@ -28,10 +30,12 @@ public class PlannerService {
                 Integer.parseInt(plannerAddDto.getEndTime().substring(0,2)),
                 Integer.parseInt(plannerAddDto.getEndTime().substring(3,5)),
                 Integer.parseInt(plannerAddDto.getEndTime().substring(6,8)));
-
+        Mentee mentee = menteeRepository.findByMteId(id).orElseThrow(()->
+            new IllegalArgumentException("일치하는 멘티가 없습니다.")
+        );
         plannerRepository.save(Planner.builder()
                 .subject(plannerAddDto.getSubject())
-                .mentee(Mentee.builder().mteId(id).build())
+                .mentee(mentee)
                 .date(date)
                 .startTime(startTime)
                 .endTime(endTime)

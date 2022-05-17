@@ -2,6 +2,7 @@ package com.edu.opensky.attendance;
 
 
 import com.edu.opensky.user.mentee.Mentee;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class Attendance {
     private Long attendanceId;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "mteId")
     private Mentee mentee;
 

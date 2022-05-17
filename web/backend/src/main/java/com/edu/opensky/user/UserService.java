@@ -55,7 +55,24 @@ public class UserService {
         // 마지막 접속일자 업데이트
         user.setLastAccessDate(LocalDate.now());
 
+        if(user.getRole().equals("멘티")){
+            Mentee mentee =  menteeRepository.findByMteId(user.getEmail()).orElseThrow(()->{
+                return new IllegalArgumentException("멘티 아이디가 존재하지 않음");
+
+            });
+            mentee.setState("온라인");
+        }
+
         return jwtTokenProvider.createToken(userDetails); //토큰 생성
+
+    }
+
+    @Transactional
+    public void logout(ServletRequest request){
+        String token =jwtTokenProvider.getToken((HttpServletRequest) request);
+        String id = jwtTokenProvider.getUsername(token);
+
+        menteeRepository.findByMteId(id).ifPresent(m ->m.setState("오프라인"));
 
     }
 
@@ -92,23 +109,29 @@ public class UserService {
                 userInfo.get(0), userInfo.get(1), LocalDate.parse(userInfo.get(2), DateTimeFormatter.ISO_DATE));
         checkDuplicateUser(userSaveRequestDto);
 
+
         switch (requestDto.getType()) {
             case "멘티":
                 MenteeSaveRequestDto menteeSaveRequestDto = new MenteeSaveRequestDto(requestDto.getEmail(), userSaveRequestDto.getName(), requestDto.getSchool());
                 menteeRepository.save(menteeSaveRequestDto.toEntity());
+                userSaveRequestDto.setRole("멘티");
                 break;
             case "멘토":
                 MentorSaveRequestDto mentorSaveRequestDto = new MentorSaveRequestDto(requestDto.getEmail(), userSaveRequestDto.getName());
                 mentorRepository.save(mentorSaveRequestDto.toEntity());
+                userSaveRequestDto.setRole("멘토");
                 break;
             case "학부모":
                 ParentSaveRequestDto parentSaveRequestDto = new ParentSaveRequestDto(
                         requestDto.getEmail(), userSaveRequestDto.getName(), requestDto.getStdName(), requestDto.getPhoneFirst()+requestDto.getPhoneMiddle()+requestDto.getPhoneLast());
                 parentRepository.save(parentSaveRequestDto.toEntity());
+                userSaveRequestDto.setRole("학부모");
 
         }
 
-        return userRepository.save(userSaveRequestDto.toEntity()).getEmail();
+        User user = userRepository.save(userSaveRequestDto.toEntity());
+        LoginRequestDto loginRequestDto = new LoginRequestDto(user);
+        return login(loginRequestDto);
     }
 
     // 중복확인
@@ -132,7 +155,7 @@ public class UserService {
         // 유저 아이디와 입력받은 비밀번호에 해당하는 아이디가 같은 경우에만 업데이트
         if (user.getEmail().equals(email)){
             // 새 비밀번호로 업데이트
-            user.update(email, requestDto.getNewPassword(), user.getName(), user.getPhone(),user.getBirth());
+            user.update(email, requestDto.getNewPassword(),user.getRole(), user.getName(), user.getPhone(),user.getBirth());
         }
         else{
             System.out.println("비밀번호가 다릅니다.");
@@ -173,7 +196,6 @@ public class UserService {
         } else {
             email = principal.toString();
         }
-        //System.out.println(email);
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자가 없습니다."));
         return user;
