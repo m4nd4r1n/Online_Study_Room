@@ -1,6 +1,10 @@
 import axios from 'axios';
 
 const client = axios.create();
+client.defaults.baseURL =
+  'http://ec2-3-38-228-132.ap-northeast-2.compute.amazonaws.com:8080/';
+client.defaults.withCredentials = true;
+//client.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 /*
   글로벌 설정 예시:

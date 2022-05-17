@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeField, initializeForm, find } from '../../modules/auth';
 import AuthForm from '../../components/auth/AuthForm';
-import { check } from '../../modules/user';
 import { useNavigate } from 'react-router-dom';
 
 const FindForm = () => {
@@ -79,9 +78,8 @@ const FindForm = () => {
     if (auth) {
       console.log('찾기 성공');
       alert(auth);
-      dispatch(check());
     }
-  }, [auth, authError, dispatch]);
+  }, [auth, authError]);
 
   useEffect(() => {
     if (user) {

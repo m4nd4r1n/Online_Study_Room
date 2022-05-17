@@ -12,29 +12,30 @@ const Ranking = ({ ranks }) => {
     }`;
   const { data, size, setSize } = useSWRInfinite(getKey, getRanking, {
     revalidateFirstPage: false,
+    dedupingInterval: 0,
   });
   const isEnd = data && data[data.length - 1]?.length < 25;
   const issues = data ? [].concat(...data) : [];
   const onTimeClick = () => {
+    if (type !== 'time') setSize(0);
     setType('time');
-    setSize(0);
   };
   const onLevelClick = () => {
+    if (type !== 'level') setSize(0);
     setType('level');
     setTime('day');
-    setSize(0);
   };
   const onDayClick = () => {
+    if (time !== 'day') setSize(0);
     setTime('day');
-    setSize(0);
   };
   const onWeekClick = () => {
+    if (time !== 'week') setSize(0);
     setTime('week');
-    setSize(0);
   };
   const onMonthClick = () => {
+    if (time !== 'month') setSize(0);
     setTime('month');
-    setSize(0);
   };
 
   return (

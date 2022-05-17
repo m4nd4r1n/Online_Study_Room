@@ -1,5 +1,7 @@
 import React from 'react';
 import tw from 'tailwind-styled-components';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const InfoBar = tw.div`
   flex
@@ -12,35 +14,31 @@ const InfoBar = tw.div`
   border-gray-500
 `;
 
-const printExp = (ExpRatio) => {
-  const exp = '■';
-  let ExpBar = '';
-  for (let i = 0; i < ExpRatio * 19; i++) {
-    ExpBar += exp;
-  }
-  return ExpBar;
-};
+const ExpBar = tw(ProgressBar)`
+  rounded
+`;
 
 const UserInfo = ({ info, type }) => {
-  const testInfo = { name: '김겨울', level: '8', exp: 60 };
-
+  const testInfo = { name: '김겨울', level: '8', exp: 80 };
   return (
     <InfoBar>
-      <div style={{ width: '15%' }}>{testInfo.name} 님</div>
+      <div className="w-[15%]">{testInfo.name} 님</div>
       {
         // 멘티(학생)에게만 레벨, 경험치를 보여줌
         type === 'mentee' && (
           <>
-            <div style={{ width: '15%' }}>Lv. {testInfo.level}</div>
-            <div
-              style={{ width: '15%', textAlign: 'right', padding: '0.5rem' }}
-            >
-              EXP
+            <div className="w-[15%] text-right">Lv. {testInfo.level}</div>
+            <div className="w-[15%] p-2 text-right">EXP</div>
+            <div className="w-[65%] rounded border border-gray-500">
+              <ExpBar
+                isChild
+                now={testInfo.exp}
+                label={`${testInfo.exp}/120`}
+                striped
+                animated
+                max={120}
+              />
             </div>
-            <div style={{ width: '40%', textAlign: 'left' }}>
-              {printExp(testInfo.exp / 120)}
-            </div>
-            <div style={{ width: '15%' }}>{testInfo.exp}/120</div>
           </>
         )
       }

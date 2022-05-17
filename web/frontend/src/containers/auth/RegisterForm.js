@@ -121,7 +121,7 @@ const RegisterForm = () => {
   useEffect(() => {
     if (authError) {
       // 중복 값 존재
-      if (authError.response.status === 409) {
+      if (authError.response?.status === 409) {
         setErrors({ message: authError.response.data.error });
         return;
       }
