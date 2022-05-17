@@ -68,11 +68,14 @@ public class UserApiController {
 
     // 로그아웃
     @PostMapping("/auth/logout")
-    public void logout(HttpServletResponse response){
+    public void logout(ServletRequest request ,HttpServletResponse response){
+
+        userService.logout(request);
         Cookie authCookie = new Cookie("Authorization",null);
         authCookie.setMaxAge(0);
         authCookie.setPath("/");
         response.addCookie(authCookie);
+
     }
 
 //    // 회원탈퇴

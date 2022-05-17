@@ -38,7 +38,8 @@ public class Mentee {
     @Column(columnDefinition = "integer default 0")
     private Integer exp;
 
-    @Column(columnDefinition = "varchar(255) default '온라인'")
+
+    @Column(columnDefinition = "varchar(255) default '오프라인'")
     private String state;
 
     @JsonManagedReference
@@ -62,6 +63,11 @@ public class Mentee {
         this.school = school;
         this.level = 1;
         this.exp = 0;
-        this.state = "온라인";
+        this.state = "오프라인";
+    }
+
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

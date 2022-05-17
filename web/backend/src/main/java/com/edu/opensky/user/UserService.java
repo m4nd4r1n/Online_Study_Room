@@ -55,7 +55,24 @@ public class UserService {
         // 마지막 접속일자 업데이트
         user.setLastAccessDate(LocalDate.now());
 
+        if(user.getRole().equals("멘티")){
+            Mentee mentee =  menteeRepository.findByMteId(user.getEmail()).orElseThrow(()->{
+                return new IllegalArgumentException("멘티 아이디가 존재하지 않음");
+
+            });
+            mentee.setState("온라인");
+        }
+
         return jwtTokenProvider.createToken(userDetails); //토큰 생성
+
+    }
+
+    @Transactional
+    public void logout(ServletRequest request){
+        String token =jwtTokenProvider.getToken((HttpServletRequest) request);
+        String id = jwtTokenProvider.getUsername(token);
+
+        menteeRepository.findByMteId(id).ifPresent(m ->m.setState("오프라인"));
 
     }
 
