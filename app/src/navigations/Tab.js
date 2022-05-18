@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   HomeStackNavigation,
@@ -10,31 +10,21 @@ import {
   SettingStackNavigation,
 } from './stacks';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
-  const [user, setUser] = useState('');
-  useEffect(() => {
-    const bootstrap = async () => {
-      try {
-        const data = await AsyncStorage.getItem('@user');
-        console.log(data);
-        setUser(data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    bootstrap();
-  }, []);
+  const { user } = useSelector(({ user }) => ({
+    user: user.user,
+  }));
 
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: '#06B6D4',
-        tabBarStyle: { display: user === '학부모' ? 'none' : 'flex' },
+        tabBarStyle: { display: user?.type === 'parent' ? 'none' : 'flex' },
       }}
       initialRouteName="HomeTab"
     >
@@ -49,7 +39,7 @@ const TabNavigation = () => {
           title: '홈',
         }}
       />
-      {user === '멘티' && (
+      {user?.type === 'mentee' && (
         <>
           <Tab.Screen
             name="AchievementTab"
@@ -86,7 +76,7 @@ const TabNavigation = () => {
           />
         </>
       )}
-      {(user === '멘토' || user === '멘티') && (
+      {(user?.type === 'mentor' || user?.type === 'mentee') && (
         <>
           <Tab.Screen
             name="PlannerTab"
