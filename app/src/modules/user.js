@@ -4,6 +4,7 @@ import * as authAPI from '../libs/api/auth';
 import createRequestSaga, {
   createRequestActionTypes,
 } from '../libs/createRequestSaga';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TEMP_SET_USER = 'user/TEMP_SET_USER'; // 새로고침 이후 임시 로그인 처리
 // 회원 정보 확인
@@ -19,7 +20,7 @@ const checkSaga = createRequestSaga(CHECK, authAPI.check);
 
 function checkFailureSaga() {
   try {
-    localStorage.removeItem('user'); // localStorage 에서 user 제거
+    AsyncStorage.removeItem('@user'); // localStorage 에서 user 제거
   } catch (e) {
     console.log('localStorage is not working');
   }
@@ -28,7 +29,7 @@ function checkFailureSaga() {
 function* logoutSaga() {
   try {
     yield call(authAPI.logout); // logout API 호출
-    localStorage.removeItem('user'); // localStorage 에서 user 제거
+    AsyncStorage.removeItem('user'); // localStorage 에서 user 제거
   } catch (e) {
     console.log(e);
   }

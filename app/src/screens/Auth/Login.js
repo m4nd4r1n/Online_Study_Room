@@ -5,20 +5,39 @@ import { TextInput, Button } from 'react-native-paper';
 import tw from 'twrnc';
 import { useIsFocused } from '@react-navigation/native';
 import AuthLayout from '../../components/auth/AuthLayout';
-import { isEmail } from '../../libs/utils';
+import { handleCookie, isEmail, storeData } from '../../libs/utils';
 import { Error } from '../../components/auth/common';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { login } from '../../libs/api/auth';
+import { check } from '../../modules/user';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Login = ({ navigation: { navigate, replace } }) => {
+  const dispatch = useDispatch();
+  const { auth, user } = useSelector(({ auth, user }) => ({
+    auth: auth.auth,
+    user: user.user,
+  }));
+
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm({ defaultValues: { email: '', password: '' }, mode: 'onChange' });
-  const onValid = (validForm) => {
+  const onValid = async (validForm) => {
     // 백엔드로 전송
     console.log(validForm);
+    try {
+      const payload = await login(validForm);
+      const [cookie] = payload.headers['set-cookie'];
+      await handleCookie('cookie', JSON.stringify(cookie));
+
+      if (payload.status == 200) dispatch(check());
+      console.log(user);
+    } catch (e) {
+      console.error(e);
+    }
   };
   const [secure, setSecure] = useState(true);
   const inputRef = useRef(null);
@@ -34,6 +53,17 @@ const Login = ({ navigation: { navigate, replace } }) => {
     }
     replace('Tab');
   };
+
+  useEffect(() => {
+    if (user) {
+      try {
+        storeData('@user', JSON.stringify(user));
+        replace('Tab');
+      } catch (e) {
+        console.log('localStorage is not working');
+      }
+    }
+  }, [user]);
   return (
     <AuthLayout>
       <Text style={tw`mb-3`}>로그인</Text>

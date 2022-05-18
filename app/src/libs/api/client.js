@@ -28,4 +28,8 @@ client.defaults.withCredentials = true;
   })  
 */
 
+export const setCookie = (cookie) => {
+  client.defaults.headers.Cookies = JSON.parse(cookie);
+};
+
 export default client;

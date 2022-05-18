@@ -7,6 +7,9 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer, { rootSaga } from './modules';
+import { tempSetUser, check } from './modules/user';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setCookie } from './libs/api/client';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
@@ -14,9 +17,11 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(sagaMiddleware)),
 );
 
-function loadUser() {
+async function loadUser() {
   try {
-    const user = localStorage.getItem('user');
+    const cookie = await AsyncStorage.getItem('cookie');
+    setCookie(cookie);
+    const user = await AsyncStorage.getItem('@user');
     if (!user) return;
     store.dispatch(tempSetUser(JSON.parse(user)));
     store.dispatch(check());
