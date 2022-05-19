@@ -6,8 +6,17 @@ import tw from 'twrnc';
 import AuthLayout from '../../components/auth/AuthLayout';
 import { isEmail } from '../../libs/utils';
 import { Error } from '../../components/auth/common';
+import { useSelector, useDispatch } from 'react-redux';
+import { find } from '../../modules/auth';
 
 const Find = ({ route, navigation: { navigate } }) => {
+  const dispatch = useDispatch();
+  const { auth, authError } = useSelector(({ auth }) => ({
+    auth: auth.auth,
+    authError: auth.authError,
+    user: user.user,
+  }));
+
   const {
     control,
     handleSubmit,
@@ -15,11 +24,29 @@ const Find = ({ route, navigation: { navigate } }) => {
   } = useForm({ defaultValues: { email: '' }, mode: 'onChange' });
   const certSuccess = JSON.parse(route?.params?.success || 'false');
   const impUID = route?.params?.imp_uid;
+
   const onValid = (validForm) => {
     // 백엔드로 전송
     const data = { ...validForm, impUID };
     console.log(data);
+
+    // 찾기
+    dispatch(find(data));
   };
+
+  useEffect(() => {
+    if (authError) {
+      console.log('오류 발생');
+      console.log(authError);
+      setErrors({ message: '찾기 실패' });
+      return;
+    }
+    if (auth) {
+      console.log('찾기 성공');
+      alert(auth);
+    }
+  }, [auth, authError]);
+
   return (
     <AuthLayout>
       <Text style={tw`mb-3`}>{route.params.type} 찾기</Text>

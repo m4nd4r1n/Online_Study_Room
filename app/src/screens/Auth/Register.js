@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import tw from 'twrnc';
@@ -11,10 +11,18 @@ import {
   Provider,
 } from 'react-native-paper';
 import AuthLayout from '../../components/auth/AuthLayout';
-import { isEmail } from '../../libs/utils';
+import { handleCookie, isEmail, storeData } from '../../libs/utils';
 import { Error } from '../../components/auth/common';
+import { register } from '../../libs/api/auth';
+import { check } from '../../modules/user';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Register = ({ route, navigation: { navigate } }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector(({ user }) => ({
+    user: user.user,
+  }));
+
   const [state, setState] = useState({
     type: route?.params?.type,
     secure: true,
@@ -44,12 +52,39 @@ const Register = ({ route, navigation: { navigate } }) => {
     mode: 'onChange',
   });
 
-  const onValid = (validForm) => {
-    // 백엔드로 전송
+  const onValid = async (validForm) => {
     delete validForm.passwordConfirm;
+
+    // register data 추출
     const data = { ...validForm, impUID, type: state.type };
     console.log(data);
+
+    // 회원가입
+    try {
+      const payload = await register(data);
+      const [cookie] = payload.headers['set-cookie'];
+
+      // 응답에 쿠키 존재 시
+      if (cookie) {
+        await handleCookie('cookie', JSON.stringify(cookie));
+        dispatch(check());
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
+
+  useEffect(() => {
+    if (user) {
+      try {
+        storeData('@user', JSON.stringify(user));
+        replace('Tab');
+      } catch (e) {
+        console.log('localStorage is not working');
+      }
+    }
+  }, [user]);
+
   return (
     <Provider>
       <AuthLayout>

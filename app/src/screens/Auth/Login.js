@@ -14,8 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const Login = ({ navigation: { navigate, replace } }) => {
   const dispatch = useDispatch();
-  const { auth, user } = useSelector(({ auth, user }) => ({
-    auth: auth.auth,
+  const { user } = useSelector(({ user }) => ({
     user: user.user,
   }));
 
@@ -26,15 +25,18 @@ const Login = ({ navigation: { navigate, replace } }) => {
     formState: { errors },
   } = useForm({ defaultValues: { email: '', password: '' }, mode: 'onChange' });
   const onValid = async (validForm) => {
-    // 백엔드로 전송
     console.log(validForm);
+
+    // 로그인
     try {
       const payload = await login(validForm);
       const [cookie] = payload.headers['set-cookie'];
-      await handleCookie('cookie', JSON.stringify(cookie));
 
-      if (payload.status == 200) dispatch(check());
-      console.log(user);
+      // 응답에 쿠키 존재 시
+      if (cookie) {
+        await handleCookie('cookie', JSON.stringify(cookie));
+        dispatch(check());
+      }
     } catch (e) {
       console.error(e);
     }
@@ -64,6 +66,7 @@ const Login = ({ navigation: { navigate, replace } }) => {
       }
     }
   }, [user]);
+
   return (
     <AuthLayout>
       <Text style={tw`mb-3`}>로그인</Text>
