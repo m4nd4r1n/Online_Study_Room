@@ -19,21 +19,20 @@ const ExpBar = tw(ProgressBar)`
 `;
 
 const UserInfo = ({ info, type }) => {
-  const testInfo = { name: '김겨울', level: '8', exp: 80 };
   return (
     <InfoBar>
-      <div className="w-[15%]">{testInfo.name} 님</div>
+      <div className="w-[15%]">{info?.name} 님</div>
       {
         // 멘티(학생)에게만 레벨, 경험치를 보여줌
         type === 'mentee' && (
           <>
-            <div className="w-[15%] text-right">Lv. {testInfo.level}</div>
+            <div className="w-[15%] text-right">Lv. {info?.level}</div>
             <div className="w-[15%] p-2 text-right">EXP</div>
             <div className="w-[65%] rounded border border-gray-500">
               <ExpBar
                 isChild
-                now={testInfo.exp}
-                label={`${testInfo.exp}/120`}
+                now={info?.exp}
+                label={`${info?.exp}/120`}
                 striped
                 animated
                 max={120}
