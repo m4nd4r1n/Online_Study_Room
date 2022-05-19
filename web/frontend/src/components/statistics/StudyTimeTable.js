@@ -76,13 +76,7 @@ const StudyTimeTable = ({ studyTime }) => {
   ];
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        width: '60%',
-        flexDirection: 'column',
-      }}
-    >
+    <div className="mb-4 flex w-full flex-col sm:w-3/5">
       <Tag />
       {hours.map((hour) => (
         <Minutes hour={hour} key={hour} studyTime={studyTime}></Minutes>

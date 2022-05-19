@@ -14,6 +14,7 @@ import {
   Tooltip,
   Legend,
 } from 'recharts';
+import tw from 'tailwind-styled-components';
 
 const COLORS = [palette.Coral, palette.DodgerBlue];
 
@@ -33,21 +34,17 @@ const ColoredText = styled.span`
     `}
 `;
 
-const GraphBox = styled(StyledBox)`
-  background-color: ${(props) => props.color};
-  font-size: 1.2rem;
-  font-weight: bold;
-  border-width: 1px;
-  border-radius: 0px;
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-
-  & + & {
-    margin-top: 10px;
-  }
+const GraphBox = tw(StyledBox)`
+  text-[1.2rem]
+  font-bold
+  border
+  rounded-sm
+  flex
+  w-full
+  flex-col
+  justify-center
+  items-center
+  mb-1
 `;
 
 const StudyTimeGraph = ({ weekStudyTime, dateStudyTime }) => {
@@ -69,21 +66,8 @@ const StudyTimeGraph = ({ weekStudyTime, dateStudyTime }) => {
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        width: '40%',
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          width: '100%',
-          flexDirection: 'column',
-          padding: '10px',
-          marginTop: '-10px',
-        }}
-      >
+    <div className="flex w-full sm:w-2/5">
+      <div className="-mt-[10px] flex w-full flex-col p-[10px]">
         <GraphBox>
           {dateStudyTime ? (
             <>

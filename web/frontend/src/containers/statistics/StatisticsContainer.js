@@ -240,7 +240,7 @@ const StatisticsContainer = () => {
           withPortal
         />
       </ItemBlock>
-      <div style={{ display: 'flex', width: '100%', flexDirection: 'row' }}>
+      <div className="flex w-full flex-col sm:flex-row">
         <StudyTimeTable studyTime={testTimeTable} />
         <StudyTimeGraph
           weekStudyTime={testWeekStudyTime}
