@@ -15,20 +15,22 @@ const InfoBar = tw.div`
 `;
 
 const ExpBar = tw(ProgressBar)`
+  text-xs
+  sm:text-sm
   rounded
 `;
 
-const UserInfo = ({ info, type }) => {
+const UserInfo = ({ info, type, setIsOpen }) => {
   return (
     <InfoBar>
-      <div className="w-[15%]">{info?.name} 님</div>
+      <span className="w-2/12">{info?.name} 님</span>
       {
         // 멘티(학생)에게만 레벨, 경험치를 보여줌
         type === 'mentee' && (
           <>
-            <div className="w-[15%] text-right">Lv. {info?.level}</div>
-            <div className="w-[15%] p-2 text-right">EXP</div>
-            <div className="w-[65%] rounded border border-gray-500">
+            <span className="w-2/12 sm:w-1/12">Lv. {info?.level}</span>
+            <span className="w-1/12 pr-1 text-right">EXP</span>
+            <div className="mr-2 w-6/12 rounded border border-gray-500">
               <ExpBar
                 isChild
                 now={info?.exp}
@@ -38,6 +40,12 @@ const UserInfo = ({ info, type }) => {
                 max={120}
               />
             </div>
+            <button
+              onClick={() => setIsOpen(true)}
+              className="w-2/12 rounded border px-1 text-xs text-gray-600 sm:text-sm"
+            >
+              출석 현황 확인
+            </button>
           </>
         )
       }
