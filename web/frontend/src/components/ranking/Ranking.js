@@ -124,11 +124,11 @@ const Ranking = ({ ranks }) => {
               나의 등수{' '}
               {type === 'time'
                 ? time === 'day'
-                  ? ranks?.day
+                  ? ranks?.day || 0
                   : time === 'week'
-                  ? ranks?.week
+                  ? ranks?.week || 0
                   : time === 'month'
-                  ? ranks?.month
+                  ? ranks?.month || 0
                   : null
                 : ranks?.level}
               등
@@ -140,21 +140,24 @@ const Ranking = ({ ranks }) => {
             {type === 'time' ? <span>학습시간</span> : <span>레벨</span>}
           </div>
 
-          {issues?.map((data, i) => (
-            <div
-              key={i}
-              className="grid w-full select-none grid-cols-3 items-center border-b py-1 text-center"
-            >
-              <span className="ml-8 flex aspect-square w-14 items-center justify-center rounded-full border-2 border-cyan-400 shadow-md sm:ml-20">
-                {i + 1}
-              </span>
-              <div className="flex flex-col items-center justify-center">
-                <span>{data?.school}</span>
-                <span>{data?.name}</span>
-              </div>
-              <span>{type === 'time' ? data?.time : data?.level}</span>
-            </div>
-          ))}
+          {issues?.map(
+            (data, i) =>
+              data && (
+                <div
+                  key={i}
+                  className="grid w-full select-none grid-cols-3 items-center border-b py-1 text-center"
+                >
+                  <span className="ml-8 flex aspect-square w-14 items-center justify-center rounded-full border-2 border-cyan-400 shadow-md sm:ml-20">
+                    {i + 1}
+                  </span>
+                  <div className="flex flex-col items-center justify-center">
+                    <span>{data?.school}</span>
+                    <span>{data?.name}</span>
+                  </div>
+                  <span>{type === 'time' ? data?.time : data?.level}</span>
+                </div>
+              ),
+          )}
           {!isEnd && (
             <button
               className="mt-4 h-12 w-full border-t px-4 font-medium"
