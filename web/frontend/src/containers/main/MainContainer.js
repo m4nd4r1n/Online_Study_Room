@@ -17,44 +17,62 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserInfo } from '../../modules/userInfo';
 import Character from '../../components/main/Character';
 import Attendance from '../../components/main/Attendance';
+import { getAttendance } from '../../modules/attendanceInfo';
 
 const MainContainer = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [next, setNext] = useState(false);
   const dispatch = useDispatch();
-  let { info, error, loading, user } = useSelector(
-    ({ userInfo, loading, user }) => ({
+  let { info, loading, user, dates } = useSelector(
+    ({ userInfo, loading, user, attendanceInfo }) => ({
       info: userInfo.info,
-      error: userInfo.error,
       loading: loading['userInfo/GET_USER_INFO'],
       user: user.user,
+      dates: attendanceInfo.dates,
     }),
   );
 
   useEffect(() => {
-    if (user !== null) dispatch(getUserInfo());
+    if (user !== null) {
+      dispatch(getUserInfo());
+      dispatch(getAttendance({ userID: user.userId })); //
+    }
   }, [dispatch, user]);
 
   useEffect(() => {
-    if (user.type !== 'mentee') setIsOpen(false);
+    if (user?.type !== 'mentee') setIsOpen(false);
   }, [user]);
 
   useEffect(() => {
-    // 출석정보 가져오기 및 설정
-  });
+    if (user?.type === 'mentee') {
+      try {
+        if (localStorage.getItem('lastVisit')) {
+          const lastVisit = new Date(localStorage.getItem('lastVisit'));
+          const today = new Date();
+          if (
+            today.getFullYear() === lastVisit.getFullYear() &&
+            today.getMonth() === lastVisit.getMonth() &&
+            today.getDate() === lastVisit.getDate()
+          ) {
+            setIsOpen(false);
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }, [user]);
 
-  // 첫 클릭 시 출석 ==> 보상
-  // 두번째 클릭 시 창 닫기
+  // 클릭 시 창 닫기
   const handleClick = () => {
-    if (!next) setNext(true);
-    else setIsOpen(false);
+    setIsOpen(false);
+    localStorage.setItem('lastVisit', new Date());
   };
 
   return (
     <>
-      <Attendance handleClick={handleClick} isOpen={isOpen} next={next} />
+      <Attendance handleClick={handleClick} isOpen={isOpen} dates={dates} />
       <ContentsBlock>
-        <UserInfo info={info} type={user.type} />
+        <UserInfo info={info} type={user.type} setIsOpen={setIsOpen} />
         {user ? (
           user.type === 'parent' ? (
             <ChildrenList />

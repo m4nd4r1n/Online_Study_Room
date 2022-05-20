@@ -4,7 +4,6 @@ import palette from '../../lib/styles/palette';
 import styled from 'styled-components';
 import Modal from 'react-modal';
 import { ModalCalendar } from '../common/Calendar';
-//import Button from '../common/Button';
 
 const modalStyle = {
   overlay: {
@@ -47,21 +46,8 @@ const ModalTitle = styled.span`
   margin-bottom: 1rem;
 `;
 
-const RewardItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: ${palette.Ivory};
-  border-radius: 4px solid;
-  color: ${palette.gray[8]};
-`;
-
-const ATTENDANCE_DATES = [
-  new Date(),
-  new Date(2022, 0, 15),
-  new Date(2022, 0, 18),
-]; // 출석 날짜
-
-const Attendance = ({ handleClick, isOpen, next }) => {
+const Attendance = ({ handleClick, isOpen, dates }) => {
+  const attendanceDates = dates?.map((date) => new Date(date));
   return (
     <Modal
       isOpen={isOpen}
@@ -71,25 +57,12 @@ const Attendance = ({ handleClick, isOpen, next }) => {
     >
       {/* 내부 컨텐츠 클릭 시 닫기 */}
       <AttendanceWrapper onClick={handleClick}>
-        {next ? (
-          <>
-            <ModalTitle>오늘의 출석보상</ModalTitle>
-            <RewardItem>
-              <img src={'character/ring_rainbow.png'} alt="ring" />
-              <span>무지개 반지</span>
-            </RewardItem>
-          </>
-        ) : (
-          <>
-            <ModalTitle>이번 달 출석현황</ModalTitle>
-            <ModalCalendar
-              dates={ATTENDANCE_DATES}
-              canChangeMonth={false}
-              fixedWeeks
-            />
-          </>
-        )}
-        {/* <Button onClick={handleClick}>확인</Button> */}
+        <ModalTitle>이번 달 출석현황</ModalTitle>
+        <ModalCalendar
+          dates={attendanceDates}
+          canChangeMonth={false}
+          fixedWeeks
+        />
       </AttendanceWrapper>
     </Modal>
   );
