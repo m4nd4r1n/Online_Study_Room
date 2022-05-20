@@ -2,9 +2,11 @@ package com.edu.opensky.user.mentor;
 
 import com.edu.opensky.messenger.chatRoomJoin.ChatRoomJoinRepository;
 import com.edu.opensky.messenger.chatRoomJoin.ChatRoomJoinService;
+import com.edu.opensky.user.UserRepository;
 import com.edu.opensky.user.mentee.Mentee;
 import com.edu.opensky.user.mentee.MenteeRepository;
 import com.edu.opensky.user.mentor.dto.MenteeListDto;
+import com.edu.opensky.user.mentor.dto.MentorListDto;
 import com.edu.opensky.user.mentor.dto.MentorSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -20,6 +23,7 @@ public class MentorService {
 
     private final MentorRepository mentorRepository;
     private final MenteeRepository menteeRepository;
+    private final UserRepository userRepository;
     private final ChatRoomJoinRepository chatRoomJoinRepository;
     private final ChatRoomJoinService chatRoomJoinService;
 
@@ -49,5 +53,16 @@ public class MentorService {
 //        return menteeRepository.findByMtrId(id).stream()
 //                .map(m->m.getMteId()).collect(Collectors.toList());
         return menteeListDtoList;
+    }
+
+    public List<MentorListDto> getMentorList() {
+        List<MentorListDto> mentorListDtoList = mentorRepository.findAll().stream().map(m->{
+            return MentorListDto.builder()
+                    .mtrId(m.getMtrId())
+                    .name(m.getName())
+                    .phone(userRepository.findByEmail(m.getMtrId()).orElseThrow(()-> new IllegalArgumentException("해당 유저가 존재하지 않습니다.")).getPhone())
+                    .build();
+        }).collect(Collectors.toList());
+        return mentorListDtoList;
     }
 }

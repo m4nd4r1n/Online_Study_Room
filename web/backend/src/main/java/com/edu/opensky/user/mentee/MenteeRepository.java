@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface MenteeRepository extends JpaRepository<Mentee,String> {
 
-    @Transactional(readOnly = true)
     Optional<Mentee> findByMteId(String mteId);
 
     @Transactional(readOnly = true)

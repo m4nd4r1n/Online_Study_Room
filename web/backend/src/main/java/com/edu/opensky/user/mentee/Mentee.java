@@ -70,4 +70,12 @@ public class Mentee {
     public void setState(String state) {
         this.state = state;
     }
+
+
+    public void updateMentor(String mtrId){
+        this.mtrId = mtrId;
+    }
+    public void updateParent(String prtId){
+        this.prtId = prtId;
+    }
 }
