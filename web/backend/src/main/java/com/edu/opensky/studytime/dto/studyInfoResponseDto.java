@@ -1,4 +1,4 @@
-package com.edu.opensky.user.mentee.dto;
+package com.edu.opensky.studytime.dto;
 
 import lombok.Builder;
 import lombok.Getter;

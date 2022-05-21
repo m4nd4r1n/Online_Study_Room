@@ -11,6 +11,5 @@ public interface PlannerRepository extends JpaRepository<Planner, Long> {
     @Transactional(readOnly = true)
     List<Planner> findPlannersByDateAndMentee_MteId(LocalDate date,String userId);
 
-    @Transactional(readOnly = true)
-    Optional<Planner> findBySubjectAndDate(String subject, LocalDate date);
+    Optional<Planner> findBySubjectAndDateAndMentee_MteId(String subject, LocalDate date, String userId);
 }

@@ -1,11 +1,16 @@
 package com.edu.opensky.studytime;
 
+import com.edu.opensky.studytime.dto.mentorNameAndChildResponseDto;
+import com.edu.opensky.studytime.dto.parentNameAndChildResponseDto;
+import com.edu.opensky.user.User;
 import com.edu.opensky.user.UserService;
 import com.edu.opensky.user.mentee.MenteeService;
 import com.edu.opensky.user.mentor.MentorService;
+import com.edu.opensky.user.parent.ParentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,23 +21,36 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudyController {
     private final MenteeService menteeService;
     private final MentorService mentorService;
+    private final ParentService parentService;
     private final UserService userService;
 
 
     @GetMapping("/study/info")
-    public ResponseEntity<?> StudyInfo() {
+    public ResponseEntity StudyInfo(
+            @CookieValue(value="Authorization") String token) {
 
-//        User user = userService.getUserByToken(principal);
-//        String role = user.getRole();
-//        String id = "asdasd@naver.com";
-//        String role = "멘토";
-        /* 수정 필 */
-        String id = "qqqq@naver.com";
-        String role = "멘티";
+        User user = userService.getUserByToken(token);
+
+        String id = user.getEmail();
+        String role = user.getRole();
         if (role.equals("멘티")) {
-            return new ResponseEntity<>(menteeService.getStudyInfo(id),HttpStatus.OK);
+            return ResponseEntity.ok(menteeService.getStudyInfo(id));
         } else if (role.equals("멘토")) {
-            return new ResponseEntity<>(mentorService.getMenteeList(id),HttpStatus.OK);
+            mentorNameAndChildResponseDto responseDto = mentorService.getMyNameAndMenteeList(id);
+            if (responseDto.getName() == null){
+                return ResponseEntity.badRequest().build();
+            }
+            else{
+                return ResponseEntity.ok(responseDto);
+            }
+        } else if (role.equals("학부모")){
+            parentNameAndChildResponseDto responseDto =parentService.getMyNameAndChildList(id);
+            if (responseDto.getName() == null){
+                return ResponseEntity.badRequest().build();
+            }
+            else{
+                return ResponseEntity.ok(responseDto);
+            }
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

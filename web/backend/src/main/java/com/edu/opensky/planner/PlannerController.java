@@ -47,12 +47,18 @@ public class PlannerController {
 
     }
     @DeleteMapping("/planner{queryString}")
-    public void removePlan(@RequestParam("subject") String subject,
-                           @RequestParam("year")@NonNull String year,
-                           @RequestParam("month") String month,
-                           @RequestParam("day") String day) {
+    public ResponseEntity removePlan(@RequestParam("subject") String subject,
+                                     @RequestParam("year")@NonNull String year,
+                                     @RequestParam("month") String month,
+                                     @RequestParam("day") String day,
+                                     @CookieValue(value="Authorization") String token) {
 
-        plannerService.removePlan(subject,year,month,day);
+        User user = userService.getUserByToken(token);
+        if(plannerService.removePlan(subject,year,month,day,user.getEmail())){
+            return ResponseEntity.ok().build();
+        }
+        else
+            return ResponseEntity.badRequest().build();
 
     }
 }

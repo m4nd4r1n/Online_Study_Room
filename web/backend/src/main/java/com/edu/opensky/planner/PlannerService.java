@@ -5,15 +5,14 @@ import com.edu.opensky.user.mentee.Mentee;
 import com.edu.opensky.user.mentee.MenteeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-@Transactional
 public class PlannerService {
     private final PlannerRepository plannerRepository;
     private final MenteeRepository menteeRepository;
@@ -47,14 +46,21 @@ public class PlannerService {
     public List<Planner> getPlans(String year, String month, String day, String userId){
         LocalDate date = LocalDate.of(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
 
-        return plannerRepository.findPlannersByDateAndMentee_MteId(
-                date, userId);
+        return plannerRepository.findPlannersByDateAndMentee_MteId(date, userId);
     }
 
-    public void removePlan(String subject, String year, String month, String day){
+    public boolean removePlan(String subject, String year, String month, String day, String userId){
 
         LocalDate date = LocalDate.of(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
-        plannerRepository.findBySubjectAndDate(subject,date).ifPresent(plannerRepository::delete);
+        Optional<Planner> planner = plannerRepository.findBySubjectAndDateAndMentee_MteId(subject,date,userId);
+        if (planner.isPresent()){
+            plannerRepository.delete(planner.get());
+            return true;
+        }
+        else{
+            return false;
+        }
+
 
     }
 }

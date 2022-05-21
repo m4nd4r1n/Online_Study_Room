@@ -21,7 +21,7 @@ public class MentorApiController {
     public ResponseEntity getMenteeList(@CookieValue(value="Authorization")String token){
         User user= userService.getUserByToken(token);
         System.out.println("user.getEmail() = " + user.getEmail());
-        return ResponseEntity.ok(mentorService.getMenteeList(user.getEmail()));
+        return ResponseEntity.ok(mentorService.getMyNameAndMenteeList(user.getEmail()));
     }
 
 

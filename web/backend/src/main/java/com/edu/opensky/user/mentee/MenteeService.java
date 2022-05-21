@@ -2,7 +2,7 @@ package com.edu.opensky.user.mentee;
 
 import com.edu.opensky.user.UserRepository;
 import com.edu.opensky.user.mentee.dto.MenteeSaveRequestDto;
-import com.edu.opensky.user.mentee.dto.studyInfoResponseDto;
+import com.edu.opensky.studytime.dto.studyInfoResponseDto;
 import com.edu.opensky.user.admin.dto.AdminMenteeRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -51,5 +51,9 @@ public class MenteeService {
                                 }
                         ).collect(Collectors.toList());
         return adminMenteeRequestDtos;
+    }
+
+    public List<Mentee> getMenteeWithParent(String prtId){
+        return menteeRepository.findByPrtId(prtId);
     }
 }

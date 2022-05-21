@@ -1,13 +1,12 @@
 package com.edu.opensky.studytime;
 
 import com.edu.opensky.studytime.dto.MyRankingResponseDto;
+import com.edu.opensky.user.User;
+import com.edu.opensky.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +15,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class StudyTimeController {
     private final StudyTimeService studyTimeService;
+    private final UserService userService;
 
     @GetMapping("/ranking{queryUrl}")
     public List<? extends Object> getRanking(
@@ -45,13 +45,11 @@ public class StudyTimeController {
     }
 
     @GetMapping("/rank")
-    public MyRankingResponseDto getNumOfStudyAndRankInfo(){
+    public MyRankingResponseDto getNumOfStudyAndRankInfo(
+            @CookieValue(value="Authorization")String token){
 
-        // 유저 아이디
-        // 수정 필요
-        String id = "asdasd@naver.com";
-
-
+        User user = userService.getUserByToken(token);
+        String id = user.getEmail();
         Integer current = studyTimeService.getNumOfNowStudying();
         Integer today = studyTimeService.getNumOfTodayStudying();
         Integer day = studyTimeService.getMyDailyRanking(id);

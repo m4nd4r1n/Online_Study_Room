@@ -12,4 +12,7 @@ public interface MenteeRepository extends JpaRepository<Mentee,String> {
 
     @Transactional(readOnly = true)
     List<Mentee> findByMtrId(String mtrId);
+
+    @Transactional(readOnly = true)
+    List<Mentee> findByPrtId(String prtId);
 }
