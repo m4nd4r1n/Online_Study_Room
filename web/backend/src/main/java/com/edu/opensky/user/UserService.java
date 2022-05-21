@@ -222,7 +222,26 @@ public class UserService {
 
     public boolean signout(User user) {
         if(user.getRole().equals("멘티")){
-
+            menteeRepository.findByMteId(user.getEmail())
+                    .ifPresent(m->menteeRepository.delete(m));
+            userRepository.findByEmail(user.getEmail())
+                    .ifPresent(u->userRepository.delete(u));
         }
+        else if(user.getRole().equals("멘토")){
+            mentorRepository.findByMtrId(user.getEmail())
+                    .ifPresent(m->mentorRepository.delete(m));
+            userRepository.findByEmail(user.getEmail())
+                    .ifPresent(u->userRepository.delete(u));
+        }
+        else if(user.getRole().equals("학부모")){
+            parentRepository.findByPrtId(user.getEmail())
+                    .ifPresent(p->parentRepository.delete(p));
+            userRepository.findByEmail(user.getEmail())
+                    .ifPresent(u->userRepository.delete(u));
+        }
+        else{
+            return false;
+        }
+        return true;
     }
 }
