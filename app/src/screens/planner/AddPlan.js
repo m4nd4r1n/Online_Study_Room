@@ -6,8 +6,11 @@ import { Error } from '../../components/auth/common';
 import tw from 'twrnc';
 import { addPlanHours, addPlanMinutes } from '../../libs/constants';
 import { Picker } from '@react-native-picker/picker';
+import { useDispatch } from 'react-redux';
+import { addPlan } from '../../modules/plan';
 
 const AddPlan = ({ plans, setVisible, visible, date }) => {
+  const dispatch = useDispatch();
   const [state, setState] = useState({
     startHour: addPlanHours[0].value,
     startMinute: addPlanMinutes[0].value,
@@ -62,6 +65,7 @@ const AddPlan = ({ plans, setVisible, visible, date }) => {
       }
     }
     console.log(data);
+    dispatch(addPlan(data));
   };
   const onDismiss = () => {
     setVisible(false);
