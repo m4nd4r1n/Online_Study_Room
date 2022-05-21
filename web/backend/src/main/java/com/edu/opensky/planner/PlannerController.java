@@ -20,26 +20,13 @@ public class PlannerController {
 
     private final PlannerService plannerService;
     private final UserService userService;
+
     // 플랜 추가하기
-    /*
-    @PostMapping("/check")
-    public String check(){
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user= userService.getUserByToken(principal);
-        String id=user.getEmail();
-
-        return id;
-    }
-    */
-
     @PostMapping("/planner")
-    public ResponseEntity<?> createPlan(@RequestBody PlannerAddDto plannerAddDto,ServletRequest request){
-        // 토큰 아이디로 수정 필요
 
-        userService.check(request);
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user= userService.getUserByToken(principal);
-        //String id ="asdasd@naver.com";
+    public ResponseEntity createPlan(@RequestBody PlannerAddDto plannerAddDto,@CookieValue(value="Authorization")String token){
+
+        User user= userService.getUserByToken(token);
 
         if (user.getRole().equals("멘티")) {
             plannerService.AddPlan(user.getEmail(), plannerAddDto);
