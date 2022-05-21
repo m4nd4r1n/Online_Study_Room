@@ -67,9 +67,9 @@ public class UserApiController {
 
     // 로그아웃
     @PostMapping("/auth/logout")
-    public void logout(ServletRequest request ,HttpServletResponse response){
-
-        userService.logout(request);
+    public void logout(@CookieValue(value="Authorization") String token, HttpServletResponse response){
+        User user = userService.getUserByToken(token);
+        userService.logout(user);
         Cookie authCookie = new Cookie("Authorization",null);
         authCookie.setMaxAge(0);
         authCookie.setPath("/");
@@ -77,16 +77,17 @@ public class UserApiController {
 
     }
 
-//    // 회원탈퇴
-//    @DeleteMapping("/auth/signout")
-//    public ResponseEntity<?> signout(){
-//        if (userService.signout()){
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        }
-//        else{
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    // 회원탈퇴
+    @DeleteMapping("/auth/signout")
+    public ResponseEntity signout(@CookieValue(value="Authorization") String token){
+        User user = userService.getUserByToken(token);
+        if (userService.signout(user)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
 }

@@ -7,10 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletRequest;
 import java.util.List;
 
 @RestController
@@ -41,20 +39,11 @@ public class PlannerController {
     public List<Planner> readPlans(@RequestParam("year")@NonNull String year,
                                    @RequestParam("month")@NonNull String month,
                                    @RequestParam("day")@NonNull String day,
-                                   ServletRequest request)
-//            ,
-//                                   @RequestParam("userId") String userId) {
+                                   @CookieValue(value="Authorization")String token)
     {
-     //   if (userId.isEmpty()) {
 
-        userService.check(request);
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user= userService.getUserByToken(principal);
+        User user= userService.getUserByToken(token);
         return plannerService.getPlans(year, month, day, user.getEmail());
-       // }
-
-        //return plannerService.getPlans(year,month,day,userId);
 
     }
     @DeleteMapping("/planner{queryString}")

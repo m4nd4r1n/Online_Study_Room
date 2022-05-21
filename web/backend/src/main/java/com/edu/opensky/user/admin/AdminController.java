@@ -1,9 +1,11 @@
 package com.edu.opensky.user.admin;
 
 import com.edu.opensky.user.admin.dto.SetMentorMenteeRequestDto;
+import com.edu.opensky.user.mentee.MenteeService;
 import com.edu.opensky.user.mentor.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +16,22 @@ import javax.validation.Valid;
 public class AdminController {
 
     private final MentorService mentorService;
+    private final MenteeService menteeService;
     private final AdminService adminService;
 
+    @GetMapping("/api/admin/mentee")
+    public ResponseEntity getMenteeList(@RequestParam @Nullable String mtrId){
+        if(mtrId == null){
+            return ResponseEntity.ok(menteeService.getMenteeWithoutMentorList());
+        }
+        else{
+            return ResponseEntity.ok(mentorService.getMenteeWithMentorList(mtrId));
+        }
+
+    }
 
     @GetMapping("/api/admin/mentor")
-    public ResponseEntity getMenteeList(){
+    public ResponseEntity getMentorList(){
         return ResponseEntity.ok(mentorService.getMentorList());
     }
 

@@ -3,6 +3,7 @@ package com.edu.opensky.user.mentor;
 import com.edu.opensky.messenger.chatRoomJoin.ChatRoomJoinRepository;
 import com.edu.opensky.messenger.chatRoomJoin.ChatRoomJoinService;
 import com.edu.opensky.user.UserRepository;
+import com.edu.opensky.user.admin.dto.AdminMenteeRequestDto;
 import com.edu.opensky.user.mentee.Mentee;
 import com.edu.opensky.user.mentee.MenteeRepository;
 import com.edu.opensky.user.mentor.dto.MenteeListDto;
@@ -64,5 +65,17 @@ public class MentorService {
                     .build();
         }).collect(Collectors.toList());
         return mentorListDtoList;
+    }
+
+    public List<AdminMenteeRequestDto> getMenteeWithMentorList(String mtrId) {
+        List<AdminMenteeRequestDto> adminMenteeRequestDtos =
+                menteeRepository.findByMtrId(mtrId).stream().map(m->
+                        AdminMenteeRequestDto.builder()
+                                .mteId(m.getMteId())
+                                .phone(userRepository.findByEmail(m.getMteId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저")).getPhone())
+                                .name(m.getName())
+                                .school(m.getSchool())
+                                .build()).collect(Collectors.toList());
+        return adminMenteeRequestDtos;
     }
 }

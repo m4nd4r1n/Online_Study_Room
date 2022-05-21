@@ -18,8 +18,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -66,11 +64,9 @@ public class UserService {
     }
 
     @Transactional
-    public void logout(ServletRequest request){
-        String token =jwtTokenProvider.getToken((HttpServletRequest) request);
-        String id = jwtTokenProvider.getUsername(token);
+    public void logout(User user){
 
-        menteeRepository.findByMteId(id).ifPresent(m ->m.setState("오프라인"));
+        menteeRepository.findByMteId(user.getEmail()).ifPresent(m ->m.setState("오프라인"));
 
     }
 
@@ -224,4 +220,9 @@ public class UserService {
 
     }
 
+    public boolean signout(User user) {
+        if(user.getRole().equals("멘티")){
+
+        }
+    }
 }
