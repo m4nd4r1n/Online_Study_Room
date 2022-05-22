@@ -9,7 +9,7 @@ import InputTime from '../../components/timer/InputTime';
 import Alarm from '../../components/timer/Alarm';
 import { isSupported } from '../../lib/utils';
 
-const TimerContainer = () => {
+const TimerContainer = ({ isStudy = false }) => {
   const [inputTime, setInputTime] = useState(true);
   const [isTimer, setIsTimer] = useState(true);
 
@@ -35,7 +35,7 @@ const TimerContainer = () => {
     }
   }, []);
 
-  return (
+  return !isStudy ? (
     <ContentsBlock
       style={{ display: 'flex', height: '80vh', flexDirection: 'column' }}
     >
@@ -53,6 +53,22 @@ const TimerContainer = () => {
         <Alarm onClickTimer={onClickTimer} time={time} />
       )}
     </ContentsBlock>
+  ) : (
+    <div className="flex flex-col items-center justify-center py-16">
+      {inputTime ? (
+        <InputTime
+          changeTimer={changeTimer}
+          isTimer={isTimer}
+          onClickTimer={onClickTimer}
+          time={time}
+          setTime={setTime}
+        />
+      ) : isTimer ? (
+        <Timer onClickTimer={onClickTimer} inputTime={inputTime} time={time} />
+      ) : (
+        <Alarm onClickTimer={onClickTimer} time={time} />
+      )}
+    </div>
   );
 };
 

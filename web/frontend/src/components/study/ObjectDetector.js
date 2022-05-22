@@ -1,126 +1,34 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
-import { ContentsBlock } from '../common/Contents';
-import { StudyButton } from '../common/Button';
-import { createClient } from './../../lib/socket/client';
-import useInterval from '../timer/useInterval';
-import * as studyAPI from '../../lib/api/study';
-
-import * as cocoSsd from '@tensorflow-models/coco-ssd';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import '@tensorflow/tfjs';
+import * as cocossd from '@tensorflow-models/coco-ssd';
+import Webcam from 'react-webcam';
+import { ContentsBlock } from '../common/Contents';
+import TimerContainer from '../../containers/timer/TimerContainer';
+import { StudyButton } from '../common/Button';
+import { useNavigate } from 'react-router-dom';
+import useInterval from '../timer/useInterval';
+import { createClient } from '../../lib/socket/client';
 
 const ObjectDetector = ({ user }) => {
   const userId = false;
-  const [client, setClient] = useState(createClient()); // 소켓 클라이언트
+  const webcamRef = useRef(null);
+  const canvasRef = useRef(null);
   const peerConnectionRef = useRef(); // peer 연결
-
-  let captureFlag = true; // 캡쳐 제한 플래그
-  let rejectCount = 0; // 학습인증 실패 횟수
-
+  const navigate = useNavigate();
+  const [client, setClient] = useState(createClient()); // 소켓 클라이언트
   const [loading, setLoading] = useState(true); // 카메라, 모델 로딩
-  const [rejectedFrame, setRejectedFrame] = useState(null); // 인증 거부된 프레임
-  const [track, setTrack] = useState(); // 비디오 트랙
-  const videoRef = useRef();
-  const canvasRef = useRef();
-  const capture = useRef();
+  const [object, setObject] = useState({ 'cell phone': 0, person: 0 });
 
-  // 프레임 전송
-  const uploadFrame = () => {
-    studyAPI.uploadFrame(rejectedFrame);
+  const listener = (e) => {
+    e.preventDefault();
+    e.returnValue = '';
   };
 
-  // 실공시간 체크
-  const checkActualStudyTime = (predictions) => {
-    let studyFlag = false;
-    const person = predictions.filter(
-      (prediction) => prediction.class === 'person',
-    );
-    const items = predictions.filter(
-      (prediction) =>
-        prediction.class === 'laptop' || prediction.class === 'book',
-    );
-
-    // // 사람, 학습도구 미인식 시
-    // if (person && items.length > 0) {
-    //   items.forEach((item) => {
-    //     const x0 =
-    //       item.bbox[0] > person.bbox[0] ? item.bbox[0] : person.bbox[0];
-    //     const y0 =
-    //       item.bbox[1] > person.bbox[1] ? item.bbox[1] : person.bbox[1];
-    //     const x1 =
-    //       item.bbox[0] + item.bbox[2] < person.bbox[0] + person.bbox[2]
-    //         ? item.bbox[0] + item.bbox[2]
-    //         : person.bbox[0] + person.bbox[2];
-    //     const y1 =
-    //       item.bbox[1] + item.bbox[3] > person.bbox[1] + person.bbox[3]
-    //         ? item.bbox[1] + item.bbox[3]
-    //         : person.bbox[1] + person.bbox[3];
-
-    //     // 각 영역이 겹치지 않을 시
-    //     if (x0 > x1 || y0 > y1) return;
-
-    //     const personArea = person.bbox[1] * person.bbox[3];
-    //     const overlapppingArea = (x1 - x0) * (y1 - y0);
-
-    //     // 사람과 물건 영역이 30% 이상 곂치면 학습인정
-    //     if (overlapppingArea / personArea > 0.3) studyFlag = true;
-    //   });
-    // }
-
-    // 학습 인정 X, 최대 1분에 한번 캡쳐 (+ 후 프레임 전송)
-    //if (!studyFlag && captureFlag) {
-    if (person.length === 0 || items.length === 0) {
-      if (captureFlag === true) {
-        captureFlag = false;
-        captureFrame();
-      }
-      rejectCount = rejectCount + 1; // 거부횟수
-    }
-  };
-
-  // 프레임 캡쳐
-  const captureFrame = () => {
-    console.log('캡쳐');
-
-    // 몇몇 브라우저에서 이미지캡쳐 api 지원 X
-    const sUsrAg = navigator.userAgent;
-    if (sUsrAg.indexOf('Firefox') > -1) {
-      console.log('browser error');
-      return;
-    }
-
-    setTrack(videoRef.current.srcObject.getVideoTracks()[0]);
-
-    new ImageCapture(track).grabFrame().then((data) =>
-      new Promise((res) => {
-        // 이미지 크기 조정
-        capture.current.width = 300;
-        capture.current.height = 200;
-
-        // imagebitmap to blob
-        const ctx = capture.current.getContext('bitmaprenderer');
-        if (ctx) {
-          ctx.width = 300;
-          ctx.height = 200;
-          ctx.transferFromImageBitmap(data);
-        }
-        capture.current.toBlob(res);
-      }).then((blob) => {
-        setRejectedFrame(blob);
-      }),
-    );
-  };
-
-  // 프레임 객체 감지
-  const detectFrame = useCallback((video, model) => {
-    model.detect(video).then((predictions) => {
-      renderPredictions(predictions); // 객체 박스 렌더링 필요 x 시 삭제
-      //checkActualStudyTime(predictions);
-
-      // 다음 리페인트 전에 애니메이션 업데이트 콜백함수 실행
-      requestAnimationFrame(() => {
-        detectFrame(video, model);
-      });
-    });
+  useEffect(() => {
+    window.addEventListener('beforeunload', listener);
+    return () => {
+      window.removeEventListener('beforeunload', listener);
+    };
   }, []);
 
   const handleIce = useCallback(
@@ -157,92 +65,14 @@ const ObjectDetector = ({ user }) => {
 
     // IceCandidate 설정
     peerConnection.onicecandidate = handleIce;
-
-    videoRef.current.srcObject
+    webcamRef.current.video.srcObject
       .getVideoTracks()
       .forEach((track) =>
-        peerConnection.addTrack(track, videoRef.current.srcObject),
+        peerConnection.addTrack(track, webcamRef.current.video.srcObject),
       );
 
     peerConnectionRef.current = peerConnection;
   }, [handleIce]);
-
-  // 웹캠 및 텐서플로우 객체감지 수행 함수
-  const run = useCallback(() => {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      const webCamPromise = navigator.mediaDevices
-        .getUserMedia({
-          audio: false,
-          video: {
-            facingMode: 'user',
-          },
-        })
-        .then((stream) => {
-          window.stream = stream;
-          videoRef.current.srcObject = stream;
-          return new Promise((resolve, reject) => {
-            videoRef.current.onloadedmetadata = () => {
-              resolve();
-            };
-          });
-        });
-
-      const modelPromise = cocoSsd.load();
-
-      Promise.all([modelPromise, webCamPromise])
-        .then((values) => {
-          createPeer();
-          detectFrame(videoRef.current, values[0]);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-
-      // 로딩 해제
-      setLoading(false);
-    }
-  }, [createPeer, detectFrame]);
-
-  // 예측 객체 렌더링
-  const renderPredictions = (predictions) => {
-    const ctx = canvasRef.current.getContext('2d');
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-    // font options
-    const font = '16px sans-serif';
-    ctx.font = font;
-    ctx.textBaseline = 'top';
-    predictions.forEach((prediction) => {
-      const x = prediction.bbox[0];
-      const y = prediction.bbox[1];
-      const width = prediction.bbox[2];
-      const height = prediction.bbox[3];
-
-      // 박스 그리기
-      ctx.strockeStyle = '#00FFFF';
-      ctx.lineWidth = 4;
-      ctx.strokeRect(x, y, width, height);
-
-      // 백그라운드 라벨 그리기
-      ctx.fillStyle = '#00FFFF';
-      const textWidth = ctx.measureText(prediction.class).width;
-      const textHeight = parseInt(font, 10);
-      ctx.fillRect(x, y, textWidth + 4, textHeight + 4);
-    });
-
-    predictions.forEach((prediction) => {
-      const x = prediction.bbox[0];
-      const y = prediction.bbox[1];
-
-      // 텍스트가 맨 위에 오도록
-      ctx.fillStyle = '#000000';
-      ctx.fillText(prediction.class, x, y);
-    });
-  };
-
-  useEffect(() => {
-    run();
-  });
 
   const sendOffer = useCallback(async () => {
     // offer 생성 (초대장)
@@ -306,61 +136,103 @@ const ObjectDetector = ({ user }) => {
     };
   }, [client, userId, user, handleMessage]);
 
-  useInterval(() => {
-    console.log(rejectCount);
-    //captureFrame(); // 캡쳐 테스트
-    //uploadFrame(); // 업로드
-    captureFlag = true; // 캡쳐가능
-    //setRejectedFrame(); // 캡쳐화면 초기화
-  }, 60000); // 1분 = 1000(1초) * 60
+  // Main function
+  const runCoco = async () => {
+    const net = await cocossd.load({ base: 'mobilenet_v2' });
+    console.log('model loaded.');
+    //  Loop and detect object
+    setLoading(false);
+    setInterval(() => {
+      detect(net);
+    }, 1000);
+  };
+
+  const drawRect = (detections, ctx) => {
+    console.log(detections);
+    // Loop through each prediction
+    detections.forEach((prediction) => {
+      // Extract boxes and classes
+      const [x, y, width, height] = prediction['bbox'];
+      const text = prediction['class'];
+      if (text === 'cell phone' || text === 'person') {
+        object[text]++;
+      }
+
+      // Set styling
+      ctx.strokeStyle = '#009f9f';
+      ctx.font = '18px Arial';
+
+      // Draw rectangles and text
+      ctx.beginPath();
+      ctx.fillStyle = '#00ffff';
+      ctx.fillText(text, x, y + 15);
+      ctx.rect(x, y, width, height);
+      ctx.stroke();
+    });
+  };
+
+  const detect = async (net) => {
+    // Check data is available
+    if (
+      typeof webcamRef.current !== 'undefined' &&
+      webcamRef.current !== null &&
+      webcamRef.current.video.readyState === 4
+    ) {
+      // Get Video Properties
+      const video = webcamRef.current.video;
+      const videoWidth = webcamRef.current.video.videoWidth;
+      const videoHeight = webcamRef.current.video.videoHeight;
+
+      // Set video width
+      webcamRef.current.video.width = videoWidth;
+      webcamRef.current.video.height = videoHeight;
+
+      // Set canvas height and width
+      canvasRef.current.width = videoWidth;
+      canvasRef.current.height = videoHeight;
+
+      // Make Detections
+      const obj = await net.detect(video);
+
+      // Draw mesh
+      const ctx = canvasRef.current.getContext('2d');
+      drawRect(obj, ctx);
+    }
+  };
+
+  useEffect(() => {
+    runCoco();
+  }, []);
 
   useInterval(() => {
-    if (rejectCount > 7) {
-      // 10분간 학습 비인정 8번 이상 발생 시 학습 미인정
-      console.log('학습 인정 x');
+    // 학습 절반 동안 휴대전화가 인식되거나 사람이 인식되지 않은 경우
+    if (object['cell phone'] > 300 || object.person < 300) {
+      console.log('학습 미인정');
     } else {
-      // 학습 인정
       console.log('학습 인정');
     }
-    rejectCount = 0; // 인증 X 카운트 초기화
-  }, 600000); // 10분 = 1000(1초) * 60 * 10
+    setObject({ 'cell phone': 0, person: 0 });
+  }, 1000 * 60 * 10);
 
   return (
     <ContentsBlock>
-      <canvas ref={capture} style={{ display: 'hiddne' }} />
-      <div
-        style={{
-          width: 'auto',
-          height: '500px',
-        }}
-      >
-        {loading && <div>카메라를 불러오는 중입니다...</div>}{' '}
-        <video
-          className="size"
-          autoPlay
-          playsInline
-          muted
-          ref={videoRef}
-          width="568"
-          height="500"
-          style={{
-            display: 'inline',
-          }}
-        />
-        {/* 이 캔버스는 최종버전에서 삭제 */}
+      <div className="relative mt-16 flex flex-col items-center justify-center">
+        {loading && <div>카메라를 불러오는 중입니다...</div>}
+        <Webcam ref={webcamRef} muted className="ml-auto mr-auto" />
         <canvas
-          className="size"
           ref={canvasRef}
-          width="568"
-          height="500"
-          style={{
-            display: 'inline',
-            position: 'absolute',
-            left: '400px',
-          }}
+          className="absolute left-0 right-0 z-10 ml-auto mr-auto"
         />
       </div>
-      <StudyButton to="/" type="stop" />
+      <TimerContainer isStudy />
+      <StudyButton
+        onClick={() => {
+          if (window.confirm('학습을 종료하시겠습니까?')) {
+            navigate('/', { replace: true });
+          }
+        }}
+        type="stop"
+      />
     </ContentsBlock>
   );
 };
