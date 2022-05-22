@@ -1,9 +1,8 @@
 import React from 'react';
 import 'react-day-picker/lib/style.css';
-import palette from '../../lib/styles/palette';
-import styled from 'styled-components';
 import Modal from 'react-modal';
 import { ModalCalendar } from '../common/Calendar';
+import tw from 'tailwind-styled-components';
 
 const modalStyle = {
   overlay: {
@@ -29,21 +28,25 @@ const modalStyle = {
     outline: 'none',
     padding: '20px',
     textAlign: 'center',
-    backgroundColor: `${palette.Wheat}`,
+    backgroundColor: '#ECFEFF',
   },
 };
 
-const AttendanceWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
+const AttendanceWrapper = tw.div`
+  flex
+  flex-col
+  justify-center
+  text-center
+  text-[1.5rem]
+  font-bold
 `;
 
-const ModalTitle = styled.span`
-  margin-bottom: 1rem;
+tw.div`bg-cyan-50`;
+
+const ModalTitle = tw.span`
+  mb-8
+  border-b
+  border-gray-300
 `;
 
 const Attendance = ({ handleClick, isOpen, dates }) => {
