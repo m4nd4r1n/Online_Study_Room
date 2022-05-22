@@ -63,7 +63,7 @@ const PlannerContainer = () => {
 
   // 멘토 계정이면서 menteeList 없을 시 userInfo 요청
   useEffect(() => {
-    if (user?.type === 'mentor' && !info?.menteeList) {
+    if (user?.role === '멘토' && !info?.menteeList) {
       dispatch(getUserInfo());
     }
   }, [user, info, dispatch]);
@@ -219,7 +219,7 @@ const PlannerContainer = () => {
 
   return (
     <>
-      {user?.type === 'mentor' && (
+      {user?.role === '멘토' && (
         <SelectMentee
           menteeList={testMenteeList}
           menteeId={menteeId}

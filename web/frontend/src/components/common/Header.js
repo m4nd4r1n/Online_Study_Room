@@ -76,7 +76,7 @@ const Wrapper = tw(Wrap)`
   mx-auto
 `;
 
-const Header = ({ title, back, counter, isAdmin, Logout }) => {
+const Header = ({ title, back, counter, isAdmin, Logout, logo }) => {
   const navigate = useNavigate();
 
   return (
@@ -126,9 +126,11 @@ const Header = ({ title, back, counter, isAdmin, Logout }) => {
           <Title>{title}</Title>
 
           <ItemContainer className="right">
-            <StyledLink to="/">
-              <div className="text-xs sm:text-base">open SKY</div>
-            </StyledLink>
+            {logo && (
+              <StyledLink to="/">
+                <div className="text-xs sm:text-base">open SKY</div>
+              </StyledLink>
+            )}
           </ItemContainer>
         </Wrapper>
       </HeaderBlock>

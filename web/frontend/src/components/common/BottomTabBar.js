@@ -50,35 +50,35 @@ const BottomTabBar = ({ type }) => {
     <TwWrapper>
       <BottomNavigation value={'/' + value[1]} onChange={onChange} showLabels>
         <BottomNavigationAction label="홈" value="/" icon={<Home />} />
-        {type === 'mentee' && (
+        {type === '멘티' && (
           <BottomNavigationAction
             label="도전과제"
             value="/achievement"
             icon={<EmojiEvents />}
           />
         )}
-        {type === 'mentee' && (
+        {type === '멘티' && (
           <BottomNavigationAction
             label="랭킹"
             value="/ranking"
             icon={<Equalizer />}
           />
         )}
-        {type === 'mentee' && (
+        {type === '멘티' && (
           <BottomNavigationAction
             label="타이머"
             value="/timer"
             icon={<Timer />}
           />
         )}
-        {type !== 'parent' && (
+        {type !== '학부모' && (
           <BottomNavigationAction
             label="플래너"
             value="/planner"
             icon={<EventNote />}
           />
         )}
-        {type !== 'parent' && (
+        {type !== '학부모' && (
           <BottomNavigationAction
             label="메시지"
             value="/messenger"

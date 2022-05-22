@@ -4,7 +4,7 @@ import Layout from '../components/common/Layout';
 
 const StudyPage = () => {
   return (
-    <Layout title="학습 중..." counter back={false}>
+    <Layout title="학습 중..." counter back={false} logo={false}>
       <StudyVideoContainer />
     </Layout>
   );

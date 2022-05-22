@@ -26,7 +26,7 @@ const UserInfo = ({ info, type, setIsOpen }) => {
       <span className="w-2/12">{info?.name} 님</span>
       {
         // 멘티(학생)에게만 레벨, 경험치를 보여줌
-        type === 'mentee' && (
+        type === '멘티' && (
           <>
             <span className="w-2/12 sm:w-1/12">Lv. {info?.level}</span>
             <span className="w-1/12 pr-1 text-right">EXP</span>

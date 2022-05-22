@@ -18,10 +18,12 @@ import { getUserInfo } from '../../modules/userInfo';
 import Character from '../../components/main/Character';
 import Attendance from '../../components/main/Attendance';
 import { getAttendance } from '../../modules/attendanceInfo';
+import { useNavigate } from 'react-router-dom';
 
 const MainContainer = () => {
   const [isOpen, setIsOpen] = useState(true);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   let { info, loading, user, dates } = useSelector(
     ({ userInfo, loading, user, attendanceInfo }) => ({
       info: userInfo.info,
@@ -39,11 +41,11 @@ const MainContainer = () => {
   }, [dispatch, user]);
 
   useEffect(() => {
-    if (user?.type !== 'mentee') setIsOpen(false);
+    if (user?.role !== '멘티') setIsOpen(false);
   }, [user]);
 
   useEffect(() => {
-    if (user?.type === 'mentee') {
+    if (user?.role === '멘티') {
       try {
         if (localStorage.getItem('lastVisit')) {
           const lastVisit = new Date(localStorage.getItem('lastVisit'));
@@ -72,16 +74,23 @@ const MainContainer = () => {
     <>
       <Attendance handleClick={handleClick} isOpen={isOpen} dates={dates} />
       <ContentsBlock>
-        <UserInfo info={info} type={user.type} setIsOpen={setIsOpen} />
+        <UserInfo info={info} type={user?.role} setIsOpen={setIsOpen} />
         {user ? (
-          user.type === 'parent' ? (
+          user?.role === '학부모' ? (
             <ChildrenList />
-          ) : user.type === 'mentor' ? (
+          ) : user?.role === '멘토' ? (
             <MenteeList />
-          ) : user.type === 'mentee' ? (
+          ) : user?.role === '멘티' ? (
             <>
               <Character />
-              <StudyButton to="/study" />
+              <StudyButton
+                onClick={() => {
+                  window.alert(
+                    '학습하는 모습이 잘 나오도록 카메라를 배치시켜주세요.\n핸드폰 등 학습에 불필요한 물건이 인식되지 않도록 주의해주세요.',
+                  );
+                  navigate('/study', { replace: true });
+                }}
+              />
             </>
           ) : (
             <>사용자 정보를 불러오지 못했습니다.</>

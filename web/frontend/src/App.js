@@ -31,7 +31,7 @@ const PrivateRoute = () => {
 
 const MenteeRoute = () => {
   const { user } = useSelector(({ user }) => ({ user: user.user }));
-  if (user?.type !== 'mentee') {
+  if (user?.role !== '멘티') {
     return <Navigate to="/" replace />;
   }
   return <Outlet />;
@@ -39,7 +39,7 @@ const MenteeRoute = () => {
 
 const MentorRoute = () => {
   const { user } = useSelector(({ user }) => ({ user: user.user }));
-  if (user?.type !== 'mentor') {
+  if (user?.role !== '멘토') {
     return <Navigate to="/" replace />;
   }
   return <Outlet />;
@@ -47,7 +47,7 @@ const MentorRoute = () => {
 
 const MentorParentRoute = () => {
   const { user } = useSelector(({ user }) => ({ user: user.user }));
-  if (user?.type !== 'mentor' && user?.type !== 'parent') {
+  if (user?.role !== '멘토' && user?.role !== '학부모') {
     return <Navigate to="/" replace />;
   }
   return <Outlet />;
@@ -60,7 +60,7 @@ const App = () => {
       <Route element={<PrivateRoute />}>
         <Route
           element={
-            user?.type === 'admin' ? (
+            user?.role === '관리자' ? (
               <AdminPage />
             ) : (
               <>

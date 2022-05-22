@@ -6,7 +6,7 @@ const BottomTabBarContainer = () => {
   const { user } = useSelector(({ user }) => ({
     user: user.user,
   }));
-  return <BottomTabBar type={user?.type} />;
+  return <BottomTabBar type={user?.role} />;
 };
 
 export default BottomTabBarContainer;

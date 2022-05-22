@@ -8,7 +8,7 @@ import { logout } from './../../modules/user';
  * @title : 헤더 타이틀
  * @back  : 뒤로가기 버튼 여부
  */
-const HeaderContainer = ({ title, back, counter }) => {
+const HeaderContainer = ({ title, back, counter, logo }) => {
   const { user } = useSelector(({ user }) => ({ user: user.user }));
   const dispatch = useDispatch();
   const Logout = () => dispatch(logout());
@@ -17,8 +17,9 @@ const HeaderContainer = ({ title, back, counter }) => {
       title={title}
       back={back}
       counter={counter}
-      isAdmin={user?.type === 'admin'}
+      isAdmin={user?.role === '관리자'}
       Logout={Logout}
+      logo={logo}
     />
   );
 };

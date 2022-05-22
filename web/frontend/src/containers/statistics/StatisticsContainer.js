@@ -166,7 +166,7 @@ const StatisticsContainer = () => {
 
   // 멘토 계정이면서 menteeList 없을 시 userInfo 요청
   useEffect(() => {
-    if (user?.type === 'mentor' && !info?.menteeList) {
+    if (user?.role === '멘토' && !info?.menteeList) {
       dispatch(getUserInfo());
     }
   }, [user, info, dispatch]);
@@ -217,7 +217,7 @@ const StatisticsContainer = () => {
         flexDirection: 'column',
       }}
     >
-      {user?.type !== 'mentee' && (
+      {user?.role !== '멘티' && (
         <SelectMentee
           menteeList={testMenteeList}
           menteeId={menteeId}
