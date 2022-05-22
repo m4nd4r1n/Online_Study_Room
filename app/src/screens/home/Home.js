@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Text } from 'react-native';
 import { Button } from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ContentsBlock } from '../../components/common/Contents';
 import ChildrenList from '../../components/home/ChildrenList';
 import UserInfo from '../../components/home/UserInfo';
@@ -11,7 +10,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserInfo } from '../../modules/userInfo';
 import tw from 'twrnc';
-import { check } from './../../modules/user';
 
 const Home = ({ navigation: { navigate, replace } }) => {
   const dispatch = useDispatch();
@@ -36,9 +34,9 @@ const Home = ({ navigation: { navigate, replace } }) => {
       <UserInfo user={user} info={info} />
       {!info ? (
         <Text>사용자 정보를 불러오지 못했습니다.</Text>
-      ) : user?.type === 'parent' ? (
+      ) : user?.role === '학부모' ? (
         <ChildrenList />
-      ) : user?.type === 'mentee' ? (
+      ) : user?.role === '멘티' ? (
         <>
           <Character />
           <Button

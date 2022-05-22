@@ -19,29 +19,27 @@ const printExp = (ExpRatio) => {
   return ExpBar;
 };
 
-const UserInfo = ({ user }) => {
-  const testInfo = { type: 'mentee', name: '김겨울', level: '8', exp: 60 };
-
+const UserInfo = ({ user, info }) => {
   return (
     <InfoBar>
       <View style={tw`flex-0.2`}>
-        <Text>{testInfo.name}님</Text>
+        <Text>{info?.name}님</Text>
       </View>
       {
         // 멘티(학생)에게만 레벨, 경험치를 보여줌
-        user === '멘티' && (
+        user?.role === '멘티' && (
           <>
             <View style={tw`items-center flex-0.15`}>
-              <Text>Lv. {testInfo.level}</Text>
+              <Text>Lv. {info?.level}</Text>
             </View>
             <View style={tw`items-end flex-0.15`}>
               <Text>EXP</Text>
             </View>
             <View style={tw`flex-0.5 text-right`}>
-              <Text>{printExp(testInfo.exp / 120)}</Text>
+              <Text>{printExp(info?.exp / 120)}</Text>
             </View>
             <View style={tw`items-end flex-0.2`}>
-              <Text>{testInfo.exp}/120</Text>
+              <Text>{info?.exp}/120</Text>
             </View>
           </>
         )

@@ -24,7 +24,7 @@ const TabNavigation = () => {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: '#06B6D4',
-        tabBarStyle: { display: user?.type === 'parent' ? 'none' : 'flex' },
+        tabBarStyle: { display: user?.role === '학부모' ? 'none' : 'flex' },
       }}
       initialRouteName="HomeTab"
     >
@@ -39,7 +39,7 @@ const TabNavigation = () => {
           title: '홈',
         }}
       />
-      {user?.type === 'mentee' && (
+      {user?.role === '멘티' && (
         <>
           <Tab.Screen
             name="AchievementTab"
@@ -76,7 +76,7 @@ const TabNavigation = () => {
           />
         </>
       )}
-      {(user?.type === 'mentor' || user?.type === 'mentee') && (
+      {(user?.role === '멘토' || user?.role === '멘티') && (
         <>
           <Tab.Screen
             name="PlannerTab"
