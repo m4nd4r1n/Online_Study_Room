@@ -23,4 +23,4 @@ export const setMentorMentee = (mtrId, mteId) =>
   client.post('/api/admin', { mtrId, mteId }); // 멘토 멘티 설정
 
 export const deleteMentorMentee = (mtrId, mteId) =>
-  client.delete('/api/admin', { mtrId, mteId }); // 멘토 멘티 해제
+  client.put('/api/admin', { mtrId, mteId }); // 멘토 멘티 해제

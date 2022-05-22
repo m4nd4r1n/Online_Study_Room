@@ -47,7 +47,7 @@ public class AdminController {
         return ResponseEntity.badRequest().build();
     }
 
-    @DeleteMapping("/api/admin")
+    @PutMapping("/api/admin")
     public ResponseEntity deleteMentorMentee(
             @RequestBody @Valid SetMentorMenteeRequestDto setMentorMenteeRequestDto, Errors errors){
         if(errors.hasErrors()){

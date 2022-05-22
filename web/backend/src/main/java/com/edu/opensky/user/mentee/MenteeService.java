@@ -46,7 +46,7 @@ public class MenteeService {
                                     .mteId(mentee.getMteId())
                                     .phone(userRepository.findByEmail(mentee.getMteId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저")).getPhone())
                                     .school(mentee.getSchool())
-                                    .name(mentee.getSchool())
+                                    .name(mentee.getName())
                                     .build();
                                 }
                         ).collect(Collectors.toList());
