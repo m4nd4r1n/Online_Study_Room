@@ -1,7 +1,7 @@
 import React from 'react';
 import tw from 'tailwind-styled-components';
-import ProgressBar from 'react-bootstrap/ProgressBar';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import { withStyles } from '@material-ui/core/styles';
 
 const InfoBar = tw.div`
   flex
@@ -14,11 +14,19 @@ const InfoBar = tw.div`
   border-gray-500
 `;
 
-const ExpBar = tw(ProgressBar)`
-  text-xs
-  sm:text-sm
-  rounded
-`;
+const BorderLinearProgress = withStyles(() => ({
+  root: {
+    height: '1rem',
+    borderRadius: 5,
+  },
+  colorPrimary: {
+    backgroundColor: '#E5E7EB',
+  },
+  bar: {
+    borderRadius: 5,
+    backgroundColor: '#1a90ff',
+  },
+}))(LinearProgress);
 
 const UserInfo = ({ info, type, setIsOpen }) => {
   return (
@@ -30,14 +38,10 @@ const UserInfo = ({ info, type, setIsOpen }) => {
           <>
             <span className="w-2/12 sm:w-1/12">Lv. {info?.level}</span>
             <span className="w-1/12 pr-1 text-right">EXP</span>
-            <div className="mr-2 w-6/12 rounded border border-gray-500">
-              <ExpBar
-                isChild
-                now={info?.exp}
-                label={`${info?.exp}/120`}
-                striped
-                animated
-                max={120}
+            <div className="mr-2 w-6/12 rounded bg-gray-200">
+              <BorderLinearProgress
+                variant="determinate"
+                value={(info?.exp / 120) * 100}
               />
             </div>
             <button
