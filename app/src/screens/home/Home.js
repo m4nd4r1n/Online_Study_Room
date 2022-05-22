@@ -21,7 +21,7 @@ const Home = ({ navigation: { navigate, replace } }) => {
   useEffect(() => {
     if (user) dispatch(getUserInfo());
     else replace('Login');
-  }, [dispatch, user, info]);
+  }, [user, dispatch, getUserInfo, replace]);
 
   return (
     <ContentsBlock center={false}>

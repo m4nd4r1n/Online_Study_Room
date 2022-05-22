@@ -17,7 +17,7 @@ import AddPlan from './AddPlan';
 import { useDispatch, useSelector } from 'react-redux';
 import { readPlanner, unloadPlanner } from '../../modules/planner';
 import { getUserInfo } from '../../modules/userInfo';
-import { changeField, initializePlan, addPlan } from '../../modules/plan';
+import { changeField } from '../../modules/plan';
 import { removePlan } from '../../libs/api/planner';
 import { Picker } from '@react-native-picker/picker';
 
@@ -126,25 +126,15 @@ const Planner = () => {
       info: userInfo.info,
     }),
   );
-  // const user = { type: 'mentor' };
-  // const info = {
-  //   menteeList: [
-  //     { name: '1', id: '1' },
-  //     { name: '2', id: '2', school: 'school' },
-  //   ],
-  // };
 
   // 멘토면 멘티ID, 멘티면 본인ID
-  const [id, setId] = useState(
-    info?.menteeList ? info?.menteeList[0].id : user?.userId,
-  );
+  const [id, setId] = useState();
 
-  // 멘토 계정이면서 menteeList 없을 시 userInfo 요청
   useEffect(() => {
-    if (user?.type === 'mentor' && !info?.menteeList) {
-      dispatch(getUserInfo());
-    }
-  }, [user, info, dispatch]);
+    setId(
+      info?.menteeList.length !== 0 ? info?.menteeList[0].id : user?.userId,
+    );
+  }, [info, user, setId]);
 
   // 날짜 변경 시 새 플래너 요청, 플랜 날짜 변경
   useEffect(() => {
@@ -250,7 +240,7 @@ const Planner = () => {
   return (
     <Provider>
       <ContentsBlock>
-        {user?.type === 'mentor' && info?.menteeList && (
+        {user?.role === '멘토' && info?.menteeList.length !== 0 ? (
           <View
             style={tw`w-full h-10 flex-row border border-cyan-600 rounded mt-3 items-center bg-white`}
           >
@@ -275,42 +265,63 @@ const Planner = () => {
               ))}
             </Picker>
           </View>
+        ) : (
+          <View style={tw`flex-1 items-center justify-center`}>
+            <Text>담당 학생이 존재하지 않습니다.</Text>
+            <Button
+              icon="restart"
+              mode="contained"
+              color="#06B6D4"
+              style={tw`mt-2`}
+              labelStyle={tw`text-white`}
+              onPress={() => {
+                dispatch(getUserInfo());
+              }}
+            >
+              새로고침
+            </Button>
+          </View>
         )}
-        <View style={tw`flex-row flex-1`}>
-          <View style={tw`flex-1 items-center`}>
-            <Text style={tw`mb-2.5 mt-2`}>PLAN</Text>
-            <PlanList
-              plans={plans}
-              setShowAddPlan={setShowAddPlan}
-              deletePlan={deletePlan}
-              plannerOwner={id && id === user?.userId}
-            />
-          </View>
-          <View style={tw`flex-1.5 ml-4 items-center`}>
-            {Platform.OS === 'android' && (
-              <Button onPress={showDatepicker} color="#06B6D4">
-                {date?.getFullYear()}/{date?.getMonth() + 1}/{date?.getDate()}
-              </Button>
-            )}
-            {(showCalendar || Platform.OS === 'ios') && (
-              <DateTimePicker
-                value={date}
-                mode="date"
-                is24Hour={true}
-                onChange={onChange}
-                style={tw`pl-28`}
-                locale="ko-KR"
+        {info?.menteeList.length !== 0 && (
+          <View style={tw`flex-row flex-1`}>
+            <View style={tw`flex-1 items-center`}>
+              <Text style={tw`mb-2.5 mt-2`}>PLAN</Text>
+              <PlanList
+                plans={plans}
+                setShowAddPlan={setShowAddPlan}
+                deletePlan={deletePlan}
+                plannerOwner={id && id === user?.userId}
               />
-            )}
-            <ScrollView style={tw`w-full`} showsVerticalScrollIndicator={false}>
-              <View style={tw`border border-slate-300 w-full`}>
-                {plannerHours.map((hour, i) => (
-                  <Table key={i} hour={hour} plans={plans} />
-                ))}
-              </View>
-            </ScrollView>
+            </View>
+            <View style={tw`flex-1.5 ml-4 items-center`}>
+              {Platform.OS === 'android' && (
+                <Button onPress={showDatepicker} color="#06B6D4">
+                  {date?.getFullYear()}/{date?.getMonth() + 1}/{date?.getDate()}
+                </Button>
+              )}
+              {(showCalendar || Platform.OS === 'ios') && (
+                <DateTimePicker
+                  value={date}
+                  mode="date"
+                  is24Hour={true}
+                  onChange={onChange}
+                  style={tw`pl-28`}
+                  locale="ko-KR"
+                />
+              )}
+              <ScrollView
+                style={tw`w-full`}
+                showsVerticalScrollIndicator={false}
+              >
+                <View style={tw`border border-slate-300 w-full`}>
+                  {plannerHours.map((hour, i) => (
+                    <Table key={i} hour={hour} plans={plans} />
+                  ))}
+                </View>
+              </ScrollView>
+            </View>
           </View>
-        </View>
+        )}
       </ContentsBlock>
       <AddPlan
         plans={plans}
