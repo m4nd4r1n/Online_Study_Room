@@ -47,7 +47,7 @@ export const StyledBox = tw.div`
   focus:border-gray-700
   focus:text-teal-700
   ${(p) => p.$border && 'border border-gray-400'}
-  ${(p) => p.$borderb && 'rounded-none border-b'}
+  ${(p) => p.$borderb && 'rounded-none border-b border-gray-400'}
   ${(p) => p.$messenger && 'rounded-none border-none hover:bg-gray-100'}
   ${(p) =>
     p.$message
@@ -56,6 +56,7 @@ export const StyledBox = tw.div`
   ${(p) => p.$right && 'flex-col items-end'}
   ${(p) => p.$isClicked && 'bg-gray-200 hover:bg-gray-200'}
   ${(p) => p.$agreement && '-mt-[1px] text-xs'}
+  ${(p) => p.$pointer && 'cursor-pointer'}
 `;
 
 /**

@@ -13,6 +13,7 @@ const Mentee = ({ mentee }) => {
       <div className="flex h-3/5 w-full items-center justify-around border-r px-1">
         {/* 멘티 관리 */}
         <MdManageAccounts
+          className="cursor-pointer"
           onClick={() => {
             navigate(`/management/${id}`);
           }}
@@ -20,6 +21,7 @@ const Mentee = ({ mentee }) => {
 
         {/* 플래너 */}
         <MdEventNote
+          className="cursor-pointer"
           onClick={() => {
             navigate(`/planner/${id}`);
           }}
@@ -27,6 +29,7 @@ const Mentee = ({ mentee }) => {
 
         {/* 메신저 */}
         <MdMessage
+          className="cursor-pointer"
           onClick={() => {
             navigate(`/messenger/${messengerId}`);
           }}
