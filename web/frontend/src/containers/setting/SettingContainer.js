@@ -3,6 +3,7 @@ import SettingList from '../../components/setting/SettingList';
 import { useDispatch } from 'react-redux';
 import { signout } from '../../lib/api/auth';
 import { logout } from './../../modules/user';
+import { initializeForm } from './../../modules/auth';
 
 const RankingContainer = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const RankingContainer = () => {
       try {
         await signout();
         window.alert('회원탈퇴가 완료되었습니다.');
+        dispatch(initializeForm());
         dispatch(logout());
       } catch (e) {
         window.alert('회원탈퇴에 실패했습니다.\r다시 시도해주세요.');
@@ -35,7 +37,10 @@ const RankingContainer = () => {
     {
       title: '로그아웃',
       onClick: () => {
-        if (window.confirm('로그아웃을 진행합니다.')) dispatch(logout());
+        if (window.confirm('로그아웃을 진행합니다.')) {
+          dispatch(initializeForm());
+          dispatch(logout());
+        }
       },
     },
     {
