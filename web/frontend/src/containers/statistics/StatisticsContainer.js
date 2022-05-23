@@ -208,29 +208,33 @@ const StatisticsContainer = () => {
           handleChange={handleChange}
         />
       )}
-      <ItemBlock
-        style={{
-          display: 'flex',
-          width: '100%',
-        }}
-      >
-        <StyledDatePicker
-          dateFormat="yyyy.MM.dd"
-          locale="ko"
-          selected={date} //new Date(today.setDate(today.getDate() + 1))
-          onChange={handleDate}
-          placeholderText=" 날짜 선택"
-          fixedHeight
-          withPortal
-        />
-      </ItemBlock>
-      <div className="flex w-full flex-col sm:flex-row">
-        <StudyTimeTable studyTime={testTimeTable} />
-        <StudyTimeGraph
-          weekStudyTime={testWeekStudyTime}
-          dateStudyTime={testDateStudyTime}
-        />
-      </div>
+      {((user?.role !== '멘티' && menteeId) || user?.role === '멘티') && (
+        <>
+          <ItemBlock
+            style={{
+              display: 'flex',
+              width: '100%',
+            }}
+          >
+            <StyledDatePicker
+              dateFormat="yyyy.MM.dd"
+              locale="ko"
+              selected={date} //new Date(today.setDate(today.getDate() + 1))
+              onChange={handleDate}
+              placeholderText=" 날짜 선택"
+              fixedHeight
+              withPortal
+            />
+          </ItemBlock>
+          <div className="flex w-full flex-col sm:flex-row">
+            <StudyTimeTable studyTime={testTimeTable} />
+            <StudyTimeGraph
+              weekStudyTime={testWeekStudyTime}
+              dateStudyTime={testDateStudyTime}
+            />
+          </div>
+        </>
+      )}
     </ContentsBlock>
   );
 };

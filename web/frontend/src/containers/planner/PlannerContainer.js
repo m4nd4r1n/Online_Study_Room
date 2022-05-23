@@ -11,10 +11,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { readPlanner, unloadPlanner } from '../../modules/planner';
-import { changeField, initializePlan, addPlan } from '../../modules/plan';
+import { changeField, initializePlan } from '../../modules/plan';
 import { ContentsBlock } from '../../components/common/Contents';
 import AddPlan from '../../components/planner/AddPlan';
-import { removePlan } from '../../lib/api/planner';
+import { removePlan, addPlan } from '../../lib/api/planner';
 import Planner from '../../components/planner/Planner';
 import { formatDate } from 'react-day-picker/moment';
 import SelectMentee from '../../components/planner/SelectMentee';
@@ -57,7 +57,7 @@ const PlannerContainer = () => {
         year: formattedDate.getFullYear(),
         month: formattedDate.getMonth() + 1,
         day: formattedDate.getDate(),
-        userId: menteeId !== '' ? menteeId : user && user.userId,
+        userId: menteeId ?? user?.userId,
       }),
     );
     dispatch(
@@ -127,6 +127,14 @@ const PlannerContainer = () => {
     );
   };
 
+  const asyncAdd = async (plan) => {
+    try {
+      await addPlan(plan);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   // 플랜 등록 이벤트 핸들러
   const onSubmit = (e) => {
     e.preventDefault();
@@ -156,14 +164,24 @@ const PlannerContainer = () => {
         return;
       }
     }
-
-    dispatch(addPlan(plan));
+    const formattedDate = new Date(crossBrowserDate);
+    asyncAdd(plan).then(() => {
+      dispatch(
+        readPlanner({
+          year: formattedDate.getFullYear(),
+          month: formattedDate.getMonth() + 1,
+          day: formattedDate.getDate(),
+          userId: menteeId ?? user?.userId,
+        }),
+      );
+      setIsAddPlan(false);
+    });
   };
 
   // 삭제요청 전송
-  const asyncRemove = async ({ subject, year, month, day }) => {
+  const asyncRemove = async ({ subject, year, month, day, userId }) => {
     try {
-      await removePlan({ subject, year, month, day });
+      await removePlan({ subject, year, month, day, userId });
     } catch (e) {
       console.log(e);
     }
@@ -180,6 +198,7 @@ const PlannerContainer = () => {
         year: formattedDate.getFullYear(),
         month: formattedDate.getMonth() + 1,
         day: formattedDate.getDate(),
+        userId: menteeId ?? user?.userId,
       }).then(() => {
         // 플래너 다시 로드
         dispatch(
@@ -187,7 +206,7 @@ const PlannerContainer = () => {
             year: formattedDate.getFullYear(),
             month: formattedDate.getMonth() + 1,
             day: formattedDate.getDate(),
-            userId,
+            userId: menteeId ?? user?.userId,
           }),
         );
       });
@@ -197,6 +216,15 @@ const PlannerContainer = () => {
   const handleChange = (e) => {
     setMenteeId(e.target.value);
   };
+
+  useEffect(() => {
+    dispatch(
+      changeField({
+        key: 'userId',
+        value: menteeId,
+      }),
+    );
+  }, [dispatch, menteeId]);
 
   return (
     <>
@@ -219,14 +247,16 @@ const PlannerContainer = () => {
           />
         </ContentsBlock>
       ) : (
-        <Planner
-          plans={plans}
-          date={date}
-          handleDate={handleDate}
-          onRemove={onRemove}
-          setIsAddPlan={setIsAddPlan}
-          plannerOwner={true} //user && userId === user.userId}
-        />
+        ((user?.role === '멘토' && menteeId) || user?.role === '멘티') && (
+          <Planner
+            plans={plans}
+            date={date}
+            handleDate={handleDate}
+            onRemove={onRemove}
+            setIsAddPlan={setIsAddPlan}
+            plannerOwner={true} //user && userId === user.userId}
+          />
+        )
       )}
     </>
   );
