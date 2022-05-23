@@ -64,9 +64,18 @@ public class UserService {
     }
 
     @Transactional
-    public void logout(User user){
+    public boolean logout(User user){
 
-        menteeRepository.findByMteId(user.getEmail()).ifPresent(m ->m.setState("오프라인"));
+        Optional<Mentee> mentee = menteeRepository.findByMteId(user.getEmail());
+        if (mentee.isPresent()){
+
+            mentee.get().setState("오프라인");
+            menteeRepository.save(mentee.get());
+            return true;
+        }
+        else{
+            return false;
+        }
 
     }
 

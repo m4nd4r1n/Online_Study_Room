@@ -67,13 +67,18 @@ public class UserApiController {
 
     // 로그아웃
     @PostMapping("/auth/logout")
-    public void logout(@CookieValue(value="Authorization") String token, HttpServletResponse response){
+    public ResponseEntity logout(@CookieValue(value="Authorization") String token, HttpServletResponse response){
         User user = userService.getUserByToken(token);
-        userService.logout(user);
+
         Cookie authCookie = new Cookie("Authorization",null);
         authCookie.setMaxAge(0);
         authCookie.setPath("/");
         response.addCookie(authCookie);
+        if(userService.logout(user)){
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.badRequest().build();
 
     }
 
