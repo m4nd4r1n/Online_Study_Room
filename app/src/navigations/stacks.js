@@ -3,7 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../screens/home/Home';
 import Achievement from '../screens/achievement/Achievement';
 import Header from '../components/common/Header';
-import Message from '../screens/Message';
+import Messenger from '../screens/messenger/Messenger';
+import Message from '../screens/messenger/Message';
 import Planner from '../screens/planner/Planner';
 import Ranking from '../screens/Ranking';
 import Setting from '../screens/Setting';
@@ -42,6 +43,18 @@ export const AchievementStackNavigation = () => {
         name="Achievement"
         component={Achievement}
         options={{ title: '도전과제' }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+export const MessengerStackNavigation = () => {
+  return (
+    <Stack.Navigator screenOptions={{ header: Header }}>
+      <Stack.Screen
+        name="Messenger"
+        component={Messenger}
+        options={{ title: '메신저' }}
       />
     </Stack.Navigator>
   );

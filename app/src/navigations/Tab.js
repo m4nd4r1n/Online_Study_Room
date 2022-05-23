@@ -6,6 +6,7 @@ import {
   RankingStackNavigation,
   TimerStackNavigation,
   PlannerStackNavigation,
+  MessengerStackNavigation,
   MessageStackNavigation,
   SettingStackNavigation,
 } from './stacks';
@@ -91,18 +92,29 @@ const TabNavigation = () => {
             }}
           />
           <Tab.Screen
-            name="MessageTab"
-            component={MessageStackNavigation}
+            name="MessengerTab"
+            component={MessengerStackNavigation}
             options={{
               tabBarIcon: (props) => (
                 <MaterialCommunityIcons name="message-text" {...props} />
               ),
               tabBarLabel: '메시지',
-              title: '메시지',
+              title: '메신저',
             }}
           />
         </>
       )}
+      <Tab.Screen
+        name="MessageTab"
+        component={MessageStackNavigation}
+        options={{
+          tabBarIcon: (props) => (
+            <MaterialCommunityIcons name="message" {...props} />
+          ),
+          tabBarItemStyle: { display: 'none' },
+          tabBarStyle: { display: 'none' },
+        }}
+      />
       <Tab.Screen
         name="SettingTab"
         component={SettingStackNavigation}
