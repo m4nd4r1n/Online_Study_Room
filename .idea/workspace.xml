@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7e0ae73-e136-438e-8cf7-b7e0a9d457e9" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/statics/StudyTimeRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/parent/Parent.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/parent/Parent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/parent/dto/ParentSaveRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/user/parent/dto/ParentSaveRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/statics/StaticsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/statics/StaticsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/statics/StaticsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/statics/StaticsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/statics/StaticsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/statics/StaticsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/web/frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/frontend/src/lib/api/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/frontend/src/lib/api/client.js" afterDir="false" />
@@ -85,8 +85,8 @@
         <option value="FxmlFile" />
         <option value="HTML File" />
         <option value="JUnit5 Test Class" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -471,7 +471,7 @@
       <workItem from="1653206363487" duration="27000" />
       <workItem from="1653211295349" duration="647000" />
       <workItem from="1653230386578" duration="2865000" />
-      <workItem from="1653290525497" duration="4158000" />
+      <workItem from="1653290525497" duration="13666000" />
     </task>
     <servers />
   </component>

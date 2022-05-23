@@ -28,7 +28,7 @@ public interface StudyTimeRepository extends JpaRepository<StudyTime, Long> {
     @Transactional(readOnly = true)
     @Query(value = "select m.school as school,u.name as name, sec_to_time(sum(time_to_sec(s.endTime)-time_to_sec(s.startTime))) as time " +
             "from StudyTime s join User u on s.mteId = u.email join Mentee m on m.mteId = s.mteId " +
-            "where datediff(date(s.startTime), :date) < 7 and not isnull(s.endtime) " +
+            "where datediff(:date, date(s.startTime)) < 7 and datediff(:date, date(s.startTime)) >= 0 and not isnull(s.endtime) " +
             "group by s.mteId, m.school, u.name " +
             "order by time desc ",nativeQuery = true)
     Page<timeRankingListInterface> findByRankingOfTimeForWeek(LocalDate date,Pageable pageable);

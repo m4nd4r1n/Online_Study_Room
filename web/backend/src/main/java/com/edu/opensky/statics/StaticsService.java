@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -25,6 +27,37 @@ public class StaticsService {
         return staticsRepository.findByWeekStudyTime(ptrId,dateTime);
     }
 
+    public List<Integer> getWeekStatics(String userId, String year, String month, String day){
+        if(month.length() == 1){
+            month = '0'+month;
+        }
+        if (day.length() == 1){
+            day = '0' + day;
+        }
+        LocalDate localDate = getMondayOfWeek(LocalDate.of(
+                Integer.parseInt(year),
+                Integer.parseInt(month),
+                Integer.parseInt(day)));
+
+        List<Integer> result = new ArrayList<>();
+        for(int i = 0; i < 7; i++){
+            localDate = localDate.plusDays(i);
+
+            Integer studyTime = staticsRepository.findSecondsByWeekStudyTime(userId, localDate);
+            Integer planTime = staticsRepository.findSecondsByWeekPlanTime(userId, localDate);
+            if(planTime.equals(0)) {
+                result.add(0);
+            }else {
+                result.add(studyTime / planTime);
+            }
+
+        }
+        return result;
+
+    }
+    public LocalDate getMondayOfWeek(LocalDate localDate){
+        return localDate.minusDays(localDate.getDayOfWeek().getValue()-1);
+    }
 
 
 
