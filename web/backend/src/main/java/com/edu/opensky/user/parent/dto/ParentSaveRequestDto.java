@@ -1,5 +1,6 @@
 package com.edu.opensky.user.parent.dto;
 
+import com.edu.opensky.user.mentee.Mentee;
 import com.edu.opensky.user.parent.Parent;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +13,12 @@ public class ParentSaveRequestDto {
     private String stdName;
     private String stdPhone;
     private String name;
+
+    public void setMentee(Mentee mentee) {
+        this.mentee = mentee;
+    }
+
+    private Mentee mentee;
 
     @Builder
     public ParentSaveRequestDto(String email,String name, String stdName, String stdPhone){
@@ -27,6 +34,7 @@ public class ParentSaveRequestDto {
                 .stdName(stdName)
                 .name(name)
                 .stdPhone(stdPhone)
+                .mentee(mentee)
                 .build();
     }
 }

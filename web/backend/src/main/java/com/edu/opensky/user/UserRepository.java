@@ -17,4 +17,6 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Transactional(readOnly = true)
     Optional<User> findByPassword(String password);
+
+    Optional<User> findByPhoneAndName(String phone, String name);
 }

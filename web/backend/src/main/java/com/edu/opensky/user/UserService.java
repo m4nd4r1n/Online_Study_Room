@@ -125,8 +125,22 @@ public class UserService {
                 userSaveRequestDto.setRole("멘토");
                 break;
             case "학부모":
-                ParentSaveRequestDto parentSaveRequestDto = new ParentSaveRequestDto(
-                        requestDto.getEmail(), userSaveRequestDto.getName(), requestDto.getStdName(), requestDto.getPhoneFirst()+requestDto.getPhoneMiddle()+requestDto.getPhoneLast());
+                ParentSaveRequestDto parentSaveRequestDto = ParentSaveRequestDto.builder()
+                        .name(userSaveRequestDto.getName())
+                        .email(requestDto.getEmail())
+                        .stdPhone(requestDto.getPhoneFirst()+requestDto.getPhoneMiddle()+requestDto.getPhoneLast())
+                        .stdName(requestDto.getStdName())
+                        .build();
+
+                User student = userRepository.findByPhoneAndName(parentSaveRequestDto.getStdPhone(),parentSaveRequestDto.getStdName())
+                        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 학생 정보"));
+                Mentee mentee = menteeRepository.findByMteId(student.getEmail())
+                        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 학생 정보"));
+
+                parentSaveRequestDto.setMentee(mentee);
+                mentee.updateParent(parentSaveRequestDto.getEmail());
+                menteeRepository.save(mentee);
+
                 parentRepository.save(parentSaveRequestDto.toEntity());
                 userSaveRequestDto.setRole("학부모");
 
@@ -245,6 +259,10 @@ public class UserService {
         else if(user.getRole().equals("학부모")){
             parentRepository.findByPrtId(user.getEmail())
                     .ifPresent(p->parentRepository.delete(p));
+            menteeRepository.findByPrtId(user.getEmail()).forEach(mentee->{
+                mentee.updateParent(null);
+                menteeRepository.save(mentee);
+            });
             userRepository.findByEmail(user.getEmail())
                     .ifPresent(u->userRepository.delete(u));
         }

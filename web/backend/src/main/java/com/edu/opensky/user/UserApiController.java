@@ -19,7 +19,6 @@ public class UserApiController {
 
     // 회원가입
     @PostMapping("/auth/register")
-
     public void register(@RequestBody RegisterRequestDto requestDto, HttpServletResponse response){
         Cookie authCookie = new Cookie("Authorization", userService.register(requestDto));
         authCookie.setMaxAge(1000 * 60 * 60 * 24 * 7); // 유효 기간 7일
