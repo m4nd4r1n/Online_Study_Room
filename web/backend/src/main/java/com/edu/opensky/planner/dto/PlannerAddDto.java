@@ -15,13 +15,16 @@ public class PlannerAddDto {
     private String startTime;
     private String endTime;
 
+    private String userId;
+
     @Builder
     public PlannerAddDto(
-            String subject, String date, String startTime, String endTime)
+            String subject, String date, String startTime, String endTime, String userId)
     {
         this.subject = subject;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.userId = userId;
     }
 }

@@ -29,6 +29,9 @@ public class PlannerController {
         if (user.getRole().equals("멘티")) {
             plannerService.AddPlan(user.getEmail(), plannerAddDto);
             return new ResponseEntity<>(HttpStatus.OK);
+        } else if (user.getRole().equals("멘토")) {
+            plannerService.AddPlan(plannerAddDto.getUserId(), plannerAddDto);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
@@ -39,11 +42,17 @@ public class PlannerController {
     public List<Planner> readPlans(@RequestParam("year")@NonNull String year,
                                    @RequestParam("month")@NonNull String month,
                                    @RequestParam("day")@NonNull String day,
+                                   @RequestParam("userId")@NonNull String userId,
                                    @CookieValue(value="Authorization")String token)
     {
 
         User user= userService.getUserByToken(token);
-        return plannerService.getPlans(year, month, day, user.getEmail());
+        if(user.getRole().equals("멘티")) {
+            return plannerService.getPlans(year, month, day, user.getEmail());
+        } else if (user.getRole().equals("멘토")) {
+            return plannerService.getPlans(year, month, day, userId);
+        }
+        return null;
 
     }
     @DeleteMapping("/planner{queryString}")
@@ -51,14 +60,24 @@ public class PlannerController {
                                      @RequestParam("year")@NonNull String year,
                                      @RequestParam("month") String month,
                                      @RequestParam("day") String day,
+                                     @RequestParam("userId")@NonNull String userId,
                                      @CookieValue(value="Authorization") String token) {
 
         User user = userService.getUserByToken(token);
-        if(plannerService.removePlan(subject,year,month,day,user.getEmail())){
-            return ResponseEntity.ok().build();
+        if(user.getRole().equals("멘티")) {
+            if(plannerService.removePlan(subject,year,month,day,user.getEmail())){
+                return ResponseEntity.ok().build();
+            }
+            else
+                return ResponseEntity.badRequest().build();
+        } else if (user.getRole().equals("멘토")) {
+            if(plannerService.removePlan(subject,year,month,day,userId)){
+                return ResponseEntity.ok().build();
+            }
+            else
+                return ResponseEntity.badRequest().build();
         }
-        else
-            return ResponseEntity.badRequest().build();
 
+        return ResponseEntity.badRequest().build();
     }
 }

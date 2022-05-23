@@ -195,19 +195,18 @@ public class UserService {
     public String find(FindRequestDto findRequestDto) {
         String email = findRequestDto.getEmail();
         String impUID = findRequestDto.getImpUID();
-
         List<String> userInfo = importService.getCertification(impUID);
 
         // 이메일 찾기
-        if (!userInfo.isEmpty() && email == null){
+        if (!userInfo.isEmpty() && email.isEmpty()){
             User user = userRepository.findByPhone(userInfo.get(1)).orElseThrow(() -> new
                     IllegalArgumentException("회원 가입 기록이 없습니다."));
             return user.getEmail();
         }
         // 비밀번호 찾기
-        else if (!userInfo.isEmpty() && email != null){
-            User user = userRepository.findByEmail(email).orElseThrow(() -> new
-                    IllegalArgumentException("해당 아이디가 없습니다. id=" + email));
+        else if (!userInfo.isEmpty() && !email.isEmpty()){
+            User user = userRepository.findByEmailAndPhone(email, userInfo.get(1)).orElseThrow(()->new
+                    IllegalArgumentException("일치하는 정보가 없습니다."));
             return user.getPassword();
         }
 

@@ -18,3 +18,5 @@ export const uploadFrame = (data) => {
     },
   });
 };
+
+export const setStudyState = () => client.post('/study/state');

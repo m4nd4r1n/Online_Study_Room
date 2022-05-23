@@ -19,11 +19,12 @@ export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
 export const initializePlan = createAction(INITIALIZE_PLAN, (plan) => plan); // reg login
 export const addPlan = createAction(
   ADD_PLAN,
-  ({ subject, date, startTime, endTime }) => ({
+  ({ subject, date, startTime, endTime, userId }) => ({
     subject,
     date,
     startTime,
     endTime,
+    userId,
   }),
 );
 
@@ -39,6 +40,7 @@ const initialState = {
     date: new Date(),
     startTime: '00:00:00',
     endTime: '00:00:00',
+    userId: '',
   },
   error: null,
 };
