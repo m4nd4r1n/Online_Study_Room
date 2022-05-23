@@ -13,6 +13,7 @@ const Mentee = ({ mentee }) => {
       <div className="flex h-3/5 w-full items-center justify-around border-r px-1">
         {/* 멘티 관리 */}
         <MdManageAccounts
+          className="cursor-pointer"
           onClick={() => {
             navigate(`/management/${id}`);
           }}
@@ -20,6 +21,7 @@ const Mentee = ({ mentee }) => {
 
         {/* 플래너 */}
         <MdEventNote
+          className="cursor-pointer"
           onClick={() => {
             navigate(`/planner/${id}`);
           }}
@@ -27,6 +29,7 @@ const Mentee = ({ mentee }) => {
 
         {/* 메신저 */}
         <MdMessage
+          className="cursor-pointer"
           onClick={() => {
             navigate(`/messenger/${messengerId}`);
           }}
@@ -37,27 +40,10 @@ const Mentee = ({ mentee }) => {
   );
 };
 
-const MenteeList = () => {
-  const mentees = [
-    {
-      id: '1234',
-      school: '서울중',
-      name: '박서울',
-      state: '학습중',
-      messengerId: 'messengerId1',
-    },
-    {
-      id: '5678',
-      school: '부산고',
-      name: '김부산',
-      state: '오프라인',
-      messengerId: 'messengerId2',
-    },
-  ];
-
+const MenteeList = ({ mentees }) => {
   return (
     <>
-      {mentees.map((mentee, index) => (
+      {mentees?.map((mentee, index) => (
         <Mentee mentee={mentee} key={index} />
       ))}
     </>

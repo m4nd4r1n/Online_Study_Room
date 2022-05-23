@@ -138,22 +138,6 @@ const StatisticsContainer = () => {
       time: '1500',
     },
   ];
-  const testMenteeList = [
-    {
-      id: '1234',
-      school: '서울중',
-      name: '박서울',
-      state: '학습중',
-      messengerId: 'messengerId1',
-    },
-    {
-      id: '5678',
-      school: '부산고',
-      name: '김부산',
-      state: '오프라인',
-      messengerId: 'messengerId2',
-    },
-  ];
 
   const handleChange = (e) => {
     setMenteeId(e.target.value);
@@ -219,7 +203,7 @@ const StatisticsContainer = () => {
     >
       {user?.role !== '멘티' && (
         <SelectMentee
-          menteeList={testMenteeList}
+          menteeList={info?.menteeList}
           menteeId={menteeId}
           handleChange={handleChange}
         />

@@ -9,18 +9,14 @@ import { useParams } from 'react-router-dom';
 const ManagementContainer = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
-  const { studentInfo, error, user } = useSelector(({ management, user }) => ({
-    studentInfo: management.info,
-    error: management.error,
-    user: user.user,
-  }));
+  const { studentInfo, menteeList } = useSelector(
+    ({ management, userInfo }) => ({
+      studentInfo: management.info,
+      menteeList: userInfo.info?.menteeList,
+    }),
+  );
 
-  // 테스트용 학생정보
-  // 필드 추가 가능
-  const testStudentInfo = {
-    school: '광운고등학교',
-    name: '김광운',
-  };
+  const student = menteeList?.filter((data) => data?.id === userId);
 
   useEffect(() => {
     dispatch(getStudentInfo({ userId }));
@@ -28,8 +24,8 @@ const ManagementContainer = () => {
 
   return (
     <ContentsBlock>
-      <StudentInfo studentInfo={testStudentInfo} />
-      <ManagementList />
+      <StudentInfo studentInfo={studentInfo} />
+      <ManagementList state={student[0]?.state} />
     </ContentsBlock>
   );
 };

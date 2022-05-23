@@ -9,11 +9,11 @@ const SelectMentee = ({ menteeList, menteeId, handleChange }) => {
         <Select
           className="flex w-full"
           id="mentee-select"
-          value={menteeId}
+          value={menteeId ?? ''}
           label="Mentee"
           onChange={handleChange}
         >
-          {menteeList.map((mentee, index) => (
+          {menteeList?.map((mentee, index) => (
             <MenuItem value={mentee.id} key={index}>
               {mentee.name}({mentee.school})
             </MenuItem>
