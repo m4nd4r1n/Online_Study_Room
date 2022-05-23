@@ -19,6 +19,7 @@ import Character from '../../components/main/Character';
 import Attendance from '../../components/main/Attendance';
 import { getAttendance } from '../../modules/attendanceInfo';
 import { useNavigate } from 'react-router-dom';
+import { setStudyState } from '../../lib/api/study';
 
 const MainContainer = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -84,11 +85,13 @@ const MainContainer = () => {
             <>
               <Character />
               <StudyButton
-                onClick={() => {
+                onClick={async () => {
                   window.alert(
                     '학습하는 모습이 잘 나오도록 카메라를 배치시켜주세요.\n핸드폰 등 학습에 불필요한 물건이 인식되지 않도록 주의해주세요.',
                   );
-                  navigate('/study', { replace: true });
+                  setStudyState().then(() =>
+                    navigate('/study', { replace: true }),
+                  );
                 }}
               />
             </>

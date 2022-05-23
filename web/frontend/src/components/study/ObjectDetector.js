@@ -8,6 +8,7 @@ import { StudyButton } from '../common/Button';
 import { useNavigate } from 'react-router-dom';
 import useInterval from '../timer/useInterval';
 import { createClient } from '../../lib/socket/client';
+import { setStudyState } from '../../lib/api/study';
 
 const ObjectDetector = ({ user }) => {
   const userId = false;
@@ -228,7 +229,7 @@ const ObjectDetector = ({ user }) => {
       <StudyButton
         onClick={() => {
           if (window.confirm('학습을 종료하시겠습니까?')) {
-            navigate('/', { replace: true });
+            setStudyState().then(() => navigate('/', { replace: true }));
           }
         }}
         type="stop"

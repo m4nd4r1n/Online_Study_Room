@@ -1,7 +1,5 @@
 import React from 'react';
-import { ItemBlock, StyledBox } from '../common/Contents';
 import { useParams } from 'react-router-dom';
-import { ListItem } from '../common/List';
 import { BsFillCameraVideoFill, BsPencilFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@material-ui/core';
@@ -11,8 +9,8 @@ const ManagementList = ({ state }) => {
   const navigate = useNavigate();
 
   const isOffline = () => {
-    if (state === '오프라인') {
-      window.alert('학생이 오프라인 상태입니다.');
+    if (state !== '학습 중') {
+      window.alert('학습 중이 아닙니다.');
     } else {
       navigate(`/study/${userId}`);
     }
