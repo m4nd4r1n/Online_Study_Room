@@ -12,4 +12,7 @@ public interface PlannerRepository extends JpaRepository<Planner, Long> {
     List<Planner> findPlannersByDateAndMentee_MteId(LocalDate date,String userId);
 
     Optional<Planner> findBySubjectAndDateAndMentee_MteId(String subject, LocalDate date, String userId);
+
+    @Transactional(readOnly = true)
+    List<Planner> findByDateEqualsAndAndMentee_MteId(LocalDate date, String mteId);
 }

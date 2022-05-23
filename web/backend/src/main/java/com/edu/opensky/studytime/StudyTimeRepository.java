@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface StudyTimeRepository extends JpaRepository<StudyTime, Long> {
 
@@ -97,4 +98,12 @@ public interface StudyTimeRepository extends JpaRepository<StudyTime, Long> {
             "where t.id = :id "
             ,nativeQuery = true)
     Integer MyRankingOfLevel (String id);
+
+    @Transactional(readOnly = true)
+    @Query(value = "select * " +
+            "from StudyTime s join Mentee m on s.mteId = m.mteId " +
+            "where datediff(date(s.startTime),:date) = 0 and s.mteId = :userId "
+            ,nativeQuery = true)
+    List<StudyTime> findByDate(LocalDate date, String userId);
+
 }

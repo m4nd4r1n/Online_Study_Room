@@ -27,7 +27,18 @@ public class StaticsController {
                                            @RequestParam @NotNull String month,
                                            @RequestParam @NotNull String day){
 
+        // 분 단위
         return ResponseEntity.ok(staticsService.getWeekStatics(userId,year,month,day));
+
+    }
+
+    @GetMapping("/statistics/date{query}")
+    public ResponseEntity getDateStudyTime(@RequestParam @NotNull String userId,
+                                           @RequestParam @NotNull String year,
+                                           @RequestParam @NotNull String month,
+                                           @RequestParam @NotNull String day){
+        // 분 단위
+        return ResponseEntity.ok(staticsService.getDateStatics(userId,year,month,day));
 
     }
 }
