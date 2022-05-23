@@ -42,25 +42,6 @@ const PlannerContainer = () => {
     }),
   );
 
-  //const testUser = { type: 'mentor' };
-
-  const testMenteeList = [
-    {
-      id: '1234',
-      school: '서울중',
-      name: '박서울',
-      state: '학습중',
-      messengerId: 'messengerId1',
-    },
-    {
-      id: '5678',
-      school: '부산고',
-      name: '김부산',
-      state: '오프라인',
-      messengerId: 'messengerId2',
-    },
-  ];
-
   // 멘토 계정이면서 menteeList 없을 시 userInfo 요청
   useEffect(() => {
     if (user?.role === '멘토' && !info?.menteeList) {
@@ -221,7 +202,7 @@ const PlannerContainer = () => {
     <>
       {user?.role === '멘토' && (
         <SelectMentee
-          menteeList={testMenteeList}
+          menteeList={info?.menteeList}
           menteeId={menteeId}
           handleChange={handleChange}
         />
