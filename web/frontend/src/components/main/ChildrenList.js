@@ -32,25 +32,10 @@ const Child = ({ child }) => {
   );
 };
 
-const ChildrenList = () => {
-  const children = [
-    {
-      id: '1234',
-      school: '서울중',
-      name: '박서울',
-      state: '학습중',
-    },
-    {
-      id: '5678',
-      school: '부산고',
-      name: '김부산',
-      state: '오프라인',
-    },
-  ];
-
+const ChildrenList = ({ children }) => {
   return (
     <>
-      {children.map((child, index) => (
+      {children?.map((child, index) => (
         <Child child={child} key={index} />
       ))}
     </>

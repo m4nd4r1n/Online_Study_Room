@@ -77,9 +77,9 @@ const MainContainer = () => {
         <UserInfo info={info} type={user?.role} setIsOpen={setIsOpen} />
         {user ? (
           user?.role === '학부모' ? (
-            <ChildrenList />
+            <ChildrenList children={info?.menteeList} />
           ) : user?.role === '멘토' ? (
-            <MenteeList />
+            <MenteeList mentees={info?.menteeList} />
           ) : user?.role === '멘티' ? (
             <>
               <Character />
