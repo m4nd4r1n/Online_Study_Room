@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { TextInput, Button } from 'react-native-paper';
@@ -11,7 +11,7 @@ import { find } from '../../modules/auth';
 
 const Find = ({ route, navigation: { navigate } }) => {
   const dispatch = useDispatch();
-  const { auth, authError } = useSelector(({ auth }) => ({
+  const { auth, authError } = useSelector(({ auth, user }) => ({
     auth: auth.auth,
     authError: auth.authError,
     user: user.user,
