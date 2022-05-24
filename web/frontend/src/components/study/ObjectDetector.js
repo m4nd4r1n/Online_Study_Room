@@ -6,19 +6,23 @@ import { ContentsBlock } from '../common/Contents';
 import TimerContainer from '../../containers/timer/TimerContainer';
 import { StudyButton } from '../common/Button';
 import { useNavigate } from 'react-router-dom';
-import useInterval from '../timer/useInterval';
 import { createClient } from '../../lib/socket/client';
-import { setStudyState } from '../../lib/api/study';
+import { setStudyState, uploadFrame } from '../../lib/api/study';
+import useInterval from '../timer/useInterval';
 
 const ObjectDetector = ({ user }) => {
-  const userId = false;
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  const capture = useRef();
   const peerConnectionRef = useRef(); // peer 연결
   const navigate = useNavigate();
   const [client, setClient] = useState(createClient()); // 소켓 클라이언트
+  const [rejectedFrame, setRejectedFrame] = useState(null); // 인증 거부된 프레임
   const [loading, setLoading] = useState(true); // 카메라, 모델 로딩
-  const [object, setObject] = useState({ 'cell phone': 0, person: 0 });
+  const [object, setObject] = useState({ 'cell phone': 0, noPerson: 0 });
+
+  const { userId } = user;
+  const { 'cell phone': cell_phone, noPerson } = object;
 
   const listener = (e) => {
     e.preventDefault();
@@ -37,14 +41,14 @@ const ObjectDetector = ({ user }) => {
       client.send(
         '/pub/study/message',
         JSON.stringify({
-          userId: user.userId,
+          userId,
           type: 'ice',
           ice: data.candidate,
         }),
         {},
       );
     },
-    [client, user],
+    [client, userId],
   );
 
   const createPeer = useCallback(() => {
@@ -82,10 +86,10 @@ const ObjectDetector = ({ user }) => {
     // room에 offer 전달
     client.send(
       '/pub/study/message',
-      JSON.stringify({ userId: user.userId, type: 'offer', offer }),
+      JSON.stringify({ userId, type: 'offer', offer }),
       {},
     );
-  }, [client, user]);
+  }, [client, userId]);
 
   // 구독중인 룸의 메시지 수신 이벤트 핸들러
   const handleMessage = useCallback(
@@ -118,16 +122,7 @@ const ObjectDetector = ({ user }) => {
     client &&
       client.connect({}, () => {
         // 메시지 구독
-        client.subscribe(`/sub/study/room/${user.userId}`, handleMessage);
-
-        // 학부모, 멘토는 enter 메시지 전송
-        if (userId) {
-          client.send(
-            '/pub/study/message',
-            JSON.stringify({ userId: user.userId, type: 'enter' }),
-            {},
-          );
-        }
+        client.subscribe(`/sub/study/room/${userId}`, handleMessage);
       });
     return () => {
       if (client && client.connected) {
@@ -135,7 +130,7 @@ const ObjectDetector = ({ user }) => {
         client.disconnect();
       }
     };
-  }, [client, userId, user, handleMessage]);
+  }, [client, userId, handleMessage]);
 
   // Main function
   const runCoco = async () => {
@@ -149,14 +144,13 @@ const ObjectDetector = ({ user }) => {
   };
 
   const drawRect = (detections, ctx) => {
-    console.log(detections);
     // Loop through each prediction
     detections.forEach((prediction) => {
       // Extract boxes and classes
       const [x, y, width, height] = prediction['bbox'];
       const text = prediction['class'];
-      if (text === 'cell phone' || text === 'person') {
-        object[text]++;
+      if (text === 'cell phone') {
+        setObject((prev) => ({ ...prev, [text]: prev[text] + 1 }));
       }
 
       // Set styling
@@ -198,6 +192,9 @@ const ObjectDetector = ({ user }) => {
       // Draw mesh
       const ctx = canvasRef.current.getContext('2d');
       drawRect(obj, ctx);
+      if (!obj.find((elem) => elem.class === 'person')) {
+        setObject((prev) => ({ ...prev, noPerson: prev.noPerson + 1 }));
+      }
     }
   };
 
@@ -205,18 +202,62 @@ const ObjectDetector = ({ user }) => {
     runCoco();
   }, []);
 
-  useInterval(() => {
-    // 학습 절반 동안 휴대전화가 인식되거나 사람이 인식되지 않은 경우
-    if (object['cell phone'] > 300 || object.person < 300) {
+  // 프레임 캡쳐
+  const captureFrame = () => {
+    // 몇몇 브라우저에서 이미지캡쳐 api 지원 X
+    const sUsrAg = navigator.userAgent;
+
+    if (
+      sUsrAg.indexOf('Chrome') > -1 ||
+      sUsrAg.indexOf('Edg') > -1 ||
+      sUsrAg.indexOf('Opera') > -1
+    ) {
+      new ImageCapture(webcamRef.current.video.srcObject.getVideoTracks()[0])
+        .grabFrame()
+        .then((data) =>
+          new Promise((res) => {
+            // 이미지 크기 조정
+            capture.current.width = 300;
+            capture.current.height = 200;
+
+            // imagebitmap to blob
+            const ctx = capture.current.getContext('bitmaprenderer');
+            if (ctx) {
+              ctx.width = 300;
+              ctx.height = 200;
+              ctx.transferFromImageBitmap(data);
+            }
+            capture.current.toBlob(res);
+          }).then((blob) => {
+            setRejectedFrame(blob);
+          }),
+        );
+    }
+  };
+
+  useEffect(() => {
+    if (
+      (cell_phone > 0 && cell_phone % 10 === 0) ||
+      (noPerson > 0 && noPerson % 10 === 0)
+    ) {
+      captureFrame();
+    }
+    console.log(cell_phone, noPerson);
+  }, [cell_phone, noPerson]);
+
+  useInterval(async () => {
+    if (cell_phone > 300 || noPerson > 300) {
       console.log('학습 미인정');
+      await uploadFrame(rejectedFrame);
     } else {
       console.log('학습 인정');
     }
-    setObject({ 'cell phone': 0, person: 0 });
+    setObject(() => ({ 'cell phone': 0, noPerson: 0 }));
   }, 1000 * 60 * 10);
 
   return (
     <ContentsBlock>
+      <canvas ref={capture} className="hidden" />
       <div className="relative mt-16 flex flex-col items-center justify-center">
         {loading && <div>카메라를 불러오는 중입니다...</div>}
         <Webcam ref={webcamRef} muted className="ml-auto mr-auto" />

@@ -148,8 +148,6 @@ const VideoViewer = () => {
           playsInline
           muted
           ref={videoRef}
-          width="568"
-          height="500"
           style={{ display: 'inline' }}
         />
       </div>
