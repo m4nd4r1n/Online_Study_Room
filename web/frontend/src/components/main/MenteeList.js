@@ -2,8 +2,11 @@ import React from 'react';
 import { Block } from '../common/Contents';
 import { useNavigate } from 'react-router-dom';
 import { MdManageAccounts, MdMessage, MdEventNote } from 'react-icons/md';
+import { setMessengerId } from '../../modules/messenger';
+import { useDispatch } from 'react-redux';
 
 const Mentee = ({ mentee }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { name, school, id, messengerId, state } = mentee;
   return (
@@ -31,6 +34,12 @@ const Mentee = ({ mentee }) => {
         <MdMessage
           className="cursor-pointer"
           onClick={() => {
+            dispatch(
+              setMessengerId({
+                messengerId,
+                receiver: name,
+              }),
+            );
             navigate(`/messenger/${messengerId}`);
           }}
         />

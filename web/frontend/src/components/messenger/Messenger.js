@@ -3,8 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import Moment from 'react-moment';
 import { isToday } from '../common/Date';
 import { ContentsBlock } from '../common/Contents';
+import { setMessengerId } from '../../modules/messenger';
+import { useDispatch } from 'react-redux';
 
 const Messenger = ({ messengers }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
     <ContentsBlock>
@@ -13,6 +16,12 @@ const Messenger = ({ messengers }) => {
           key={data.messengerId}
           className="flex w-full cursor-pointer select-none flex-row items-center border-b px-4 py-6 sm:px-8"
           onClick={() => {
+            dispatch(
+              setMessengerId({
+                messengerId: data.messengerId,
+                receiver: data.messengerTitle,
+              }),
+            );
             navigate(`/messenger/${data.messengerId}`);
           }}
         >

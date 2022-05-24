@@ -18,9 +18,8 @@ const isToday = (target) => {
 
 const Messenger = ({ navigation: { navigate } }) => {
   const dispatch = useDispatch();
-  const { messengers, error, user } = useSelector(({ messengers, user }) => ({
+  const { messengers } = useSelector(({ messengers }) => ({
     messengers: messengers.messengers,
-    user: user.user,
   }));
 
   useEffect(() => {

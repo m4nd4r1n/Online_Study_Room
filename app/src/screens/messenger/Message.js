@@ -9,7 +9,7 @@ import tw from 'twrnc';
 import { listMessages, receiveMessage } from '../../modules/messenger';
 import { createClient } from '../../libs/socket/client';
 
-const Message = ({ route, navigation, navigation: { replace } }) => {
+const Message = () => {
   const [client, setClient] = useState(createClient());
 
   const scrollViewRef = useRef();
@@ -28,7 +28,7 @@ const Message = ({ route, navigation, navigation: { replace } }) => {
 
   useEffect(() => {
     if (messengerId !== null) dispatch(listMessages({ messengerId }));
-  }, [messengerId, dispatch, listMessages]);
+  }, [messengerId, dispatch]);
 
   // const [testMessages, setTestMessages] = useState([
   //   {
