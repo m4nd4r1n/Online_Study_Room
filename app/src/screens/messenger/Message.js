@@ -6,18 +6,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import Moment from 'moment';
 import tw from 'twrnc';
 
-import { listMessages } from '../../modules/messenger';
+import { listMessages, receiveMessage } from '../../modules/messenger';
 import { createClient } from '../../libs/socket/client';
 
 const Message = ({ route, navigation, navigation: { replace } }) => {
-  //const [client, setClient] = useState(createClient());
+  const [client, setClient] = useState(createClient());
 
   const scrollViewRef = useRef();
 
   const dispatch = useDispatch();
-  const { messengerId, messages, error, info } = useSelector(
+  const { messengerId, receiver, messages, error, info } = useSelector(
     ({ messenger, userInfo }) => ({
       messengerId: messenger.messengerId,
+      receiver: messenger.receiver,
       messages: messenger.messages,
       error: messenger.error,
       info: userInfo.info,
@@ -78,39 +79,46 @@ const Message = ({ route, navigation, navigation: { replace } }) => {
   // ]);
 
   // 메시지 전송
-  // const onClick = (e) => {
-  //   client.send(
-  //     '/pub/chat/message',
-  //     JSON.stringify({ messengerId, message, writer: testUser.name }),
-  //     {},
-  //   );
-  //   setMessage('');
-  // };
+  const onPress = () => {
+    if (message !== '') {
+      client.send(
+        '/pub/chat/message',
+        JSON.stringify({
+          ChatRoomId: messengerId,
+          message,
+          sender: info?.name,
+          receiver,
+        }),
+        {},
+      );
+      setMessage('');
+    }
+  };
 
-  // useEffect(() => {
-  //   client.connect({}, () => {
-  //     // 메시지 구독
-  //     client.subscribe(`/sub/chat/room/${messengerId}`, (msg) => {
-  //       const content = JSON.parse(msg.body);
+  useEffect(() => {
+    client.connect({}, () => {
+      // 메시지 구독
+      client.subscribe(`/sub/chat/room/${messengerId}`, (msg) => {
+        const content = JSON.parse(msg.body);
+        console.log('receive', msg);
 
-  //       // 새 매시지 수신 시 리스트에 추가
-  //       setTestMessages((prev) => [
-  //         ...prev,
-  //         {
-  //           name: content.writer,
-  //           message: content.message,
-  //           messageTime: new Date(),
-  //         },
-  //       ]);
-  //     });
-  //   });
-  //   return () => {
-  //     if (client.connected) {
-  //       client.unsubscribe({});
-  //       client.disconnect();
-  //     }
-  //   };
-  // }, [client, messengerId]);
+        // 새 매시지 수신 시 리스트에 추가
+        dispatch(
+          receiveMessage({
+            name: content.sender,
+            message: content.message,
+            messageTime: content.dateTime,
+          }),
+        );
+      });
+    });
+    return () => {
+      if (client.connected) {
+        client.unsubscribe({});
+        client.disconnect();
+      }
+    };
+  }, [client, messengerId]);
 
   useEffect(() => {
     if (error) console.log(error.message);
@@ -177,7 +185,7 @@ const Message = ({ route, navigation, navigation: { replace } }) => {
         />
         <TouchableOpacity
           style={tw`flex w-1/6 items-center justify-center border-0 rounded-l-none rounded-r-md bg-gray-600`}
-          onPress={() => console.log('Presssed')}
+          onPress={onPress}
         >
           <MaterialCommunityIcons name="send" size={25} color="#38bdf8" />
         </TouchableOpacity>

@@ -6,12 +6,17 @@ import * as messengerAPI from '../libs/api/messenger';
 import { takeLatest } from 'redux-saga/effects';
 
 const SET_MESSENGER_ID = 'messenger/SET_MESSENGER_ID';
+const RECEIVE_MESSAGE = 'messenger/RECEIVE_MESSAGE';
 const [LIST_MESSEGES, LIST_MESSEGES_SUCCESS, LIST_MESSEGES_FAILURE] =
   createRequestActionTypes('messenger/LIST_MESSEGES'); // 메시지 리스트
 
 export const setMessengerId = createAction(
   SET_MESSENGER_ID,
-  (messengerId) => messengerId,
+  ({ messengerId, receiver }) => ({ messengerId, receiver }),
+);
+export const receiveMessage = createAction(
+  RECEIVE_MESSAGE,
+  (message) => message,
 );
 export const listMessages = createAction(LIST_MESSEGES, ({ messengerId }) => ({
   messengerId,
@@ -28,6 +33,7 @@ export function* messengerSaga() {
 
 const initialState = {
   messengerId: null,
+  receiver: null,
   messages: [],
   subscription: null,
   error: null,
@@ -35,9 +41,14 @@ const initialState = {
 
 const messenger = handleActions(
   {
-    [SET_MESSENGER_ID]: (state, { payload: messengerId }) => ({
+    [SET_MESSENGER_ID]: (state, { payload: { messengerId, receiver } }) => ({
       ...state,
       messengerId,
+      receiver,
+    }),
+    [RECEIVE_MESSAGE]: (state, { payload: message }) => ({
+      ...state,
+      messages: [...state.messages, message],
     }),
     [LIST_MESSEGES_SUCCESS]: (state, { payload: messages }) => ({
       ...state,
