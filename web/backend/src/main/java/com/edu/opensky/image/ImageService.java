@@ -3,15 +3,11 @@ package com.edu.opensky.image;
 import com.edu.opensky.management.dto.ImageAndTimeResponseDto;
 import com.edu.opensky.user.User;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItem;
-import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.*;
-import java.nio.file.Files;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -33,17 +29,17 @@ public class ImageService {
         }
 
         for (MultipartFile file : files){
-            String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"))+"00";
+            String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 
             // 파일 이름 유저인덱스-이름-시간(yyyyMMddHHmmss).확장자
-            File dest = new File(absolutePath
-                    +user.getId()
+            String name = +user.getId()
                     + "-"
                     +user.getName()
                     + "-"
                     +now
-                    +file.getContentType().replace("image/","."));
-            imageRepository.save(Image.builder().dest(dest.getAbsolutePath()).mteId(user.getEmail()).studyDateTime(now).build());
+                    +file.getContentType().replace("image/",".");
+            File dest = new File(absolutePath +name);
+            imageRepository.save(Image.builder().name(name).dest(dest.getAbsolutePath()).mteId(user.getEmail()).studyDateTime(now).build());
             file.transferTo(dest);
         }
     }
@@ -54,12 +50,7 @@ public class ImageService {
         List<Image> images = imageRepository.findByMteId(userId);
 
         for(Image image : images){
-            File file = new File(image.getDest());
-            FileItem fileItem = new DiskFileItem("originFile", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length(), file.getParentFile());
-            InputStream input = new FileInputStream(file);
-            OutputStream os = fileItem.getOutputStream();
-            IOUtils.copy(input,os);
-            responseDtos.add(ImageAndTimeResponseDto.builder().images(new CommonsMultipartFile(fileItem)).noAcceptTime(image.getStudyDateTime()).build());
+            responseDtos.add(ImageAndTimeResponseDto.builder().imageDest(image.getDest()).noAcceptTime(image.getStudyDateTime()).build());
 
         }
 

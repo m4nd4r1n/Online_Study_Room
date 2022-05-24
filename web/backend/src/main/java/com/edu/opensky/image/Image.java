@@ -19,6 +19,9 @@ public class Image {
     // 파일 저장 경로
     private String dest;
 
+    // 파일 이름
+    private String name;
+
     // 학습 미인정된 시간
     private String studyDateTime;
 
@@ -27,9 +30,10 @@ public class Image {
 
 
     @Builder
-    public Image(String studyDateTime, String dest ,String mteId){
+    public Image(String studyDateTime, String dest, String name ,String mteId){
         this.studyDateTime = studyDateTime;
         this.dest = dest;
+        this.name = name;
         this.mteId = mteId;
     }
 

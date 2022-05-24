@@ -2,6 +2,7 @@ package com.edu.opensky.management;
 
 
 import com.edu.opensky.image.ImageService;
+import com.edu.opensky.management.dto.ImageAndTimeResponseDto;
 import com.edu.opensky.studytime.StudyTimeService;
 import com.edu.opensky.user.mentor.MentorService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,12 +35,15 @@ public class ManagementController {
         if(userId.isEmpty() || userId.equals(null)){
             return ResponseEntity.badRequest().build();
         }
+        List<ImageAndTimeResponseDto> responseDtos = null;
         try {
-            return ResponseEntity.ok(imageService.getImageAndTime(userId));
-
+            responseDtos = imageService.getImageAndTime(userId);
         } catch (IOException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
+
         }
+
+        return ResponseEntity.ok(responseDtos);
 
     }
 
