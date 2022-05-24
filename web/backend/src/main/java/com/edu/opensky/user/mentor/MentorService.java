@@ -9,6 +9,7 @@ import com.edu.opensky.user.mentee.Mentee;
 import com.edu.opensky.user.mentee.MenteeRepository;
 import com.edu.opensky.user.mentor.dto.MenteeListDto;
 import com.edu.opensky.user.mentor.dto.MentorListDto;
+import com.edu.opensky.management.dto.MentorMenteeResponseDto;
 import com.edu.opensky.user.mentor.dto.MentorSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -80,5 +81,16 @@ public class MentorService {
                                 .school(m.getSchool())
                                 .build()).collect(Collectors.toList());
         return adminMenteeRequestDtos;
+    }
+
+    public MentorMenteeResponseDto getMenteeInfo(String userId){
+        Mentee mentee = menteeRepository.findByMteId(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아이디 입니다."));
+        return MentorMenteeResponseDto.builder()
+                .mteId(mentee.getMteId())
+                .name(mentee.getName())
+                .phone(userRepository.findByEmail(mentee.getMteId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저")).getPhone())
+                .school(mentee.getSchool())
+                .build();
+
     }
 }

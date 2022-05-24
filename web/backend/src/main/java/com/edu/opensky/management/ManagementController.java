@@ -1,49 +1,48 @@
 package com.edu.opensky.management;
 
-import com.edu.opensky.user.User;
-import com.edu.opensky.user.UserRepository;
-import com.edu.opensky.user.mentee.Mentee;
-import com.edu.opensky.user.mentee.MenteeRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Time;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Optional;
+import com.edu.opensky.studytime.StudyTimeService;
+import com.edu.opensky.user.mentor.MentorService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/management")
+@RequestMapping("/api")
 public class ManagementController {
-    private final UserRepository userRepository;
-    private final MenteeRepository menteeRepository;
+    private final MentorService mentorService;
+    private final StudyTimeService studyTimeService;
 
-    // 학생 정보 -> 학교, 이름, 전화번호 등.
-    @GetMapping("/info/{stdId}")
-    public HashMap<String, String> getStudentInfo(@PathVariable String stdId){
-        HashMap<String, String> studentInfo = new HashMap<>();
-        Optional<Mentee> mentee = menteeRepository.findByMteId(stdId);
-        Optional<User> user = userRepository.findByEmail(stdId);
-        if (mentee.isPresent() && user.isPresent()) {
-            studentInfo.put("name",user.get().getName());
-            studentInfo.put("school",mentee.get().getSchool());
-
-            return studentInfo;
-        }
-        else{
-            System.out.println("학생정보 없음");
-            return null;
+    @GetMapping("/management/info")
+    public ResponseEntity getStudentInfo(@RequestParam String userId){
+        if(userId.isEmpty() || userId.equals(null)){
+            return ResponseEntity.badRequest().build();
         }
 
+        return ResponseEntity.ok(mentorService.getMenteeInfo(userId));
     }
 
-    // 학생의 학습정보
-    @GetMapping("/studyTime")
-    public String getStudyTime(){
-        return LocalDate.now().toString();
+    // 수정 중 인식시간은 스킵??
+    @GetMapping("/management/studyTime")
+    public ResponseEntity getStudyTime(@RequestParam String userId){
+        if(userId.isEmpty() || userId.equals(null)){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    // 수정 중
+    @PatchMapping("/management/studyTime")
+    public ResponseEntity acceptStudyTime(@RequestParam String userId,
+                                          @RequestParam String time){
+        if(userId.isEmpty() || userId.equals(null)){
+            return ResponseEntity.badRequest().build();
+        }
+        if(time.isEmpty() || time.equals(null)){
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok(mentorService.getMenteeInfo(userId));
     }
 }

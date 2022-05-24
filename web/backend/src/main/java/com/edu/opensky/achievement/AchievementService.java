@@ -1,12 +1,10 @@
 package com.edu.opensky.achievement;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.jni.Local;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-//import javafx.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +13,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,10 +32,11 @@ public class AchievementService {
 
     public void setAchievementList(){
         JSONParser parser = new JSONParser();
+        String path = Achievement.class.getResource("").getPath();
 
         Reader reader = null;
         try {
-            reader = new FileReader("web/frontend/src/components/achievement/achievement_list.json");
+            reader = new FileReader(path+"/achievement_list.json");
 
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
 
