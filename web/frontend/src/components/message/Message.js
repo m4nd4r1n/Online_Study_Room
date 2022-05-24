@@ -6,9 +6,9 @@ import { ContentsBlock } from '../common/Contents';
 import { isSameDay } from '../common/Date';
 import { StyledInput } from '../common/Input';
 
-const Message = ({ user, messages, onChange, onClick, message }) => {
+const Message = ({ info, messages, onChange, onClick, message }) => {
   const dateLine = messages?.map((data, i, array) =>
-    isSameDay(array[i - 1]?.messageTime ?? new Date(), data.messageTime)
+    isSameDay(array[i - 1]?.messageTime ?? new Date(), data?.messageTime)
       ? false
       : true,
   );
@@ -24,15 +24,15 @@ const Message = ({ user, messages, onChange, onClick, message }) => {
                 format="YYYY년 M월 D일"
               ></Moment>
             )}
-            {user.name === data.name ? (
+            {info?.name === data?.name ? (
               <div className="my-1 ml-auto flex h-1/3 w-auto flex-col rounded-md bg-sky-100 py-2 px-4 text-right">
-                <span className="text-base">{data.message}</span>
-                <Moment date={data.messageTime} format="h:mm A" />
+                <span className="text-base">{data?.message}</span>
+                <Moment date={data?.messageTime} format="h:mm A" />
               </div>
             ) : (
               <div className="my-1 mr-auto flex h-1/3 w-auto flex-col rounded-md bg-gray-100 py-2 px-4 text-left">
-                <span className="text-base">{data.message}</span>
-                <Moment date={data.messageTime} format="h:mm A" />
+                <span className="text-base">{data?.message}</span>
+                <Moment date={data?.messageTime} format="h:mm A" />
               </div>
             )}
           </div>

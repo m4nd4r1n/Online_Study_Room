@@ -25,7 +25,7 @@ const ManagementContainer = () => {
   return (
     <ContentsBlock>
       <StudentInfo studentInfo={studentInfo} />
-      <ManagementList state={student[0]?.state} />
+      <ManagementList state={student?.[0]?.state} />
     </ContentsBlock>
   );
 };

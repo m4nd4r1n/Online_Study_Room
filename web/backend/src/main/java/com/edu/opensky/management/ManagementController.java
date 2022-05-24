@@ -21,7 +21,7 @@ public class ManagementController {
     private final ImageService imageService;
 
     @GetMapping("/management/info")
-    public ResponseEntity getStudentInfo(@RequestParam String userId){
+    public ResponseEntity getStudentInfo(@RequestParam("userId") String userId){
         if(userId.isEmpty() || userId.equals(null)){
             return ResponseEntity.badRequest().build();
         }
@@ -30,7 +30,7 @@ public class ManagementController {
     }
 
     @GetMapping("/management/studyTime")
-    public ResponseEntity getStudyTime(@RequestParam String userId){
+    public ResponseEntity getStudyTime(@RequestParam("userId") String userId){
         if(userId.isEmpty() || userId.equals(null)){
             return ResponseEntity.badRequest().build();
         }

@@ -9,36 +9,36 @@ import Messenger from '../../components/messenger/Messenger';
 
 const MessengerListContainer = () => {
   const dispatch = useDispatch();
-  const { messengers, error, user } = useSelector(({ messengers, user }) => ({
+  const { messengers } = useSelector(({ messengers }) => ({
     messengers: messengers.messengers,
-    user: user.user,
   }));
-  const test_messengers = [
-    {
-      messengerId: '0fxca1253',
-      messengerTitle: '오픈 스카이',
-      lastMessage: '2021년 10월 15일 학습 결과 보고서',
-      lastReceivedTime: new Date(2022, 1, 1),
-    },
-    {
-      messengerId: 'mlqwnr27',
-      messengerTitle: '멘토',
-      lastMessage: '플래너 작성은 다 하셨나요?',
-      lastReceivedTime: new Date(2022, 1, 6),
-    },
-    {
-      messengerId: 'd12jut06',
-      messengerTitle: '고길동',
-      lastMessage: 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-      lastReceivedTime: new Date(),
-    },
-  ];
+
+  // const test_messengers = [
+  //   {
+  //     messengerId: '0fxca1253',
+  //     messengerTitle: '오픈 스카이',
+  //     lastMessage: '2021년 10월 15일 학습 결과 보고서',
+  //     lastReceivedTime: new Date(2022, 1, 1),
+  //   },
+  //   {
+  //     messengerId: 'mlqwnr27',
+  //     messengerTitle: '멘토',
+  //     lastMessage: '플래너 작성은 다 하셨나요?',
+  //     lastReceivedTime: new Date(2022, 1, 6),
+  //   },
+  //   {
+  //     messengerId: 'd12jut06',
+  //     messengerTitle: '고길동',
+  //     lastMessage: 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
+  //     lastReceivedTime: new Date(),
+  //   },
+  // ];
 
   useEffect(() => {
     dispatch(listMessengers());
   }, [dispatch]);
 
-  return <Messenger messengers={test_messengers} />;
+  return <Messenger messengers={messengers} />;
 };
 
 export default MessengerListContainer;
