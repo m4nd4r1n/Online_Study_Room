@@ -29,7 +29,6 @@ public class ManagementController {
         return ResponseEntity.ok(mentorService.getMenteeInfo(userId));
     }
 
-    // 수정 중 인식시간은 스킵??
     @GetMapping("/management/studyTime")
     public ResponseEntity getStudyTime(@RequestParam String userId){
         if(userId.isEmpty() || userId.equals(null)){
@@ -47,7 +46,7 @@ public class ManagementController {
 
     }
 
-    // 수정 중
+    // 학습 시간 인정 요청
     @PatchMapping("/management/studyTime")
     public ResponseEntity acceptStudyTime(@RequestParam String userId,
                                           @RequestParam String time){
@@ -58,6 +57,10 @@ public class ManagementController {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok(mentorService.getMenteeInfo(userId));
+
+        if(!studyTimeService.acceptStudying(userId,time)){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().build();
     }
 }

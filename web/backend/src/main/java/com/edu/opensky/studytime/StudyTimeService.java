@@ -1,19 +1,28 @@
 package com.edu.opensky.studytime;
 
+import com.edu.opensky.image.ImageRepository;
 import com.edu.opensky.studytime.dto.levelRankingListInterface;
+import com.edu.opensky.user.User;
+import com.edu.opensky.user.mentee.Mentee;
+import com.edu.opensky.user.mentee.MenteeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 @Transactional
 public class StudyTimeService {
     private final StudyTimeRepository studyTimeRepository;
+    private final MenteeRepository menteeRepository;
+    private final ImageRepository imageRepository;
 
     public List<levelRankingListInterface> getRankingOfLevel(PageRequest pageRequest){
 
@@ -58,5 +67,41 @@ public class StudyTimeService {
     }
     public Integer getMyLevelRanking(String id){
         return studyTimeRepository.MyRankingOfLevel(id);
+    }
+
+    public boolean detectNoStudying(User user){
+        Optional<Mentee> mentee = menteeRepository.findByMteId(user.getEmail());
+
+        if(mentee.isPresent()){
+            mentee.get().getMteId();
+            List<StudyTime> studyTimes = studyTimeRepository.findByMenteeAndEndTimeIsNullOrderByStartTimeDesc(mentee.get());
+            // 10분 미인정시 동작 -> 10분 전으로 마무리
+            // 시작한지 10분이 안지난 경우
+            if(studyTimes.get(0).getStartTime().isBefore(LocalDateTime.now().minusMinutes(10))) {
+                studyTimes.get(0).finishStudy(LocalDateTime.now().minusMinutes(10));
+            }
+            else{
+                studyTimes.get(0).finishStudy(studyTimes.get(0).getStartTime());
+            }
+            studyTimeRepository.save(studyTimes.get(0));
+            studyTimeRepository.save(StudyTime.builder().startTime(LocalDateTime.now()).endTime(null).mentee(mentee.get()).build());
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean acceptStudying(String userId, String time) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        LocalDateTime localDateTime = LocalDateTime.parse(time,formatter);
+        Optional<Mentee> mentee = menteeRepository.findByMteId(userId);
+        if(mentee.isPresent()){
+            // 시간이 인정된 경우 time 기준으로 startTime= time-10분 , endtime = time
+            studyTimeRepository.save(StudyTime.builder().endTime(localDateTime).startTime(localDateTime.minusMinutes(10)).mentee(mentee.get()).build());
+
+            return true;
+        }
+        return false;
+
     }
 }

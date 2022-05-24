@@ -29,9 +29,10 @@ public class ImageService {
         }
 
         for (MultipartFile file : files){
-            String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+            LocalDateTime nowDateTime = LocalDateTime.now();
+            String now = nowDateTime.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
 
-            // 파일 이름 유저인덱스-이름-시간(yyyyMMddHHmmss).확장자
+            // 파일 이름 유저인덱스-이름-시간(yyyyMMddHHmmssSSS).확장자
             String name = +user.getId()
                     + "-"
                     +user.getName()
@@ -39,7 +40,7 @@ public class ImageService {
                     +now
                     +file.getContentType().replace("image/",".");
             File dest = new File(absolutePath +name);
-            imageRepository.save(Image.builder().name(name).dest(dest.getAbsolutePath()).mteId(user.getEmail()).studyDateTime(now).build());
+            imageRepository.save(Image.builder().name(name).dest(dest.getAbsolutePath()).mteId(user.getEmail()).studyDateTime(nowDateTime).build());
             file.transferTo(dest);
         }
     }

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -23,14 +24,14 @@ public class Image {
     private String name;
 
     // 학습 미인정된 시간
-    private String studyDateTime;
+    private LocalDateTime studyDateTime;
 
     // 멘티 아이디
     private String mteId;
 
 
     @Builder
-    public Image(String studyDateTime, String dest, String name ,String mteId){
+    public Image(LocalDateTime studyDateTime, String dest, String name ,String mteId){
         this.studyDateTime = studyDateTime;
         this.dest = dest;
         this.name = name;

@@ -1,5 +1,6 @@
 package com.edu.opensky.studytime;
 
+import com.edu.opensky.image.ImageService;
 import com.edu.opensky.studytime.dto.mentorNameAndChildResponseDto;
 import com.edu.opensky.studytime.dto.parentNameAndChildResponseDto;
 import com.edu.opensky.user.User;
@@ -12,6 +13,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,6 +28,8 @@ public class StudyController {
     private final UserService userService;
     private final MenteeRepository menteeRepository;
     private final StudyService studyService;
+    private final ImageService imageService;
+    private final StudyTimeService studyTimeService;
 
 
     @GetMapping("/study/info")
@@ -65,5 +72,20 @@ public class StudyController {
         }
 
         return ResponseEntity.badRequest().build();
+    }
+    // 미인식 시간 업로드
+    @PostMapping("/study/upload")
+    public ResponseEntity uploadFrame(
+            @RequestParam("formData") List<MultipartFile> files,
+            @CookieValue(value="Authorization") String token) throws IOException {
+
+        User user = userService.getUserByToken(token);
+        imageService.saveImage(user,files);
+        if(!studyTimeService.detectNoStudying(user)){
+            return ResponseEntity.badRequest().build();
+
+        }
+
+        return ResponseEntity.ok().build();
     }
 }
