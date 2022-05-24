@@ -1,11 +1,14 @@
 package com.edu.opensky.management;
 
 
+import com.edu.opensky.image.ImageService;
 import com.edu.opensky.studytime.StudyTimeService;
 import com.edu.opensky.user.mentor.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class ManagementController {
     private final MentorService mentorService;
     private final StudyTimeService studyTimeService;
+    private final ImageService imageService;
 
     @GetMapping("/management/info")
     public ResponseEntity getStudentInfo(@RequestParam String userId){
@@ -29,7 +33,13 @@ public class ManagementController {
         if(userId.isEmpty() || userId.equals(null)){
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok().build();
+        try {
+            return ResponseEntity.ok(imageService.getImageAndTime(userId));
+
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     // 수정 중

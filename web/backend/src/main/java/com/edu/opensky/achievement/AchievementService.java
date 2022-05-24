@@ -8,10 +8,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -32,11 +29,11 @@ public class AchievementService {
 
     public void setAchievementList(){
         JSONParser parser = new JSONParser();
-        String path = Achievement.class.getResource("").getPath();
+        String absolutePath = new File("").getAbsolutePath()+"\\";
 
         Reader reader = null;
         try {
-            reader = new FileReader(path+"/achievement_list.json");
+            reader = new FileReader(absolutePath+"/web/backend/src/main/java/com/edu/opensky/achievement/achievement_list.json");
 
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
 
