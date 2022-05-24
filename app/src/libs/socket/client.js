@@ -10,7 +10,9 @@ import webstomp from 'webstomp-client';
 
 // 클라이언트 생성
 export const createClient = () => {
-  const sock = new SockJS('/stomp');
+  const sock = new SockJS(
+    'http://ec2-3-38-228-132.ap-northeast-2.compute.amazonaws.com:8080/stomp',
+  );
   const client = webstomp.over(sock);
 
   return client;

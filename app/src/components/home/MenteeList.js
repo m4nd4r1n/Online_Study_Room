@@ -45,7 +45,7 @@ const Mentee = ({ mentee }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            dispatch(setMessengerId(messengerId));
+            dispatch(setMessengerId({ messengerId, receiver: name }));
             navigate('MessageTab', { messengerId });
           }}
         >
@@ -66,14 +66,14 @@ const MenteeList = () => {
       school: '서울중',
       name: '박서울',
       state: '학습중',
-      messengerId: 'messengerId1',
+      messengerId: 12345,
     },
     {
       id: '5678',
       school: '부산고',
       name: '김부산',
       state: '오프라인',
-      messengerId: 'messengerId2',
+      messengerId: 67890,
     },
   ];
 

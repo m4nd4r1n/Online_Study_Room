@@ -37,7 +37,12 @@ const Messenger = ({ navigation: { navigate } }) => {
           key={index}
           style={tw`flex w-full flex-row items-center border-b border-gray-500 px-4 py-6 sm:px-8`}
           onPress={() => {
-            dispatch(setMessengerId(data.messengerId));
+            dispatch(
+              setMessengerId({
+                messengerId: data.messengerId,
+                receiver: data.messengerTitle,
+              }),
+            );
             navigate(`MessageTab`, { messengerId: data.messengerId });
           }}
         >
