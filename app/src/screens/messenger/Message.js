@@ -1,80 +1,81 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { HomeStyle } from '../../libs/utils';
-import { Button, TextInput } from 'react-native-paper';
-import { useRoute } from '@react-navigation/native';
+import { TextInput } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import Moment from 'moment';
 import tw from 'twrnc';
 
-import { Modal, Portal } from 'react-native-paper';
-import { ContentsBlock } from '../../components/common/Contents';
 import { listMessages } from '../../modules/messenger';
 import { createClient } from '../../libs/socket/client';
 
-const Message = ({ navigation: { replace } }) => {
-  const route = useRoute();
+const Message = ({ route, navigation, navigation: { replace } }) => {
   //const [client, setClient] = useState(createClient());
 
   const scrollViewRef = useRef();
 
   const dispatch = useDispatch();
-  const { messages, error, info } = useSelector(({ messenger, userInfo }) => ({
-    messages: messenger.messages,
-    error: messenger.error,
-    info: userInfo.info,
-  }));
-
+  const { messengerId, messages, error, info } = useSelector(
+    ({ messenger, userInfo }) => ({
+      messengerId: messenger.messengerId,
+      messages: messenger.messages,
+      error: messenger.error,
+      info: userInfo.info,
+    }),
+  );
   const [message, setMessage] = useState('');
 
-  const [testMessages, setTestMessages] = useState([
-    {
-      name: '멘토',
-      message: '6 / 가장 오래된 메시지',
-      messageTime: new Date(2022, 0, 2, 8, 0),
-    },
-    {
-      name: '신해담',
-      message: '3',
-      messageTime: new Date(2022, 0, 3, 14, 20),
-    },
-    {
-      name: '멘토',
-      message: '5',
-      messageTime: new Date(2022, 1, 9, 18, 17),
-    },
-    {
-      name: '멘토',
-      message: '4',
-      messageTime: new Date(2022, 1, 9, 18, 18),
-    },
-    {
-      name: '신해담',
-      message: '2',
-      messageTime: new Date(2022, 1, 10, 14, 10),
-    },
-    {
-      name: '신해담',
-      message: '1',
-      messageTime: new Date(2022, 1, 10, 14, 20),
-    },
-    {
-      name: '멘토',
-      message: '3',
-      messageTime: new Date(2022, 1, 10, 18, 18),
-    },
-    {
-      name: '멘토',
-      message: '2',
-      messageTime: new Date(2022, 1, 10, 18, 19),
-    },
-    {
-      name: '멘토',
-      message: '1 / 가장 최근 메시지',
-      messageTime: new Date(2022, 1, 10, 18, 20),
-    },
-  ]);
+  useEffect(() => {
+    if (messengerId !== null) dispatch(listMessages({ messengerId }));
+  }, [messengerId, dispatch, listMessages]);
+
+  // const [testMessages, setTestMessages] = useState([
+  //   {
+  //     name: '멘토',
+  //     message: '6 / 가장 오래된 메시지',
+  //     messageTime: new Date(2022, 0, 2, 8, 0),
+  //   },
+  //   {
+  //     name: '신해담',
+  //     message: '3',
+  //     messageTime: new Date(2022, 0, 3, 14, 20),
+  //   },
+  //   {
+  //     name: '멘토',
+  //     message: '5',
+  //     messageTime: new Date(2022, 1, 9, 18, 17),
+  //   },
+  //   {
+  //     name: '멘토',
+  //     message: '4',
+  //     messageTime: new Date(2022, 1, 9, 18, 18),
+  //   },
+  //   {
+  //     name: '신해담',
+  //     message: '2',
+  //     messageTime: new Date(2022, 1, 10, 14, 10),
+  //   },
+  //   {
+  //     name: '신해담',
+  //     message: '1',
+  //     messageTime: new Date(2022, 1, 10, 14, 20),
+  //   },
+  //   {
+  //     name: '멘토',
+  //     message: '3',
+  //     messageTime: new Date(2022, 1, 10, 18, 18),
+  //   },
+  //   {
+  //     name: '멘토',
+  //     message: '2',
+  //     messageTime: new Date(2022, 1, 10, 18, 19),
+  //   },
+  //   {
+  //     name: '멘토',
+  //     message: '1 / 가장 최근 메시지',
+  //     messageTime: new Date(2022, 1, 10, 18, 20),
+  //   },
+  // ]);
 
   // 메시지 전송
   // const onClick = (e) => {
@@ -85,11 +86,6 @@ const Message = ({ navigation: { replace } }) => {
   //   );
   //   setMessage('');
   // };
-
-  // 존재하는 메시지 리스트 로드
-  // useEffect(() => {
-  //   dispatch(listMessages({ messengerId }));
-  // }, [dispatch, messengerId]);
 
   // useEffect(() => {
   //   client.connect({}, () => {
@@ -128,7 +124,7 @@ const Message = ({ navigation: { replace } }) => {
     );
   };
 
-  const dateLine = testMessages?.map((data, i, array) =>
+  const dateLine = messages?.map((data, i, array) =>
     isSameDay(array[i - 1]?.messageTime ?? new Date(), data.messageTime)
       ? false
       : true,
@@ -144,7 +140,7 @@ const Message = ({ navigation: { replace } }) => {
           scrollViewRef.current.scrollToEnd({ animated: true })
         }
       >
-        {testMessages?.map((data, i) => (
+        {messages?.map((data, i) => (
           <View key={i} style={tw`w-full flex-1 flex-col`}>
             {dateLine?.[i] && (
               <Text style={tw`flex w-full my-2 text-center`}>

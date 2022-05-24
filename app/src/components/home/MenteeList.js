@@ -3,6 +3,8 @@ import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import tw from 'twrnc';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { setMessengerId } from '../../modules/messenger';
 
 const Item = ({ wide = false, borderRight = true, children }) => (
   <View
@@ -19,6 +21,7 @@ const Item = ({ wide = false, borderRight = true, children }) => (
 const Mentee = ({ mentee }) => {
   const { name, school, id, messengerId, state } = mentee;
   const { navigate } = useNavigation();
+  const dispatch = useDispatch();
   return (
     <View
       style={tw`flex-row h-20 w-full items-center justify-between border-b border-gray-300 text-center sm:px-4`}
@@ -41,7 +44,10 @@ const Mentee = ({ mentee }) => {
           />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigate('MessageTab', { messengerId })}
+          onPress={() => {
+            dispatch(setMessengerId(messengerId));
+            navigate('MessageTab', { messengerId });
+          }}
         >
           <MaterialCommunityIcons name="message-text" size={36} color="black" />
         </TouchableOpacity>

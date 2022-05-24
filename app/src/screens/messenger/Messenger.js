@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { listMessengers } from '../../modules/messengers';
 import Moment from 'moment';
 import tw from 'twrnc';
+import { setMessengerId } from '../../modules/messenger';
 
 const isToday = (target) => {
   const today = new Date();
@@ -20,38 +22,24 @@ const Messenger = ({ navigation: { navigate } }) => {
     messengers: messengers.messengers,
     user: user.user,
   }));
-  const test_messengers = [
-    {
-      messengerId: '0fxca1253',
-      messengerTitle: '오픈 스카이',
-      lastMessage: '2021년 10월 15일 학습 결과 보고서',
-      lastReceivedTime: new Date(2022, 1, 1),
-    },
-    {
-      messengerId: 'mlqwnr27',
-      messengerTitle: '멘토',
-      lastMessage: '플래너 작성은 다 하셨나요?',
-      lastReceivedTime: new Date(2022, 1, 6),
-    },
-    {
-      messengerId: 'd12jut06',
-      messengerTitle: '고길동',
-      lastMessage: 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-      lastReceivedTime: new Date(),
-    },
-  ];
+
+  useEffect(() => {
+    dispatch(listMessengers());
+  }, [dispatch]);
+
   return (
     <ScrollView
       style={tw`w-full bg-white`}
       showsVerticalScrollIndicator={false}
     >
-      {test_messengers.map((data, index) => (
+      {messengers?.map((data, index) => (
         <TouchableOpacity
           key={index}
           style={tw`flex w-full flex-row items-center border-b border-gray-500 px-4 py-6 sm:px-8`}
-          onPress={() =>
-            navigate(`MessageTab`, { messengerId: data.messengerId })
-          }
+          onPress={() => {
+            dispatch(setMessengerId(data.messengerId));
+            navigate(`MessageTab`, { messengerId: data.messengerId });
+          }}
         >
           <View style={tw`ml-4 flex flex-col justify-start text-left`}>
             <Text style={tw`text-base font-bold`}>{data.messengerTitle}</Text>
