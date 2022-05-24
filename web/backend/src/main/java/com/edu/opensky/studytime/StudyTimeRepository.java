@@ -2,6 +2,7 @@ package com.edu.opensky.studytime;
 
 import com.edu.opensky.studytime.dto.levelRankingListInterface;
 import com.edu.opensky.studytime.dto.timeRankingListInterface;
+import com.edu.opensky.user.mentee.Mentee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +13,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface StudyTimeRepository extends JpaRepository<StudyTime, Long> {
+
+    List<StudyTime> findByMenteeAndEndTimeIsNullOrderByStartTimeDesc(Mentee mentee);
 
     @Transactional(readOnly = true)
     @Query(value = "select m.school as school, u.name as name, m.level as level " +

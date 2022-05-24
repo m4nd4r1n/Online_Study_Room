@@ -23,8 +23,13 @@ public class StudyTime {
 
     private LocalDateTime startTime;
 
+
     private LocalDateTime endTime;
 
+
+    public void finishStudy(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
 
     @Builder
     public StudyTime(Mentee mentee,LocalDateTime startTime, LocalDateTime endTime){
