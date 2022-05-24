@@ -12,11 +12,7 @@ export const uploadFrame = (data) => {
   const formData = new FormData();
   formData.append('image', data);
 
-  return client.post('/study/upload', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  return client.post('/study/upload', formData);
 };
 
 export const setStudyState = () => client.post('/study/state');
