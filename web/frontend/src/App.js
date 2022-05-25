@@ -4,8 +4,6 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import AchievementPage from './pages/AchievementPage';
 import MenteeManagementPage from './pages/MenteeManagementPage';
-import MessengerListPage from './pages/MessengerListPage';
-import MessengerPage from './pages/MessengerPage';
 import PlannerPage from './pages/PlannerPage';
 import RankingPage from './pages/RankingPage';
 import RegisterPage from './pages/RegisterPage';
@@ -20,6 +18,7 @@ import BottomTabBarContainer from './containers/common/BottomTabBarContainer';
 import NotFound from './pages/404';
 import AdminPage from './pages/AdminPage';
 import { useSelector } from 'react-redux';
+import ChatPage from './pages/ChatPage';
 
 const PrivateRoute = () => {
   const { user } = useSelector(({ user }) => ({ user: user.user }));
@@ -108,22 +107,20 @@ const App = () => {
             element={<StudyTimeManagementPage />}
             path="management/time/:userId"
           />
+          <Route
+            element={
+              <>
+                <ChatPage />
+                <BottomTabBarContainer />
+              </>
+            }
+            path="chat/:userId"
+          />
         </Route>
 
         <Route element={<MentorParentRoute />}>
           <Route element={<StudyScreenPage />} path="study/:userId" />
         </Route>
-
-        <Route
-          element={
-            <>
-              <MessengerListPage />
-              <BottomTabBarContainer />
-            </>
-          }
-          path="messenger"
-        />
-        <Route element={<MessengerPage />} path="messenger/:messengerId" />
         <Route
           element={
             <>
@@ -168,6 +165,15 @@ const App = () => {
             </>
           }
           path="setting"
+        />
+        <Route
+          element={
+            <>
+              <ChatPage />
+              <BottomTabBarContainer />
+            </>
+          }
+          path="chat"
         />
       </Route>
       <Route element={<LoginPage />} path="login" />

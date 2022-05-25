@@ -53,11 +53,11 @@ const COLORS = ['bg-cyan-500', 'bg-cyan-200', 'bg-cyan-400', 'bg-cyan-100'];
 const Table = ({ hour, plans }) => {
   return (
     <div className="flex flex-row">
-      <div className="h-[1.7rem] w-full border-[0.5px] border-slate-300">
+      <div className="h-[1.7rem] w-full border-[0.5px] border-slate-300 bg-white">
         {hour}
       </div>
       {['00', '10', '20', '30', '40', '50'].map((minute, i) => {
-        let color;
+        let color = 'bg-white';
         if (plans) {
           for (let j = 0; j < plans.length; j++) {
             if (

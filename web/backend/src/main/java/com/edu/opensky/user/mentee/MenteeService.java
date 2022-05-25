@@ -4,11 +4,13 @@ import com.edu.opensky.user.UserRepository;
 import com.edu.opensky.user.mentee.dto.MenteeSaveRequestDto;
 import com.edu.opensky.studytime.dto.studyInfoResponseDto;
 import com.edu.opensky.user.admin.dto.AdminMenteeRequestDto;
+import com.edu.opensky.user.mentor.Mentor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -18,6 +20,8 @@ public class MenteeService {
 
     private final UserRepository userRepository;
 
+    private final MenteeRepository mentorRepository;
+
     /* 회원가입 */
     @Transactional
     public String save(MenteeSaveRequestDto requestDto) {
@@ -26,15 +30,25 @@ public class MenteeService {
 
     @Transactional(readOnly = true)
     public studyInfoResponseDto getStudyInfo(String id){
+        Optional<Mentee> mentor = mentorRepository.findByMteId(id);
         Mentee mentee = menteeRepository.findByMteId(id)
                 .orElseThrow(() -> new
                         IllegalArgumentException("존재하는 아이디가 없습니다."));
 
-        return studyInfoResponseDto.builder()
-                .name(mentee.getName())
-                .exp(mentee.getExp())
-                .level(mentee.getLevel())
-                .build();
+        if(mentor.isPresent()){
+            return studyInfoResponseDto.builder()
+                    .name(mentee.getName())
+                    .exp(mentee.getExp())
+                    .level(mentee.getLevel())
+                    .mtrId(mentor.get().getMtrId())
+                    .build();
+        }else{
+            return studyInfoResponseDto.builder()
+                    .name(mentee.getName())
+                    .exp(mentee.getExp())
+                    .level(mentee.getLevel())
+                    .build();
+        }
     }
 
     public List<AdminMenteeRequestDto> getMenteeWithoutMentorList() {

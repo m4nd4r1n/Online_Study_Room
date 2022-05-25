@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import '@stream-io/stream-chat-css/dist/css/index.css';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
