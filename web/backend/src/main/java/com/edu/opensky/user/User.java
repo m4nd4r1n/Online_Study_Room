@@ -16,9 +16,10 @@ import java.time.LocalDate;
 @Entity
 public class User {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Id
     private String email;
 
     private String password;
