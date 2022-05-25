@@ -1,29 +1,53 @@
 import React, { useState } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { ContentsBlock } from '../components/common/Contents';
+import { getRanking } from '../libs/api/ranking';
 import tw from 'twrnc';
+import useSWR from 'swr';
+import useSWRInfinite from 'swr/infinite';
 
 const TextCenter = ({ children }) => (
   <Text style={tw`flex-1 text-center`}>{children}</Text>
 );
 
 const Ranking = () => {
+  const setRanking = () => {
+    const { data } = useSWR('/api/rank', getRanking);
+    return data;
+  };
+  const ranks = setRanking();
+
   const [type, setType] = useState('time');
   const [time, setTime] = useState('day');
+  const getKey = (index) =>
+    `/api/ranking?page=${index + 1}&type=${type}&time=${
+      type === 'time' ? time : ''
+    }`;
+  const { data, size, setSize } = useSWRInfinite(getKey, getRanking, {
+    revalidateFirstPage: false,
+    dedupingInterval: 0,
+  });
+  const isEnd = data && data[data.length - 1]?.length < 25;
+  const issues = data ? [].concat(...data) : [];
   const onTimeClick = () => {
+    if (type !== 'time') setSize(0);
     setType('time');
   };
   const onLevelClick = () => {
+    if (type !== 'level') setSize(0);
     setType('level');
     setTime('day');
   };
   const onDayClick = () => {
+    if (time !== 'day') setSize(0);
     setTime('day');
   };
   const onWeekClick = () => {
+    if (time !== 'week') setSize(0);
     setTime('week');
   };
   const onMonthClick = () => {
+    if (time !== 'month') setSize(0);
     setTime('month');
   };
   return (
@@ -136,12 +160,28 @@ const Ranking = () => {
       )}
       <View style={tw`my-2 h-8 w-full items-center flex-row`}>
         <TextCenter>
-          {type === 'time' && time === 'day' ? '현재 학습중 ?명' : ''}
+          {type === 'time' && time === 'day'
+            ? `현재 학습중 ${ranks?.current}명`
+            : ''}
         </TextCenter>
         <TextCenter>
-          {type === 'time' && time === 'day' ? '금일 전체 ?명' : ''}
+          {type === 'time' && time === 'day'
+            ? `금일 전체 ${ranks?.today}명`
+            : ''}
         </TextCenter>
-        <TextCenter>나의 등수 ?등</TextCenter>
+        <TextCenter>
+          나의 등수{' '}
+          {type === 'time'
+            ? time === 'day'
+              ? ranks?.day || 0
+              : time === 'week'
+              ? ranks?.week || 0
+              : time === 'month'
+              ? ranks?.month || 0
+              : null
+            : ranks?.level}
+          등
+        </TextCenter>
       </View>
       <View
         style={tw`w-full items-center border-b border-gray-300 py-1 flex-row`}
@@ -155,7 +195,7 @@ const Ranking = () => {
         )}
       </View>
       <ScrollView style={tw`w-full`} showsVerticalScrollIndicator={false}>
-        {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((data, i) => (
+        {issues?.map((data, i) => (
           <View
             key={i}
             style={tw`w-full items-center border-b border-gray-300 py-1 flex-row`}
@@ -170,15 +210,22 @@ const Ranking = () => {
               </View>
             </View>
             <View style={tw`flex-1 justify-center items-center`}>
-              <TextCenter>학교</TextCenter>
-              <TextCenter>학생</TextCenter>
+              <TextCenter>{data?.school}</TextCenter>
+              <TextCenter>{data?.name}</TextCenter>
             </View>
-            <TextCenter>{type === 'time' ? '시간' : '레벨'}</TextCenter>
+            <TextCenter>
+              {type === 'time' ? data?.time : data?.level}
+            </TextCenter>
           </View>
         ))}
-        <TouchableOpacity style={tw`w-full h-10 mt-4`}>
-          <TextCenter>더보기</TextCenter>
-        </TouchableOpacity>
+        {!isEnd && (
+          <TouchableOpacity
+            style={tw`w-full h-10 mt-4`}
+            onPress={() => setSize(size + 1)}
+          >
+            <TextCenter>더보기</TextCenter>
+          </TouchableOpacity>
+        )}
       </ScrollView>
     </ContentsBlock>
   );
