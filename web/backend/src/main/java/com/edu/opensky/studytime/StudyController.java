@@ -76,8 +76,8 @@ public class StudyController {
     // 미인식 시간 업로드
     @PostMapping("/study/upload")
     public ResponseEntity uploadFrame(
-            @RequestParam("image") List<MultipartFile> files,
-            @CookieValue(value="Authorization") String token) throws IOException {
+            @CookieValue(value="Authorization") String token,
+            @RequestPart("image") List<MultipartFile> files) throws IOException {
 
         User user = userService.getUserByToken(token);
         imageService.saveImage(user,files);

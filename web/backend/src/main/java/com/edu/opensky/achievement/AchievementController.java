@@ -1,12 +1,10 @@
 package com.edu.opensky.achievement;
 
+import com.edu.opensky.user.User;
 import com.edu.opensky.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,15 +15,16 @@ public class AchievementController {
     private final UserService userService;
 
     @GetMapping("")
-    public JSONArray getAchievementList(){
+    public JSONArray getAchievementList(@CookieValue(value="Authorization") String token){
         // 토큰에 있는 학생아이디 받아오도록
 //        Object principal= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        User user= userService.getUserByToken(principal);
 //        String Token_id=user.getEmail();
 //        //String Token_id = "asdasd@naver.com";
         // 테스트용
-        String Token_id = "";
-        return achievementService.getAchievementList(Token_id);
+        User user = userService.getUserByToken(token);
+
+        return achievementService.getAchievementList(user.getEmail());
 
 
     }
