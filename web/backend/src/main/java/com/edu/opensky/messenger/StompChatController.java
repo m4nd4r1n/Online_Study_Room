@@ -2,14 +2,17 @@ package com.edu.opensky.messenger;
 
 import com.edu.opensky.messenger.chatMessage.ChatMessageDto;
 import com.edu.opensky.messenger.chatMessage.ChatMessageService;
-import com.edu.opensky.messenger.chatRoomJoin.ChatRoomJoinService;
 import com.edu.opensky.messenger.chatRoom.ChatRoomRepository;
 import com.edu.opensky.messenger.chatRoom.ChatRoomService;
+import com.edu.opensky.messenger.chatRoomJoin.ChatRoomJoinService;
 import com.edu.opensky.messenger.dto.StudyMessageDto;
+import com.edu.opensky.user.User;
+import com.edu.opensky.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,19 +25,22 @@ public class StompChatController {
     private final ChatRoomJoinService chatRoomJoinService;
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRoomService chatRoomService;
+    private final UserService userService;
 
     //"/pub/chat/message"
     @MessageMapping(value = "/chat/message")
-    public void message(ChatMessageDto message){
+    public void message(ChatMessageDto message,
+                        @CookieValue(value="Authorization") String token){
 
         // 토큰 아이디
-        String sender="sender";
+
+        User user = userService.getUserByToken(token);
         log.info("# receive message : " + message.getMessage());
         template.convertAndSend("/sub/chat/room/" + message.getChatRoomId(), message);
         chatMessageService.save(message);
 
         // 채팅방 마지막 대화날짜 업데이트
-        chatRoomService.lastDateUpdate(sender, message.getReceiver());
+        chatRoomService.lastDateUpdate(user.getEmail(), message.getReceiver());
 
     }
 

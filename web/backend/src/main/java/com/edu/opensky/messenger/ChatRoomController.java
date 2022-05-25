@@ -3,9 +3,14 @@ package com.edu.opensky.messenger;
 import com.edu.opensky.messenger.chatMessage.ChatMessage;
 import com.edu.opensky.messenger.chatMessage.ChatMessageDto;
 import com.edu.opensky.messenger.chatMessage.ChatMessageService;
-import com.edu.opensky.messenger.chatRoom.*;
+import com.edu.opensky.messenger.chatRoom.ChatRoom;
+import com.edu.opensky.messenger.chatRoom.ChatRoomDto;
+import com.edu.opensky.messenger.chatRoom.ChatRoomRepository;
+import com.edu.opensky.messenger.chatRoom.ChatRoomService;
 import com.edu.opensky.messenger.chatRoomJoin.ChatRoomJoinService;
+import com.edu.opensky.user.User;
 import com.edu.opensky.user.UserRepository;
+import com.edu.opensky.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONObject;
@@ -29,21 +34,24 @@ public class ChatRoomController {
     private final UserRepository userRepository;
     private final ChatMessageService chatMessageService;
     private final ChatRoomService chatRoomService;
+    private final UserService userService;
 
     //채팅방 목록 조회
     @GetMapping(value = "/messenger")
-    public List<ChatRoomDto> rooms(){
+    public List<ChatRoomDto> rooms(@CookieValue(value="Authorization") String token){
         // 토큰 아이디 수정예정
-        String sender = "sender";
+        User user = userService.getUserByToken(token);
+
         log.info("# Print Chat Room List ");
-        List<ChatRoomDto> chatRoomList = chatRoomService.chatRoomList(sender);
+        List<ChatRoomDto> chatRoomList = chatRoomService.chatRoomList(user.getEmail());
 
         return chatRoomList;
     }
 
     //채팅방 개설
     @PostMapping(value = "/room")
-    public String create(@RequestBody String jsonStr){
+    public String create(@RequestBody String jsonStr,
+                         @CookieValue(value="Authorization") String token){
 
         JSONParser parser = new JSONParser();
         Object obj = null;
@@ -56,12 +64,12 @@ public class ChatRoomController {
         log.info("# Create Chat Room");
 
         // 토큰의아이디
-        String sender = "sender";
+        User user = userService.getUserByToken(token);
 
         // 상대방
         String receiver = (String) Objects.requireNonNull(jsonObj).get("receiver");
 
-        Long charRoomId = chatRoomJoinService.newRoom(sender,receiver);
+        Long charRoomId = chatRoomJoinService.newRoom(user.getEmail(),receiver);
         
         //생성된 채팅방번호
         return charRoomId.toString();
@@ -70,12 +78,14 @@ public class ChatRoomController {
 
     //채팅방 조회
     @GetMapping("/messenger/messengerId{messengerId}")
-    public List<ChatMessageDto> getRoom(@RequestParam String messengerId){
+    public List<ChatMessageDto> getRoom(@RequestParam String messengerId,
+                                        @CookieValue(value="Authorization") String token){
 
         log.info("# get Chat Room, roomID : " + messengerId);
         // 토큰 아이디의 name
-        String senderName = "ewq";
+        User user = userService.getUserByToken(token);
 
+        String senderName = user.getName();
         Optional<ChatRoom> room = chatRoomRepository.findById(Long.parseLong(messengerId));
         System.out.println(room);
         List<ChatMessageDto> messages = new ArrayList<>();
