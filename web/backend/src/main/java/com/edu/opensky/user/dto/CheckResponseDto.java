@@ -8,7 +8,6 @@ import lombok.Setter;
 public class CheckResponseDto {
     private String userId;
     private String role;
-    private String token;
 
     public CheckResponseDto() {
     }
