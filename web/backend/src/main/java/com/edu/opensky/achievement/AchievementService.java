@@ -41,7 +41,7 @@ public class AchievementService {
 
             }
             else if(os.contains("linux")){
-                path = "/home/ec2-user/app/step1/Online_Study_Room/web/backend/src/main/java/com/edu/opensky/achievement";
+                path = "/home/ec2-user/app/step1/Online_Study_Room/web/backend/src/main/java/com/edu/opensky/achievement/achievement_list.json";
                 reader = new FileReader(path);
             }
             JSONObject jsonObject = (JSONObject) parser.parse(reader);

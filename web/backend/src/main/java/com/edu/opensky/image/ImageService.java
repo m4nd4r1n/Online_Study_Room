@@ -32,7 +32,7 @@ public class ImageService {
 
         }
         else if(os.contains("linux")) {
-            dir = new File("/home/ec2-user/app/step1/Online_Study_Room/web/backend/src/main/java/com/edu/opensky/achievement");
+            dir = new File("/home/ec2-user/app/step1/Online_Study_Room/web/backend/src/main/java/com/edu/opensky/image/Images");
 
         }
 
