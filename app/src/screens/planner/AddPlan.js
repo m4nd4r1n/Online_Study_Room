@@ -7,9 +7,10 @@ import tw from 'twrnc';
 import { addPlanHours, addPlanMinutes } from '../../libs/constants';
 import { Picker } from '@react-native-picker/picker';
 import { useDispatch } from 'react-redux';
-import { addPlan } from '../../modules/plan';
+import { addPlan } from '../../libs/api/planner';
+import { readPlanner } from '../../modules/planner';
 
-const AddPlan = ({ plans, setVisible, visible, date }) => {
+const AddPlan = ({ id, plans, setVisible, visible, date }) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
     startHour: addPlanHours[0].value,
@@ -27,6 +28,13 @@ const AddPlan = ({ plans, setVisible, visible, date }) => {
     defaultValues: { subject: '' },
     mode: 'onChange',
   });
+  const asyncAdd = async (plan) => {
+    try {
+      await addPlan(plan);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const onValid = (validForm) => {
     // 백엔드로 전송
     // swr mutate
@@ -65,7 +73,18 @@ const AddPlan = ({ plans, setVisible, visible, date }) => {
       }
     }
     console.log(data);
-    dispatch(addPlan(data));
+    asyncAdd(data).then(() => {
+      dispatch(
+        readPlanner({
+          year: date.getFullYear(),
+          month: date.getMonth() + 1,
+          day: date.getDate(),
+          userId: id ?? user?.userId,
+        }),
+      );
+      setIsAddPlan(false);
+    });
+    setVisible(false);
   };
   const onDismiss = () => {
     setVisible(false);

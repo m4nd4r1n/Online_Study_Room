@@ -132,7 +132,9 @@ const Planner = () => {
 
   useEffect(() => {
     setId(
-      info?.menteeList.length !== 0 ? info?.menteeList[0].id : user?.userId,
+      info?.menteeList && info?.menteeList.length !== 0
+        ? info?.menteeList[0].id
+        : user?.userId,
     );
   }, [info, user, setId]);
 
@@ -149,7 +151,7 @@ const Planner = () => {
         year: date.getFullYear(),
         month: date.getMonth() + 1,
         day: date.getDate(),
-        userId: id ? id : user?.userId,
+        userId: id ?? user?.userId,
       }),
     );
     return () => {
@@ -166,9 +168,9 @@ const Planner = () => {
   };
 
   // 삭제요청 전송
-  const onRemove = async ({ subject, year, month, day }) => {
+  const onRemove = async ({ subject, year, month, day, userId }) => {
     try {
-      await removePlan({ subject, year, month, day });
+      await removePlan({ subject, year, month, day, userId });
     } catch (e) {
       console.log(e);
     }
@@ -186,6 +188,7 @@ const Planner = () => {
             year: date.getFullYear(),
             month: date.getMonth() + 1,
             day: date.getDate(),
+            userId: id ?? user?.userId,
           }).then(() => {
             // 플래너 다시 로드
             dispatch(
@@ -193,7 +196,7 @@ const Planner = () => {
                 year: date.getFullYear(),
                 month: date.getMonth() + 1,
                 day: date.getDate(),
-                userId: id ? id : user?.userId,
+                userId: id ?? user?.userId,
               }),
             );
           });
@@ -240,49 +243,50 @@ const Planner = () => {
   return (
     <Provider>
       <ContentsBlock>
-        {user?.role === '멘토' && info?.menteeList.length !== 0 ? (
-          <View
-            style={tw`w-full h-10 flex-row border border-cyan-600 rounded mt-3 items-center bg-white`}
-          >
-            <Picker
-              style={tw`flex-1`}
-              selectedValue={id}
-              onValueChange={(value) => {
-                setId(value);
-              }}
-              mode="dropdown"
+        {user?.role === '멘토' &&
+          (info?.menteeList?.length !== 0 ? (
+            <View
+              style={tw`w-full h-10 flex-row border border-cyan-600 rounded mt-3 items-center bg-white`}
             >
-              {info?.menteeList.map((mentee, index) => (
-                <Picker.Item
-                  key={index}
-                  label={
-                    mentee?.school
-                      ? `${mentee?.name}(${mentee?.school})`
-                      : mentee?.name
-                  }
-                  value={mentee?.id}
-                />
-              ))}
-            </Picker>
-          </View>
-        ) : (
-          <View style={tw`flex-1 items-center justify-center`}>
-            <Text>담당 학생이 존재하지 않습니다.</Text>
-            <Button
-              icon="restart"
-              mode="contained"
-              color="#06B6D4"
-              style={tw`mt-2`}
-              labelStyle={tw`text-white`}
-              onPress={() => {
-                dispatch(getUserInfo());
-              }}
-            >
-              새로고침
-            </Button>
-          </View>
-        )}
-        {info?.menteeList.length !== 0 && (
+              <Picker
+                style={tw`flex-1`}
+                selectedValue={id}
+                onValueChange={(value) => {
+                  setId(value);
+                }}
+                mode="dropdown"
+              >
+                {info?.menteeList?.map((mentee, index) => (
+                  <Picker.Item
+                    key={index}
+                    label={
+                      mentee?.school
+                        ? `${mentee?.name}(${mentee?.school})`
+                        : mentee?.name
+                    }
+                    value={mentee?.id}
+                  />
+                ))}
+              </Picker>
+            </View>
+          ) : (
+            <View style={tw`flex-1 items-center justify-center`}>
+              <Text>담당 학생이 존재하지 않습니다.</Text>
+              <Button
+                icon="restart"
+                mode="contained"
+                color="#06B6D4"
+                style={tw`mt-2`}
+                labelStyle={tw`text-white`}
+                onPress={() => {
+                  dispatch(getUserInfo());
+                }}
+              >
+                새로고침
+              </Button>
+            </View>
+          ))}
+        {info?.menteeList?.length !== 0 && (
           <View style={tw`flex-row flex-1`}>
             <View style={tw`flex-1 items-center`}>
               <Text style={tw`mb-2.5 mt-2`}>PLAN</Text>
@@ -324,6 +328,7 @@ const Planner = () => {
         )}
       </ContentsBlock>
       <AddPlan
+        id={id}
         plans={plans}
         visible={showAddPlan}
         setVisible={setShowAddPlan}

@@ -197,7 +197,6 @@ const StatisticsContainer = () => {
       style={{
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'flex-start',
         flexDirection: 'column',
       }}
     >
