@@ -30,11 +30,20 @@ public class AchievementService {
     public void setAchievementList(){
         JSONParser parser = new JSONParser();
         String absolutePath = new File("").getAbsolutePath()+"\\";
+        String path = absolutePath +"/web/backend/src/main/java/com/edu/opensky/achievement/achievement_list.json";
 
         Reader reader = null;
         try {
-            reader = new FileReader(absolutePath+"/web/backend/src/main/java/com/edu/opensky/achievement/achievement_list.json");
+            String os = System.getProperty("os.name").toLowerCase();
 
+            if(os.contains("win")){
+                reader = new FileReader(path);
+
+            }
+            else if(os.contains("linux")){
+                path = "/home/ec2-user/app/step1/Online_Study_Room/web/backend/src/main/java/com/edu/opensky/achievement";
+                reader = new FileReader(path);
+            }
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
 
             JSONArray jsonArray = (JSONArray) jsonObject.get("normal");

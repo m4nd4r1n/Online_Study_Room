@@ -23,7 +23,19 @@ public class ImageService {
         // 파일 저장 경로
         String absolutePath = new File("").getAbsolutePath()+"\\";
         absolutePath += "/web/backend/src/main/java/com/edu/opensky/image/Images/";
-        File dir = new File(absolutePath);
+
+        String os = System.getProperty("os.name").toLowerCase();
+
+        File dir = null;
+        if(os.contains("win")){
+            dir = new File(absolutePath);
+
+        }
+        else if(os.contains("linux")) {
+            dir = new File("/home/ec2-user/app/step1/Online_Study_Room/web/backend/src/main/java/com/edu/opensky/achievement");
+
+        }
+
         if(!dir.exists()){
             dir.mkdirs();
         }

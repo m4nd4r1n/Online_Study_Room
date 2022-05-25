@@ -6,15 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c7e0ae73-e136-438e-8cf7-b7e0a9d457e9" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/image/Image.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/image/Image.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/image/ImageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/image/ImageRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/image/ImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/image/ImageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/management/ManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/management/ManagementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/management/dto/ImageAndTimeResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/management/dto/ImageAndTimeResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/java/com/edu/opensky/studytime/StudyTimeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web/backend/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/web/frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/frontend/src/lib/api/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/frontend/src/lib/api/client.js" afterDir="false" />
@@ -480,6 +471,7 @@
       <workItem from="1653315020131" duration="1957000" />
       <workItem from="1653378951636" duration="5623000" />
       <workItem from="1653389441860" duration="3044000" />
+      <workItem from="1653458420483" duration="978000" />
     </task>
     <servers />
   </component>
