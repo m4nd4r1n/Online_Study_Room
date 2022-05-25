@@ -24,8 +24,8 @@ const Character = () => {
   return (
     <Container>
       <Item>
-        <img className="bg-contain" src={'character/muffler.png'} alt="neck" />
-        <img src={'character/pants1.png'} alt="pants" />
+        {/* <img className="bg-contain" src={'character/muffler.png'} alt="neck" />
+        <img src={'character/pants1.png'} alt="pants" /> */}
       </Item>
     </Container>
   );
