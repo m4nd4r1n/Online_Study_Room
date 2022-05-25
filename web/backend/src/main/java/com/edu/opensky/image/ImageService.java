@@ -2,6 +2,8 @@ package com.edu.opensky.image;
 
 import com.edu.opensky.management.dto.ImageAndTimeResponseDto;
 import com.edu.opensky.user.User;
+import com.edu.opensky.user.UserRepository;
+import com.edu.opensky.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,13 +12,19 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class ImageService {
     private final ImageRepository imageRepository;
+    private final UserService userService;
+    private final UserRepository userRepository;
 
     public void saveImage(User user, List<MultipartFile> files) throws IOException {
 
@@ -69,5 +77,25 @@ public class ImageService {
 
         return responseDtos;
 
+    }
+
+    public String getImageDest(String time){
+        LocalDateTime dateTime = LocalDateTime.now();
+        try {
+            DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                    .appendPattern("yyyyMMddHHmmss")
+                    .appendValue(ChronoField.MILLI_OF_SECOND, 3)
+                    .toFormatter();
+
+            dateTime = LocalDateTime.parse(time, formatter);
+        } catch (DateTimeParseException e) {
+            e.getStackTrace();
+        }
+        Optional<Image> image = imageRepository.findByStudyDateTime(dateTime);
+        if(image.isPresent()){
+
+            return image.get().getDest();
+        }
+        return null;
     }
 }
