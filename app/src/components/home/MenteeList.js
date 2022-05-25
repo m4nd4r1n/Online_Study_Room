@@ -59,27 +59,10 @@ const Mentee = ({ mentee }) => {
   );
 };
 
-const MenteeList = () => {
-  const mentees = [
-    {
-      id: '1234',
-      school: '서울중',
-      name: '박서울',
-      state: '학습중',
-      messengerId: 12345,
-    },
-    {
-      id: '5678',
-      school: '부산고',
-      name: '김부산',
-      state: '오프라인',
-      messengerId: 67890,
-    },
-  ];
-
+const MenteeList = ({ mentees }) => {
   return (
     <ScrollView style={tw`w-full`} showsVerticalScrollIndicator={false}>
-      {mentees.map((mentee, index) => (
+      {mentees?.map((mentee, index) => (
         <Mentee key={index} mentee={mentee} />
       ))}
     </ScrollView>

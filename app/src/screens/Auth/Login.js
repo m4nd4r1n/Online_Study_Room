@@ -70,12 +70,6 @@ const Login = ({ navigation: { navigate, replace } }) => {
   return (
     <AuthLayout>
       <Text style={tw`mb-3`}>로그인</Text>
-      <View style={tw`flex-row justify-center`}>
-        <Button onPress={() => move('멘토')}>멘토 이동</Button>
-        <Button onPress={() => move('멘티')}>멘티 이동</Button>
-        <Button onPress={() => move('학부모')}>학부모 이동</Button>
-      </View>
-
       <Controller
         control={control}
         rules={{
