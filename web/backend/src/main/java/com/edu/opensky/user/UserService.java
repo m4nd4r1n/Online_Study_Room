@@ -233,7 +233,6 @@ public class UserService {
 
             CheckResponseDto checkResponseDto=new CheckResponseDto();
             checkResponseDto.setUserId(user.getEmail());
-            checkResponseDto.setToken(token);
             checkResponseDto.setRole(user.getRole());
             return checkResponseDto;
         }

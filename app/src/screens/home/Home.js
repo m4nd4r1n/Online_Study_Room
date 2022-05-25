@@ -35,7 +35,7 @@ const Home = ({ navigation: { navigate, replace } }) => {
       {!info ? (
         <Text>사용자 정보를 불러오지 못했습니다.</Text>
       ) : user?.role === '학부모' ? (
-        <ChildrenList />
+        <ChildrenList children={info?.menteeList} />
       ) : user?.role === '멘티' ? (
         <>
           <Character />
@@ -57,7 +57,7 @@ const Home = ({ navigation: { navigate, replace } }) => {
           </Button>
         </>
       ) : (
-        <MenteeList />
+        <MenteeList mentees={info?.menteeList} />
       )}
     </ContentsBlock>
   );

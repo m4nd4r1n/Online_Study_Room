@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { ProgressBar } from 'react-native-paper';
 import tw from 'twrnc';
 
 const InfoBar = ({ children }) => (
@@ -9,15 +10,6 @@ const InfoBar = ({ children }) => (
     {children}
   </View>
 );
-
-const printExp = (ExpRatio) => {
-  const exp = '■';
-  let ExpBar = '';
-  for (let i = 0; i < ExpRatio * 10; i++) {
-    ExpBar += exp;
-  }
-  return ExpBar;
-};
 
 const UserInfo = ({ user, info }) => {
   return (
@@ -36,7 +28,11 @@ const UserInfo = ({ user, info }) => {
               <Text>EXP</Text>
             </View>
             <View style={tw`flex-0.5 text-right`}>
-              <Text>{printExp(info?.exp / 120)}</Text>
+              <ProgressBar
+                progress={info?.exp ? info?.exp / 120 : 0}
+                color="#1a90ff"
+                style={tw`rounded-5 m-2 bg-[#E5E7EB]`}
+              />
             </View>
             <View style={tw`items-end flex-0.2`}>
               <Text>{info?.exp}/120</Text>
