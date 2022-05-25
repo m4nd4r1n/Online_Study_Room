@@ -20,6 +20,7 @@ import BottomTabBarContainer from './containers/common/BottomTabBarContainer';
 import NotFound from './pages/404';
 import AdminPage from './pages/AdminPage';
 import { useSelector } from 'react-redux';
+import ChatPage from './pages/ChatPage';
 
 const PrivateRoute = () => {
   const { user } = useSelector(({ user }) => ({ user: user.user }));
@@ -108,6 +109,15 @@ const App = () => {
             element={<StudyTimeManagementPage />}
             path="management/time/:userId"
           />
+          <Route
+            element={
+              <>
+                <ChatPage />
+                <BottomTabBarContainer />
+              </>
+            }
+            path="chat/:userId"
+          />
         </Route>
 
         <Route element={<MentorParentRoute />}>
@@ -168,6 +178,15 @@ const App = () => {
             </>
           }
           path="setting"
+        />
+        <Route
+          element={
+            <>
+              <ChatPage />
+              <BottomTabBarContainer />
+            </>
+          }
+          path="chat"
         />
       </Route>
       <Route element={<LoginPage />} path="login" />

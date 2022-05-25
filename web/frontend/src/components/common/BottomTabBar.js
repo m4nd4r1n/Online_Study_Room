@@ -36,6 +36,7 @@ const TwWrapper = tw(Wrapper)`
   border-gray-400
   bg-white
   sm:justify-center
+  z-[9999]
 `;
 
 const BottomTabBar = ({ type }) => {
@@ -81,7 +82,7 @@ const BottomTabBar = ({ type }) => {
         {type !== '학부모' && (
           <BottomNavigationAction
             label="메시지"
-            value="/messenger"
+            value="/chat"
             icon={<Chat />}
           />
         )}

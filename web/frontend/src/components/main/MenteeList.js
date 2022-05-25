@@ -2,13 +2,10 @@ import React from 'react';
 import { Block } from '../common/Contents';
 import { useNavigate } from 'react-router-dom';
 import { MdManageAccounts, MdMessage, MdEventNote } from 'react-icons/md';
-import { setMessengerId } from '../../modules/messenger';
-import { useDispatch } from 'react-redux';
 
 const Mentee = ({ mentee }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { name, school, id, messengerId, state } = mentee;
+  const { name, school, id, state } = mentee;
   return (
     <div className="flex h-20 w-full items-center justify-between border-b border-gray-300 text-center sm:px-4">
       <Block $border>{name}</Block>
@@ -34,13 +31,7 @@ const Mentee = ({ mentee }) => {
         <MdMessage
           className="cursor-pointer"
           onClick={() => {
-            dispatch(
-              setMessengerId({
-                messengerId,
-                receiver: name,
-              }),
-            );
-            navigate(`/messenger/${messengerId}`);
+            navigate(`/chat/${id}`);
           }}
         />
       </div>
