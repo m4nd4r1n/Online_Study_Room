@@ -98,7 +98,7 @@ const ObjectDetector = ({ user }) => {
       switch (message.type) {
         // 누군가 입장 시 offer 전달
         case 'enter':
-          if (!loading && !peerConnectionRef.current) createPeer();
+          createPeer();
           sendOffer();
           break;
         case 'offer':
@@ -115,7 +115,7 @@ const ObjectDetector = ({ user }) => {
           break;
       }
     },
-    [createPeer, loading, sendOffer],
+    [createPeer, sendOffer],
   );
 
   useEffect(() => {
@@ -130,7 +130,7 @@ const ObjectDetector = ({ user }) => {
         client.disconnect();
       }
     };
-  }, [client, userId, handleMessage]);
+  }, []);
 
   // Main function
   const runCoco = async () => {
@@ -270,7 +270,10 @@ const ObjectDetector = ({ user }) => {
       <StudyButton
         onClick={() => {
           if (window.confirm('학습을 종료하시겠습니까?')) {
-            setStudyState().then(() => navigate('/', { replace: true }));
+            setStudyState().then(() => {
+              navigate('/', { replace: true });
+              window.location.reload();
+            });
           }
         }}
         type="stop"

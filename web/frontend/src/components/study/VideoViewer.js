@@ -84,7 +84,6 @@ const VideoViewer = () => {
   const handleMessage = useCallback(
     (msg) => {
       const message = JSON.parse(msg.body);
-      console.log(message);
       switch (message.type) {
         case 'enter':
           // offer를 받을 것이므로 enter 수신해도 offer 전송 x
@@ -119,6 +118,7 @@ const VideoViewer = () => {
           {},
         );
       }
+      createPeer();
     });
     return () => {
       if (client && client.connected) {
@@ -126,11 +126,11 @@ const VideoViewer = () => {
         client.disconnect();
       }
     };
-  }, [client, userId, handleMessage]);
+  }, []);
 
-  useEffect(() => {
-    createPeer();
-  }, [createPeer]);
+  // useEffect(() => {
+
+  // }, []);
 
   return (
     <ContentsBlock>

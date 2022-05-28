@@ -6,14 +6,19 @@ import com.edu.opensky.management.dto.ImageAndTimeResponseDto;
 import com.edu.opensky.studytime.StudyTimeService;
 import com.edu.opensky.user.mentor.MentorService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.List;
 
@@ -53,8 +58,8 @@ public class ManagementController {
 
     // 학습 시간 인정 요청
     @PatchMapping("/management/studyTime")
-    public ResponseEntity acceptStudyTime(@RequestParam String userId,
-                                          @RequestParam String time) {
+    public ResponseEntity acceptStudyTime(@RequestBody String userId,
+                                          @RequestBody String time) {
         if (userId.isEmpty() || userId.equals(null)) {
             return ResponseEntity.badRequest().build();
         }
@@ -70,10 +75,10 @@ public class ManagementController {
     }
 
     @GetMapping(value = "/management/studyTime/image")
-    public ResponseEntity<?> getImage(@RequestParam String time) throws MalformedURLException {
+    public ResponseEntity<?> getImage(@RequestParam String image) throws MalformedURLException {
         // 이미지 저장 시간을 받음
-        String fileDir = imageService.getImageDest(time); // 파일 경로
-        if (fileDir.isEmpty() || fileDir.equals(null)) {
+        String fileDir = imageService.getImageDest(image); // 파일 경로
+        if (fileDir.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -87,4 +92,14 @@ public class ManagementController {
         return new ResponseEntity<UrlResource>(urlResource, HttpStatus.OK);
 
     }
+    @GetMapping(value="/image/{imagename}",produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> imageSearch(@PathVariable("imagename") String imagename) throws IOException{
+        String absolutePath = new File("").getAbsolutePath();
+        absolutePath += "/src/main/resources/static/img/";
+        InputStream imageStream = new FileInputStream(absolutePath+imagename);
+        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+        imageStream.close();
+        return new ResponseEntity<byte[]>(imageByteArray,HttpStatus.OK);
+    }
+
 }

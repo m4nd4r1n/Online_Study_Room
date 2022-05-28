@@ -38,6 +38,10 @@ public class ImageService {
         if(os.contains("win")){
             dir = new File(absolutePath);
 
+        }else if(os.contains("mac")){
+            absolutePath = new File("").getAbsolutePath();
+            absolutePath += "/src/main/resources/static/img/";
+            dir = new File(absolutePath);
         }
         else if(os.contains("linux")) {
             dir = new File("/home/ec2-user/app/step1/Online_Study_Room/web/backend/src/main/java/com/edu/opensky/image/Images");
@@ -71,7 +75,7 @@ public class ImageService {
         List<Image> images = imageRepository.findByMteId(userId);
 
         for(Image image : images){
-            responseDtos.add(ImageAndTimeResponseDto.builder().imageDest(image.getDest()).noAcceptTime(image.getStudyDateTime()).build());
+            responseDtos.add(ImageAndTimeResponseDto.builder().imageDest(image.getName()).noAcceptTime(image.getStudyDateTime()).build());
 
         }
 

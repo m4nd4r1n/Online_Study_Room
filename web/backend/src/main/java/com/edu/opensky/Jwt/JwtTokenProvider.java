@@ -29,7 +29,7 @@ public class JwtTokenProvider {
     private String secretKey = "onlinestudyroom";
 
     //토큰 지속시간 30분
-    private static final long TokenValidTime = 30 * 60 * 1000L;
+    private static final long TokenValidTime = 24*60 * 60 * 1000L;
 
 
     //객체초기화, secretKey를 Base64로 인코딩한다.

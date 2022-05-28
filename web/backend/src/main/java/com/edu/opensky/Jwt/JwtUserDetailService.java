@@ -25,7 +25,7 @@ public class JwtUserDetailService implements UserDetailsService {
         // DB에서 사용자정보를 가져와서 User객체에 넣어서 반환
         Optional<User> user1= userRepository.findByEmail(email);
 
-        if(user1 == null){
+        if(!user1.isPresent()){
             throw new UsernameNotFoundException(email);
         }
         return org.springframework.security.core.userdetails.User.builder()

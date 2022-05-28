@@ -3,7 +3,7 @@ import { ContentsBlock } from '../../components/common/Contents';
 import StudentInfo from '../../components/management/StudentInfo';
 import ManagementList from '../../components/management/ManagementList';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStudentInfo } from '../../modules/management';
+import { getStudentInfo, getStudyTime } from '../../modules/management';
 import { useParams } from 'react-router-dom';
 
 const ManagementContainer = () => {
@@ -19,6 +19,7 @@ const ManagementContainer = () => {
   const student = menteeList?.filter((data) => data?.id === userId);
 
   useEffect(() => {
+    dispatch(getStudyTime({ userId }));
     dispatch(getStudentInfo({ userId }));
   }, [dispatch, userId]);
 
